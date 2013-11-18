@@ -4,11 +4,18 @@ import com.op.cookit.util.SystemUiHider;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -45,6 +52,31 @@ public class MainActivity extends Activity {
      */
     private SystemUiHider mSystemUiHider;
 
+    class RetreiveFeedTask extends AsyncTask<String, Void, String> {
+
+        private Exception exception;
+
+        protected String doInBackground(String... urls) {
+            String url = "http://cookcloud.jelastic.neohost.net/rest/barcode/0000040102078";
+            // Create a new RestTemplate instance
+            RestTemplate restTemplate = new RestTemplate();
+            // Add the String message converter
+            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+
+            // Make the HTTP GET request, marshaling the response to a String
+            try {
+                String result = restTemplate.getForObject(url, String.class);
+                Log.d(">>", result);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return "";
+
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +90,9 @@ public class MainActivity extends Activity {
         // this activity.
         mSystemUiHider = SystemUiHider.getInstance(this, contentView, HIDER_FLAGS);
         mSystemUiHider.setup();
+
+        new RetreiveFeedTask().execute("");
+
         mSystemUiHider
                 .setOnVisibilityChangeListener(new SystemUiHider.OnVisibilityChangeListener() {
                     // Cached values.
