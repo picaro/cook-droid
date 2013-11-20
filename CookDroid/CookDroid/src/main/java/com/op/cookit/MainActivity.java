@@ -4,6 +4,7 @@ import com.op.cookit.util.SystemUiHider;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,10 +12,14 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import jim.h.common.android.zxinglib.integrator.IntentIntegrator;
+import jim.h.common.android.zxinglib.integrator.IntentResult;
 
 
 /**
@@ -29,6 +34,9 @@ public class MainActivity extends Activity {
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
     private static final boolean AUTO_HIDE = true;
+
+    private Handler  handler = new Handler();
+    private TextView txtScanResult;
 
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
@@ -147,6 +155,19 @@ public class MainActivity extends Activity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+
+
+        txtScanResult = (TextView) findViewById(R.id.scan_result);
+        View btnScan = findViewById(R.id.scan_button);
+        // Scan button
+        btnScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // set the last parameter to true to open front light if available
+                IntentIntegrator.initiateScan(MainActivity.this, R.layout.capture,
+                        R.id.viewfinder_view, R.id.preview_view, true);
+            }
+        });
     }
 
     @Override
@@ -191,4 +212,29 @@ public class MainActivity extends Activity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case IntentIntegrator.REQUEST_CODE:
+                IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode,
+                        resultCode, data);
+                if (scanResult == null) {
+                    return;
+                }
+                final String result = scanResult.getContents();
+                if (result != null) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            txtScanResult.setText(result);
+                        }
+                    });
+                }
+                break;
+            default:
+        }
+    }
+
 }
