@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
 
             // Make the HTTP GET request, marshaling the response to a String
             try {
-                String result = restTemplate.getForObject(url, String.class);
+                String result = (String)restTemplate.getForObject(url, String.class);
                 Log.d(">>", result);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -158,7 +158,8 @@ public class MainActivity extends Activity {
 
 
         txtScanResult = (TextView) findViewById(R.id.scan_result);
-        View btnScan = findViewById(R.id.scan_button);
+        txtScanResult.setText("qqqq");
+		View btnScan = findViewById(R.id.scan_button);
         // Scan button
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
