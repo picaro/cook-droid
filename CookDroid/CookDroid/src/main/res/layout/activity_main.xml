@@ -5,10 +5,8 @@
     android:background="#0099cc"
     tools:context=".MainActivity">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
-    <TextView android:id="@+id/fullscreen_content"
+    <TextView
+        android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:keepScreenOn="true"
@@ -18,37 +16,30 @@
         android:gravity="center"
         android:text="@string/dummy_content" />
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <LinearLayout android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
+        <LinearLayout
+            android:id="@+id/fullscreen_content_controls"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
             android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
+            android:orientation="horizontal">
 
-            <TextView android:id="@+id/scan_result" android:layout_width="wrap_content" android:text="aaaa"
+            <TextView
+                android:id="@+id/scan_result"
+                android:layout_width="wrap_content"
+                android:text="aaaa"
                 android:layout_height="wrap_content" />
 
-            <Button android:id="@+id/scan_button" android:layout_width="fill_parent"
-                android:layout_height="wrap_content" android:text="string/scan"
-                android:layout_gravity="bottom" />
-            <TextView android:layout_width="fill_parent"
-                android:layout_height="wrap_content" android:text="string/scan_resut_lable"
-                android:textColor="#fff" />
-
-            <Button android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
+            <Button
+                android:id="@+id/scan_button"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
+                android:text="string/scan"
+                android:layout_gravity="bottom" />
+
 
         </LinearLayout>
     </FrameLayout>

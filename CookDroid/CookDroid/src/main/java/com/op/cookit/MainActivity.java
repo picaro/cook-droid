@@ -78,12 +78,6 @@ public class MainActivity extends Activity {
             try {
                 String result = (String)restTemplate.getForObject(url, String.class);
                // txtScanResult.setText(result);
-			    Message msg = handler.obtainMessage();
-				msg.what = UPDATE_IMAGE;
-				//msg.obj = bitmap;
-			//	msg.setData(  result);
-			
-				handler2.sendMessage(msg);
 			   ret= "1"+result;
 				Log.d(">>", ""+result);
             } catch (Exception e) {
@@ -93,6 +87,12 @@ public class MainActivity extends Activity {
             return "";
 
         }
+
+        protected void onPostExecute(String result)
+        {
+            txtScanResult.setText(ret);
+        }
+
 
     }
 	
@@ -106,7 +106,6 @@ public class MainActivity extends Activity {
 			if(msg.what==UPDATE_IMAGE){
 				txtScanResult.setText(rt.ret);
 				
-				//images.get(msg.arg1).setImageBitmap((Bitmap) msg.obj);
 			}
 			super.handleMessage(msg);
 		}
@@ -182,7 +181,7 @@ public class MainActivity extends Activity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
 
         txtScanResult = (TextView) findViewById(R.id.scan_result);
