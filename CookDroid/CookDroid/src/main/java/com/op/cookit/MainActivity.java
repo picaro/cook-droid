@@ -20,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 
 import jim.h.common.android.zxinglib.integrator.IntentIntegrator;
 import jim.h.common.android.zxinglib.integrator.IntentResult;
+import android.os.*;
 
 
 /**
@@ -37,7 +38,7 @@ public class MainActivity extends Activity {
 
     private Handler  handler = new Handler();
     private TextView txtScanResult;
-
+	RetreiveFeedTask rt = new RetreiveFeedTask();
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
@@ -63,9 +64,11 @@ public class MainActivity extends Activity {
     class RetreiveFeedTask extends AsyncTask<String, Void, String> {
 
         private Exception exception;
+		
+		public String ret;
 
         protected String doInBackground(String... urls) {
-            String url = "http://cookcloud.jelastic.neohost.net/rest/barcode/0000040102078";
+            String url = "http://cookcloud.jelastic.neohost.net/rest/barcode/" + urls[0];
             // Create a new RestTemplate instance
             RestTemplate restTemplate = new RestTemplate();
             // Add the String message converter
@@ -74,7 +77,15 @@ public class MainActivity extends Activity {
             // Make the HTTP GET request, marshaling the response to a String
             try {
                 String result = (String)restTemplate.getForObject(url, String.class);
-                Log.d(">>", result);
+               // txtScanResult.setText(result);
+			    Message msg = handler.obtainMessage();
+				msg.what = UPDATE_IMAGE;
+				//msg.obj = bitmap;
+			//	msg.setData(  result);
+			
+				handler2.sendMessage(msg);
+			   ret= "1"+result;
+				Log.d(">>", ""+result);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -84,6 +95,23 @@ public class MainActivity extends Activity {
         }
 
     }
+	
+	private static final int UPDATE_IMAGE = 0;
+	
+	final Handler handler2 = new Handler(){
+
+		
+		@Override
+		public void handleMessage(Message msg) {
+			if(msg.what==UPDATE_IMAGE){
+				txtScanResult.setText(rt.ret);
+				
+				//images.get(msg.arg1).setImageBitmap((Bitmap) msg.obj);
+			}
+			super.handleMessage(msg);
+		}
+	};
+	
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +127,7 @@ public class MainActivity extends Activity {
         mSystemUiHider = SystemUiHider.getInstance(this, contentView, HIDER_FLAGS);
         mSystemUiHider.setup();
 
-        new RetreiveFeedTask().execute("");
+      
 
         mSystemUiHider
                 .setOnVisibilityChangeListener(new SystemUiHider.OnVisibilityChangeListener() {
@@ -229,7 +257,10 @@ public class MainActivity extends Activity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            txtScanResult.setText(result);
+							
+							
+							rt.execute(result);
+                          //  txtScanResult.setText(result);
                         }
                     });
                 }
