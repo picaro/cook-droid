@@ -1,5 +1,6 @@
 package com.op.cookit;
 
+import com.google.gson.Gson;
 import com.op.cookit.model.Product;
 import com.op.cookit.util.SystemUiHider;
 
@@ -15,8 +16,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -81,14 +84,15 @@ public class MainActivity extends Activity {
             try {
                 String result = (String)restTemplate.getForObject(url, String.class);
                // txtScanResult.setText(result);
-                ObjectMapper mapper = new ObjectMapper();
-                product = mapper.readValue(result, Product.class);
+              //  ObjectMapper mapper = new ObjectMapper();
+              //  product = mapper.readValue(result, Product.class);
+                product =  new Gson().fromJson(result, Product.class);
+
 				Log.d(">>", ""+product.getName());
             } catch (Exception e) {
                 e.printStackTrace();
-            } catch (JsonMappingException e) {
-                e.printStackTrace();
             }
+
 
             return "";
 
@@ -96,7 +100,7 @@ public class MainActivity extends Activity {
 
         protected void onPostExecute(String result)
         {
-            txtScanResult.setText(ret);
+            txtScanResult.setText(product.getName());
         }
 
 
