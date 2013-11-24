@@ -88,7 +88,7 @@ public class MainActivity extends Activity {
               //  product = mapper.readValue(result, Product.class);
                 product =  new Gson().fromJson(result, Product.class);
 
-				Log.d(">>", ""+product.getName());
+				Log.d(">>", ""+ result + " prod:" + product);
             } catch (Exception e) {
                 e.printStackTrace();
             }
