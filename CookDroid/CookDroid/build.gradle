@@ -24,8 +24,10 @@ android {
 }
 
 dependencies {
-	compile 'com.android.support:appcompat-v7:+'
+    compile 'com.android.support:appcompat-v7:+'
     compile 'com.google.zxing:core:2.0'
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE@jar'
     compile 'org.springframework.android:spring-android-core:1.0.1.RELEASE@jar'
+    compile files('libs/gson-2.2.4.jar')
+    compile files('libs/zxingjar-1.1.jar')
 }
