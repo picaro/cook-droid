@@ -1,5 +1,6 @@
 package com.op.cookit;
 
+import com.op.cookit.model.Product;
 import com.op.cookit.util.SystemUiHider;
 
 import android.annotation.TargetApi;
@@ -14,6 +15,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -65,7 +68,7 @@ public class MainActivity extends Activity {
 
         private Exception exception;
 		
-		public String ret;
+		public Product product;
 
         protected String doInBackground(String... urls) {
             String url = "http://cookcloud.jelastic.neohost.net/rest/barcode/" + urls[0];
@@ -78,9 +81,12 @@ public class MainActivity extends Activity {
             try {
                 String result = (String)restTemplate.getForObject(url, String.class);
                // txtScanResult.setText(result);
-			   ret= "1"+result;
-				Log.d(">>", ""+result);
+                ObjectMapper mapper = new ObjectMapper();
+                product = mapper.readValue(result, Product.class);
+				Log.d(">>", ""+product.getName());
             } catch (Exception e) {
+                e.printStackTrace();
+            } catch (JsonMappingException e) {
                 e.printStackTrace();
             }
 
@@ -98,20 +104,6 @@ public class MainActivity extends Activity {
 	
 	private static final int UPDATE_IMAGE = 0;
 	
-	final Handler handler2 = new Handler(){
-
-		
-		@Override
-		public void handleMessage(Message msg) {
-			if(msg.what==UPDATE_IMAGE){
-				txtScanResult.setText(rt.ret);
-				
-			}
-			super.handleMessage(msg);
-		}
-	};
-	
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

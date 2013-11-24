@@ -17,6 +17,7 @@
     <orderEntry type="library" name="spring-android-rest-template-1.0.1.RELEASE" level="project" />
     <orderEntry type="library" name="zxingjar-1.1" level="project" />
     <orderEntry type="library" name="core" level="project" />
+    <orderEntry type="library" name="jackson-mapper-asl-1.9.13" level="project" />
   </component>
 </module>
 
