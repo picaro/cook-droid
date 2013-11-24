@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
 
     private Handler  handler = new Handler();
     private TextView txtScanResult;
-	RetreiveFeedTask rt = new RetreiveFeedTask();
+	//RetreiveFeedTask rt = new RetreiveFeedTask();
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
@@ -158,7 +158,7 @@ public class MainActivity extends Activity {
                         public void run() {
 							
 							
-							rt.execute(result);
+							new RetreiveFeedTask().execute(result);
                           //  txtScanResult.setText(result);
                         }
                     });
