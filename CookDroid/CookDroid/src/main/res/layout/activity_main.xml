@@ -23,7 +23,7 @@
         <LinearLayout
             android:id="@+id/fullscreen_content_controls"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/black_overlay"
             android:orientation="horizontal">
 
@@ -35,7 +35,7 @@
 
             <Button
                 android:id="@+id/scan_button"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="string/scan"
                 android:layout_gravity="bottom" />

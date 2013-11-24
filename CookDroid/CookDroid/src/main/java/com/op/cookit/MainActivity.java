@@ -166,17 +166,6 @@ public class MainActivity extends Activity {
                     }
                 });
 
-        // Set up the user interaction to manually show or hide the system UI.
-        contentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (TOGGLE_ON_CLICK) {
-                    mSystemUiHider.toggle();
-                } else {
-                    mSystemUiHider.show();
-                }
-            }
-        });
 
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
