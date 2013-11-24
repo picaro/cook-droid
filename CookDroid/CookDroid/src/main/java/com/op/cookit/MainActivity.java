@@ -100,7 +100,11 @@ public class MainActivity extends Activity {
 
         protected void onPostExecute(String result)
         {
-            txtScanResult.setText(product.getName());
+            if (product != null){
+                txtScanResult.setText(product.getName());
+            } else {
+                txtScanResult.setText("not found");
+            }
         }
 
 
