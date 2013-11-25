@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">CookDroid</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="button.scan">Scan</string>
+	<string name="msg.scan">Scan product barcode</string>
 
+	
 </resources>

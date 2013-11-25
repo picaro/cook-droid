@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CookDroid</string>
+    <string name="button.scan">Сканировать</string>
+	<string name="msg.scan">Поднесите камеру к штртхкоду</string>
+
+	
+</resources>
