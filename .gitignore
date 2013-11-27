@@ -1,2 +1,12 @@
 /CookDroid/CookDroid/src/main/bin
 /CookDroid/CookDroid/src/main/gen/com/op/cookit/*.java
+
+/CookDroid/CookDroid/.idea
+
+/CookDroid/CookDroid/target
+
+/CookDroid/CookDroid/src/main/.classpath
+
+/CookDroid/CookDroid/src/main/.settings
+
+/CookDroid/CookDroid/src/main/.project
