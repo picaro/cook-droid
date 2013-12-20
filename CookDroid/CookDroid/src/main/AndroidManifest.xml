@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.op.cookit.ShopListActivity"
+            android:name="com.op.cookit.MainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
            >

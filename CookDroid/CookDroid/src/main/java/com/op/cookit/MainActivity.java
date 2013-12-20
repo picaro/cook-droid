@@ -2,6 +2,7 @@ package com.op.cookit;
 
 import com.google.gson.Gson;
 import com.op.cookit.model.Product;
+import com.op.cookit.model.ShopList;
 import com.op.cookit.util.SystemUiHider;
 
 import android.annotation.TargetApi;
@@ -74,7 +75,8 @@ public class MainActivity extends Activity {
 		public Product product;
 
         protected String doInBackground(String... urls) {
-            String url = "http://cookcloud.jelastic.neohost.net/rest/barcode/" + urls[0];
+            //String url = "http://cookcloud.jelastic.neohost.net/rest/barcode/" + urls[0];
+            String url = "http://cookcloud.jelasticloud.com/rest/shoplist/1";
             // Create a new RestTemplate instance
             RestTemplate restTemplate = new RestTemplate();
             // Add the String message converter
@@ -86,7 +88,7 @@ public class MainActivity extends Activity {
                // txtScanResult.setText(result);
               //  ObjectMapper mapper = new ObjectMapper();
               //  product = mapper.readValue(result, Product.class);
-                product =  new Gson().fromJson(result, Product.class);
+                ShopList product =  new Gson().fromJson(result, ShopList.class);
 
 				Log.d(">>", ""+ result + " prod:" + product);
             } catch (Exception e) {
@@ -116,11 +118,13 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.product);
 
 
         txtScanResult = (TextView) findViewById(R.id.scan_result);
         txtScanResult.setText("");
+
+
 		View btnScan = findViewById(R.id.scan_button);
         // Scan button
         btnScan.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +135,8 @@ public class MainActivity extends Activity {
                         R.id.viewfinder_view, R.id.preview_view, true);
             }
         });
+
+        new RetreiveFeedTask().execute("");
     }
 
     @Override

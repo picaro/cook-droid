@@ -24,7 +24,7 @@ public class ShopListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shoplist);
+        setContentView(R.layout.activity_main);
 
         // get list items from strings.xml
         drawerListViewItems = getResources().getStringArray(R.array.items);

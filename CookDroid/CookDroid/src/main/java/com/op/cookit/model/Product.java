@@ -5,9 +5,13 @@ import java.io.Serializable;
 /**
  * Created by alex3 on 23.11.13.
  */
-public class Product implements Serializable{
+public class Product implements Serializable {
 
     private String name;
+
+    private String note;
+
+    private Integer shoplistid;
 
     public String getName() {
         return name;
