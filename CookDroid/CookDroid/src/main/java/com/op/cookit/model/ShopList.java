@@ -1,15 +1,15 @@
 package com.op.cookit.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.lang.Long;
 
 public class ShopList implements Serializable {
 
     private String note;
 
-    private Integer date_created;
+    private Long date_created;
 
-    private Integer date_kill;
+    private Long date_kill;
 
     private String coordinates;
 
@@ -22,19 +22,19 @@ public class ShopList implements Serializable {
         this.note = note;
     }
 
-    public Integer getDate_created() {
+    public Long getDate_created() {
         return date_created;
     }
 
-    public void setDate_created(Integer date_created) {
+    public void setDate_created(Long date_created) {
         this.date_created = date_created;
     }
 
-    public Integer getDate_kill() {
+    public Long getDate_kill() {
         return date_kill;
     }
 
-    public void setDate_kill(Integer date_kill) {
+    public void setDate_kill(Long date_kill) {
         this.date_kill = date_kill;
     }
 
