@@ -72,7 +72,7 @@ public class MainActivity extends Activity {
 
         private Exception exception;
 		
-		public Product product;
+		public ShopList product;
 
         protected String doInBackground(String... urls) {
             //String url = "http://cookcloud.jelastic.neohost.net/rest/barcode/" + urls[0];
@@ -88,7 +88,7 @@ public class MainActivity extends Activity {
                // txtScanResult.setText(result);
               //  ObjectMapper mapper = new ObjectMapper();
               //  product = mapper.readValue(result, Product.class);
-                ShopList product =  new Gson().fromJson(result, ShopList.class);
+                product =  new Gson().fromJson(result, ShopList.class);
 
 				Log.d(">>", ""+ result + " prod:" + product);
             } catch (Exception e) {
@@ -103,7 +103,7 @@ public class MainActivity extends Activity {
         protected void onPostExecute(String result)
         {
             if (product != null){
-                txtScanResult.setText(product.getName());
+                txtScanResult.setText(product.toString());
             } else {
                 txtScanResult.setText("not found");
             }

@@ -2,6 +2,7 @@ package com.op.cookit.model;
 
 import java.io.Serializable;
 import java.lang.Long;
+import java.util.List;
 
 public class ShopList implements Serializable {
 
@@ -13,6 +14,15 @@ public class ShopList implements Serializable {
 
     private String coordinates;
 
+    private List<Product> productList;
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
 
     public String getNote() {
         return note;
@@ -46,9 +56,15 @@ public class ShopList implements Serializable {
         this.coordinates = coordinates;
     }
 
+
     @Override
     public String toString() {
-        return note;
+        return "ShopList{" +
+                "coordinates='" + coordinates + '\'' +
+                ", productList=" + productList +
+                ", date_kill=" + date_kill +
+                ", date_created=" + date_created +
+                ", note='" + note + '\'' +
+                '}';
     }
-
 }
