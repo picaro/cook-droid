@@ -20,5 +20,31 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
+    <!-- Eula -->
+    <string name="eula_title">License</string>
+    <string name="eula_accept">Accept</string>
+    <string name="eula_refuse">Refuse</string>
+    <string name="changelog_title">Changelog</string>
+
+    <string name="name">Name</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="back">Back</string>
+    <string name="add">Add</string>
+    <string name="exit">Exit</string>
+    <string name="info">Info</string>
+    <string name="settime">Set time</string>
+    <string name="delete_all">Delete all</string>
+    <string name="min">min</string>
+    <string name="hour">hour</string>
+    <string name="sec">sec</string>
+    <string name="set">Set</string>
+
+
 
 </resources>
