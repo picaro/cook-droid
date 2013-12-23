@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:text="Product"
             android:layout_height="wrap_content" />
-<org.jsharkey.todolist.CrossView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.op.cookit.shoplist.CrossView xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/crossview"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
@@ -26,7 +26,7 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	/>
-	</org.jsharkey.todolist.CrossView>
+	</com.op.cookit.shoplist.CrossView>
 			
     </LinearLayout>
 
