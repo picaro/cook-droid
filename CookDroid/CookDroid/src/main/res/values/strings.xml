@@ -45,6 +45,17 @@
     <string name="sec">sec</string>
     <string name="set">Set</string>
 
+	<string name="bind_minutes">%d minutes ago</string>
+	<string name="bind_hours">%d hours ago</string>
+	<string name="bind_days">%d days ago</string>
 
+	<string name="todo_add">Add entry</string>
+	<string name="todo_add_title">Enter a new task:</string>
+	<string name="todo_add_hint">new todo entry</string>
+	<string name="todo_add_pos">Create entry</string>
+	<string name="todo_add_neg">Cancel</string>
+
+	<string name="todo_cross">Cross-off entry</string>
+	<string name="todo_delete">Delete entry</string>
 
 </resources>
