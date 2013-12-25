@@ -20,42 +20,39 @@ package com.op.cookit.shoplist;
 import android.database.Cursor;
 import android.graphics.Paint;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-import com.op.cookit.R;
-
 public class CrossBinder implements SimpleCursorAdapter.ViewBinder {
 
-	public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-		
-		switch(view.getId()) {
-		case android.R.id.content:
-			// binding to parent container should set the crossed value
-			ImageView icon = (ImageView)view.findViewById(android.R.id.icon);
-			TextView text1 = (TextView)view.findViewById(android.R.id.text1),
-				text2 = (TextView)view.findViewById(android.R.id.text2);
-			
-			// read crossed status and set text flags for strikethrough
-			boolean crossed = Boolean.valueOf(cursor.getString(columnIndex));
-			if(crossed) {
-				icon.setImageState(new int[] { android.R.attr.state_checked }, true);
-				text1.setPaintFlags(text1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-				text2.setPaintFlags(text2.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-			} else {
-				icon.setImageState(new int[] { }, true);
-				text1.setPaintFlags(text1.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
-				text2.setPaintFlags(text2.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
-			}
-			return true;
+    public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
 
-		}
+        switch (view.getId()) {
+            case android.R.id.content:
+                // binding to parent container should set the crossed value
+                ImageView icon = (ImageView) view.findViewById(android.R.id.icon);
+                TextView text1 = (TextView) view.findViewById(android.R.id.text1),
+                        text2 = (TextView) view.findViewById(android.R.id.text2);
 
-		// otherwise fall through to other binding methods
-		return false;
-		
-	}
+                // read crossed status and set text flags for strikethrough
+                boolean crossed = Boolean.valueOf(cursor.getString(columnIndex));
+                if (crossed) {
+                    icon.setImageState(new int[]{android.R.attr.state_checked}, true);
+                    text1.setPaintFlags(text1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    text2.setPaintFlags(text2.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                } else {
+                    icon.setImageState(new int[]{}, true);
+                    text1.setPaintFlags(text1.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+                    text2.setPaintFlags(text2.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+                return true;
+
+        }
+
+        // otherwise fall through to other binding methods
+        return false;
+
+    }
 
 }
