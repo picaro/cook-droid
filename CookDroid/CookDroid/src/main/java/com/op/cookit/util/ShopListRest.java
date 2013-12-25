@@ -36,7 +36,18 @@ public class ShopListRest {
     }
 
     public void deleteProduct(Integer shopList, Integer productId){
-
+		StringBuilder urlBuilder = new StringBuilder();
+        urlBuilder
+                .append(SettingsConst.BASE_REST_URL)
+                .append("shoplist/")
+                .append(id);
+				RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        try {
+            restTemplate.delete(urlBuilder.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void crossProduct(Integer shopList, Integer productId){
