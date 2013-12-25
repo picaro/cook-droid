@@ -18,4 +18,6 @@ public class SettingsConst
 
 	public static final int DB_VERSION=6;
 
+    public static final String BASE_REST_URL = "http://cookcloud.jelastic.neohost.net/rest/";
+
 }

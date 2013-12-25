@@ -76,25 +76,16 @@ public class MainActivity extends Activity {
 
         protected String doInBackground(String... urls) {
             //String url = "http://cookcloud.jelastic.neohost.net/rest/barcode/" + urls[0];
-            String url = "http://cookcloud.jelasticloud.com/rest/shoplist/1";
-            // Create a new RestTemplate instance
+            String url = SettingsConst.BASE_REST_URL + "shoplist/1";
             RestTemplate restTemplate = new RestTemplate();
-            // Add the String message converter
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-
-            // Make the HTTP GET request, marshaling the response to a String
             try {
                 String result = (String)restTemplate.getForObject(url, String.class);
-               // txtScanResult.setText(result);
-              //  ObjectMapper mapper = new ObjectMapper();
-              //  product = mapper.readValue(result, Product.class);
                 product =  new Gson().fromJson(result, ShopList.class);
-
-				Log.d(">>", ""+ result + " prod:" + product);
+            	Log.d(">>", ""+ result + " prod:" + product);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
 
             return "";
 

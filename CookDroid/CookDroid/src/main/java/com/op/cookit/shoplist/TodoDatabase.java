@@ -27,6 +27,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.op.cookit.R;
+import com.op.cookit.util.ShopListRest;
 
 
 public class TodoDatabase extends SQLiteOpenHelper {
@@ -41,9 +42,11 @@ public class TodoDatabase extends SQLiteOpenHelper {
 	public final static String FIELD_LIST_CROSSED = "crossed";
 	
 	public final String[] examples;
-	
-	
-	public TodoDatabase(Context context) {
+
+    private ShopListRest shopListRest = new ShopListRest();
+
+
+    public TodoDatabase(Context context) {
 		super(context, DB_NAME, null, DB_VERSION);
 		examples = context.getResources().getStringArray(R.array.list_examples);
 	}
@@ -111,8 +114,9 @@ public class TodoDatabase extends SQLiteOpenHelper {
 	 * @param id _id of the todo entry
 	 */
 	public void deleteEntry(int id) {
-		SQLiteDatabase db = this.getWritableDatabase();
-		db.delete(TABLE_TODO, FIELD_ID + " = ?", new String[] { Integer.toString(id) });
+        shopListRest.deleteProduct(1,id);
+        //SQLiteDatabase db = this.getWritableDatabase();
+		//db.delete(TABLE_TODO, FIELD_ID + " = ?", new String[] { Integer.toString(id) });
 	}
 	
 

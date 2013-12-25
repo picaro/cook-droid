@@ -4,6 +4,9 @@
     <facet type="android" name="Android">
       <configuration />
     </facet>
+    <facet type="android" name="Android2">
+      <configuration />
+    </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
@@ -13,11 +16,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 19 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="spring-android-core-1.0.1.RELEASE" level="project" />
-    <orderEntry type="library" name="spring-android-rest-template-1.0.1.RELEASE" level="project" />
-    <orderEntry type="library" name="zxingjar-1.1" level="project" />
-    <orderEntry type="library" name="core" level="project" />
-    <orderEntry type="library" name="jackson-mapper-asl-1.9.13" level="project" />
+    <orderEntry type="library" name="android-support-v4" level="project" />
   </component>
 </module>
 
