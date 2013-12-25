@@ -2,10 +2,12 @@ package com.op.cookit;
 
 import android.os.Environment;
 
+import com.op.cookit.util.ShopListRest;
+
 /**
- *class with app settings const
+ *c lass with app settings const
 */
-public class SettingsConst
+public class AppBase
 {
 	public static final String SETTINGS_FILE = Environment.getExternalStorageDirectory() + "/Android/data/com.op.cookcloud/preferences.dat";
 	public static final String SETTINGS ="op.cookdroid";
@@ -19,5 +21,7 @@ public class SettingsConst
 	public static final int DB_VERSION=6;
 
     public static final String BASE_REST_URL = "http://cookcloud.jelastic.neohost.net/rest/";
+
+    public static ShopListRest shopListRest = new ShopListRest();
 
 }

@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -33,10 +34,12 @@ import android.view.View;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import com.op.cookit.AppBase;
 import com.op.cookit.R;
 
 public class TodoActivity extends Activity implements OnCrossListener {
@@ -44,8 +47,6 @@ public class TodoActivity extends Activity implements OnCrossListener {
 	protected CrossView cross;
 	protected ListView list;
 	
-	protected TodoDatabase db;
-	protected Cursor cursor;
 	protected int COL_ID, COL_CROSSED;
 
 	@Override
@@ -66,30 +67,20 @@ public class TodoActivity extends Activity implements OnCrossListener {
 		super.onStart();
 		
 		// connect up with database
-		this.db = new TodoDatabase(this);
-		this.cursor = db.todoCursor(); 
-		this.COL_ID = cursor.getColumnIndexOrThrow(db.FIELD_ID);
-		this.COL_CROSSED = cursor.getColumnIndexOrThrow(db.FIELD_LIST_CROSSED);
-		
+        String [] aaa = new String[]{"aaaa","bbbb"};
 		// build adapter to show todo cursor
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-				R.layout.item_todo, cursor, new String[] { db.FIELD_LIST_TITLE,
-						db.FIELD_LIST_CREATED, db.FIELD_LIST_CROSSED },
-				new int[] { android.R.id.text1, android.R.id.text2,
-						android.R.id.content });
-		adapter.setViewBinder(new CrossBinder());
-
-		list.setAdapter(adapter); 
+		ArrayAdapter adapter = new ShopListAdapter(this.getApplicationContext(),aaa);
+//				R.layout.item_todo, cursor, new String[] { db.FIELD_LIST_TITLE,
+//						db.FIELD_LIST_CREATED, db.FIELD_LIST_CROSSED },
+//				new int[] { android.R.id.text1, android.R.id.text2,
+//						android.R.id.content });
+		//adapter.set setViewBinder(new CrossBinder());
+        list.setAdapter(adapter);
 
 	}
 	
 	public void onStop() {
 		super.onStop();
-		
-		// clean up any cursor and database connections
-		cursor.close();
-		db.close();
-		
 	}
 	
 	public void onCross(int position, boolean crossed) {
@@ -97,17 +88,17 @@ public class TodoActivity extends Activity implements OnCrossListener {
 		// someone crossed an item, so we should update the database
 		int id;
 		boolean current;
-		synchronized(cursor) {
-			cursor.moveToPosition((int)position);
-			id = cursor.getInt(COL_ID);
-			current = Boolean.valueOf(cursor.getString(COL_CROSSED));
-		}
-		
-		// skip this process if database already correct
-		if(current == crossed) return;
+//		synchronized(cursor) {
+//			cursor.moveToPosition((int)position);
+//			id = cursor.getInt(COL_ID);
+//			current = Boolean.valueOf(cursor.getString(COL_CROSSED));
+//		}
 
-		db.crossEntry(id, crossed);
-		cursor.requery();
+		// skip this process if database already correct
+		//if(current == crossed) return;
+
+//		db.crossEntry(id, crossed);
+//		cursor.requery();
 
 		// and refresh the child view for any changes
 		int viewIndex = position - list.getFirstVisiblePosition();
@@ -137,8 +128,8 @@ public class TodoActivity extends Activity implements OnCrossListener {
 						// create new list from name entered
 						String title = ((TextView)view.findViewById(android.R.id.text1)).getText().toString();
 						if(title.length() > 0) {
-							db.createEntry(null, title, 0);
-							cursor.requery();
+//							db.createEntry(null, title, 0);
+//							cursor.requery();
 							list.invalidateViews();
 						}
 					}
@@ -160,12 +151,12 @@ public class TodoActivity extends Activity implements OnCrossListener {
 		final int position = info.position;
 		
 		final int id;
-		final boolean current;
-		synchronized(cursor) {
-			cursor.moveToPosition(position);
-			id = cursor.getInt(COL_ID);
-			current = Boolean.valueOf(cursor.getString(COL_CROSSED));
-		}
+		final boolean current = false;
+//		synchronized(cursor) {
+//			cursor.moveToPosition(position);
+//			id = cursor.getInt(COL_ID);
+//			current = Boolean.valueOf(cursor.getString(COL_CROSSED));
+//		}
 		
 		MenuItem crossoff = menu.add(R.string.todo_cross);
 		crossoff.setOnMenuItemClickListener(new OnMenuItemClickListener() {
@@ -175,13 +166,15 @@ public class TodoActivity extends Activity implements OnCrossListener {
 				return true;
 			}
 		});
-		
-		MenuItem delete = menu.add(R.string.todo_delete);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        MenuItem delete = menu.add(R.string.todo_delete);
 		delete.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
-				db.deleteEntry(id);
-				cursor.requery();
+                AppBase.shopListRest.deleteProduct(1, 1);//??? id
 				list.invalidateViews();
 				return true;
 			}

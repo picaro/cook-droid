@@ -1,33 +1,24 @@
 package com.op.cookit;
 
 import com.google.gson.Gson;
-import com.op.cookit.model.Product;
 import com.op.cookit.model.ShopList;
 import com.op.cookit.util.SystemUiHider;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import jim.h.common.android.zxinglib.integrator.IntentIntegrator;
 import jim.h.common.android.zxinglib.integrator.IntentResult;
-import android.os.*;
 
 
 /**
@@ -76,7 +67,7 @@ public class MainActivity extends Activity {
 
         protected String doInBackground(String... urls) {
             //String url = "http://cookcloud.jelastic.neohost.net/rest/barcode/" + urls[0];
-            String url = SettingsConst.BASE_REST_URL + "shoplist/1";
+            String url = AppBase.BASE_REST_URL + "shoplist/1";
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             try {
@@ -99,8 +90,6 @@ public class MainActivity extends Activity {
                 txtScanResult.setText("not found");
             }
         }
-
-
     }
 	
 	private static final int UPDATE_IMAGE = 0;

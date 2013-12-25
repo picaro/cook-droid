@@ -26,8 +26,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 
+import com.op.cookit.AppBase;
 import com.op.cookit.R;
-import com.op.cookit.SettingsConst;
 import com.op.cookit.util.Utils;
 
 //import com.op.kclock.full.settings.Utils;
@@ -36,8 +36,8 @@ public class Changelog {
     private static final String TAG = "Changelog";
 
     public static boolean show(Activity activity) {
-        SharedPreferences preferences = activity.getSharedPreferences(SettingsConst.PREF_CHANGELOG, Activity.MODE_PRIVATE);
-        int prefVersion = preferences.getInt(SettingsConst.PREF_APP_VERSION, 1);
+        SharedPreferences preferences = activity.getSharedPreferences(AppBase.PREF_CHANGELOG, Activity.MODE_PRIVATE);
+        int prefVersion = preferences.getInt(AppBase.PREF_APP_VERSION, 1);
         int currentVersion;
         try {
             PackageInfo pi = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 1);
@@ -51,7 +51,7 @@ public class Changelog {
                 showChangelogDialog(activity);
             }
         }
-        preferences.edit().putInt(SettingsConst.PREF_APP_VERSION, currentVersion).commit();
+        preferences.edit().putInt(AppBase.PREF_APP_VERSION, currentVersion).commit();
         return true;
     }
 

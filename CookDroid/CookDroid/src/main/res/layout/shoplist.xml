@@ -15,28 +15,18 @@
             android:layout_width="wrap_content"
             android:text="Product"
             android:layout_height="wrap_content" />
-<com.op.cookit.shoplist.CrossView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/crossview"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	>
-	
-<ListView
-	android:id="@android:id/list"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	/>
-	</com.op.cookit.shoplist.CrossView>
-			
-    </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="bottom|right"
-        android:layout_marginTop="55dp"
-        android:layout_weight="1">
+        <com.op.cookit.shoplist.CrossView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/crossview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <ListView
+                android:id="@android:id/list"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
+        </com.op.cookit.shoplist.CrossView>
 
     </LinearLayout>
 

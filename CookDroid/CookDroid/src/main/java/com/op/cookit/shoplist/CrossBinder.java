@@ -50,28 +50,9 @@ public class CrossBinder implements SimpleCursorAdapter.ViewBinder {
 				text2.setPaintFlags(text2.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
 			}
 			return true;
-			
-		case android.R.id.text2:
-			// binding to second textview should format time nicely
-			long created = cursor.getLong(columnIndex);
-			long now = System.currentTimeMillis() / 1000;
-			
-			int minutes = (int)((now - created) / 60);
-			String nice = view.getContext().getString(R.string.bind_minutes, minutes);
-			if(minutes >= 60) {
-				int hours = (minutes / 60);
-				nice = view.getContext().getString(R.string.bind_hours, hours);
-				if(hours >= 24) {
-					int days = (hours / 24);
-					nice = view.getContext().getString(R.string.bind_days, days);
-				}
-			}
-			
-			((TextView)view).setText(nice);
-			
-			return true;
+
 		}
-		
+
 		// otherwise fall through to other binding methods
 		return false;
 		

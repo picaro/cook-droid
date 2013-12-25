@@ -25,8 +25,8 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.op.cookit.AppBase;
 import com.op.cookit.R;
-import com.op.cookit.SettingsConst;
 import com.op.cookit.util.Utils;
 
 
@@ -60,7 +60,7 @@ public class Eula {
     public static boolean show(final Activity activity) {
         Context context = activity.getApplicationContext();
         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        if (!preferences.getBoolean(SettingsConst.PREF_EULA_ACCEPTED, false)) {
+        if (!preferences.getBoolean(AppBase.PREF_EULA_ACCEPTED, false)) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
             builder.setTitle(R.string.eula_title);
             builder.setCancelable(true);
@@ -90,7 +90,7 @@ public class Eula {
     }
 
     private static void accept(SharedPreferences preferences) {
-        preferences.edit().putBoolean(SettingsConst.PREF_EULA_ACCEPTED, true).commit();
+        preferences.edit().putBoolean(AppBase.PREF_EULA_ACCEPTED, true).commit();
     }
 
     private static void refuse(Activity activity) {

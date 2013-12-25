@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import com.op.cookit.SettingsConst;
+import com.op.cookit.AppBase;
 import com.op.cookit.model.Product;
 import com.op.cookit.model.ShopList;
 
@@ -20,7 +20,7 @@ public class ShopListRest {
         ShopList shopList = null;
         StringBuilder urlBuilder = new StringBuilder();
         urlBuilder
-                .append(SettingsConst.BASE_REST_URL)
+                .append(AppBase.BASE_REST_URL)
                 .append("shoplist/")
                 .append(id);
         RestTemplate restTemplate = new RestTemplate();
@@ -38,9 +38,9 @@ public class ShopListRest {
     public void deleteProduct(Integer shopList, Integer productId){
 		StringBuilder urlBuilder = new StringBuilder();
         urlBuilder
-                .append(SettingsConst.BASE_REST_URL)
-                .append("shoplist/")
-                .append(id);
+                .append(AppBase.BASE_REST_URL)
+                .append("product/")
+                .append(productId);
 				RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
         try {
