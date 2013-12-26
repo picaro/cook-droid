@@ -13,6 +13,8 @@ public class Product implements Serializable {
 
     private Integer shoplistid;
 
+    private Boolean crossed = false;
+
     public String getName() {
         return name;
     }
