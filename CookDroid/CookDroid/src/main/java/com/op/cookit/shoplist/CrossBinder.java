@@ -19,15 +19,18 @@ package com.op.cookit.shoplist;
 
 import android.database.Cursor;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.SimpleAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-public class CrossBinder implements SimpleCursorAdapter.ViewBinder {
+public class CrossBinder implements SimpleAdapter.ViewBinder {
 
-    public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-
+    public boolean setViewValue(View view, Object person, String testValue) {
+        Log.e("cook","CrossBinder");
         switch (view.getId()) {
             case android.R.id.content:
                 // binding to parent container should set the crossed value
@@ -36,7 +39,7 @@ public class CrossBinder implements SimpleCursorAdapter.ViewBinder {
                         text2 = (TextView) view.findViewById(android.R.id.text2);
 
                 // read crossed status and set text flags for strikethrough
-                boolean crossed = Boolean.valueOf(cursor.getString(columnIndex));
+                boolean crossed = true;//Boolean.valueOf(testValue);
                 if (crossed) {
                     icon.setImageState(new int[]{android.R.attr.state_checked}, true);
                     text1.setPaintFlags(text1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);

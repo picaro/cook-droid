@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +34,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.op.cookit.AppBase;
@@ -41,9 +43,11 @@ import com.op.cookit.model.Product;
 import com.op.cookit.model.ShopList;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class TodoActivity extends Activity implements OnCrossListener {
+public class ShopListActivity extends Activity implements OnCrossListener {
 
     protected CrossView cross;
     protected ListView list;
@@ -74,20 +78,25 @@ public class TodoActivity extends Activity implements OnCrossListener {
         ShopList shopList = AppBase.shopListRest.getShopList(1);
         List<Product> productList = shopList.getProductList();
 
-        List<String> list2 = new ArrayList<String>();
+        ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
         for (Product product : productList) {
-            list2.add(product.getName());
+            Map<String,Object> list2 = new HashMap<String,Object>();
+            list2.put("text1",product.getName());
+            list2.put("text2",product.getName());
+            data.add(list2);
         }
-        String[] aaa = list2.toArray(new String[list2.size()]);
+        //String[] aaa = list2.toArray(new String[list2.size()]);
 
         // build adapter to show todo cursor
-        ArrayAdapter adapter = new ShopListAdapter(this.getApplicationContext(), aaa);
+        SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.item_todo,
+                new String[]{"text1","text2"}, new int[]{android.R.id.text1,android.R.id.text2});
+        //SimpleAdapter adapter = new ShopListAdapter(this.getApplicationContext(), aaa);
 //				R.layout.item_todo, cursor, new String[] { db.FIELD_LIST_TITLE,
 //						db.FIELD_LIST_CREATED, db.FIELD_LIST_CROSSED },
 //				new int[] { android.R.id.text1, android.R.id.text2,
 //						android.R.id.content });
-        //adapter.set setViewBinder(new CrossBinder());
-        list.setAdapter(adapter);
+        sAdapter.setViewBinder(new CrossBinder());
+        list.setAdapter(sAdapter);
 
     }
 
@@ -100,8 +109,6 @@ public class TodoActivity extends Activity implements OnCrossListener {
         // someone crossed an item, so we should update the database
         int id;
         boolean current;
-//		synchronized(cursor) {
-//			cursor.moveToPosition((int)position);
 //			id = cursor.getInt(COL_ID);
 //			current = Boolean.valueOf(cursor.getString(COL_CROSSED));
 //		}
@@ -115,8 +122,12 @@ public class TodoActivity extends Activity implements OnCrossListener {
         // and refresh the child view for any changes
         int viewIndex = position - list.getFirstVisiblePosition();
         View child = list.getChildAt(viewIndex);
-        if (child != null) child.invalidate();
+        if (child != null) {
+            child.setVisibility(0);
+            child.invalidate();
+        }
 
+        Log.e("a","CROSS");
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -129,10 +140,10 @@ public class TodoActivity extends Activity implements OnCrossListener {
             public boolean onMenuItemClick(MenuItem item) {
 
                 // prompt user for new todo entry
-                LayoutInflater inflater = (LayoutInflater) TodoActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater inflater = (LayoutInflater) ShopListActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View view = inflater.inflate(R.layout.dia_newitem, null);
 
-                new AlertDialog.Builder(TodoActivity.this)
+                new AlertDialog.Builder(ShopListActivity.this)
                         .setView(view)
                         .setTitle(R.string.todo_add_title)
                         .setPositiveButton(R.string.todo_add_pos, new DialogInterface.OnClickListener() {

@@ -28,7 +28,7 @@ public class ShopListAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.item_todo, parent, false);
-        TextView textView = (TextView) rowView.findViewById(R.id.label);
+        TextView textView = (TextView) rowView.findViewById(android.R.id.text1);
         //ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         textView.setText(values[position]);
         // Change the icon for Windows and iPhone
