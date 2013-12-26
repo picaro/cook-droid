@@ -1,36 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:id="@android:id/content"
-	android:paddingTop="10dip"
-	android:paddingBottom="10dip"
-	>
-
-    <ImageView
-        android:id="@android:id/icon"
-        android:src="@drawable/checkmark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dip"
-        />
-
-<TextView
-	android:id="@android:id/text1"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:singleLine="true"
-	android:layout_toRightOf="@android:id/icon"
-	android:textAppearance="?android:attr/textAppearanceLarge"
-	/>
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@android:id/content"
+    android:paddingTop="10dip"
+    android:paddingBottom="10dip">
 
     <TextView
-        android:id="@+id/text2"
+        android:id="@android:id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@+id/label"
-        android:textSize="20px" >
-    </TextView>
+        android:singleLine="true"
+        android:layout_toRightOf="@android:id/icon"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

@@ -7,6 +7,8 @@ import java.io.Serializable;
  */
 public class Product implements Serializable {
 
+    private Integer id;
+
     private String name;
 
     private String note;
@@ -21,6 +23,38 @@ public class Product implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public Integer getShoplistid() {
+        return shoplistid;
+    }
+
+    public void setShoplistid(Integer shoplistid) {
+        this.shoplistid = shoplistid;
+    }
+
+    public Boolean getCrossed() {
+        return crossed;
+    }
+
+    public void setCrossed(Boolean crossed) {
+        this.crossed = crossed;
     }
 
     @Override

@@ -81,15 +81,15 @@ public class ShopListActivity extends Activity implements OnCrossListener {
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
         for (Product product : productList) {
             Map<String,Object> list2 = new HashMap<String,Object>();
+            list2.put("content",product);
             list2.put("text1",product.getName());
-            list2.put("text2",product.getName());
             data.add(list2);
         }
         //String[] aaa = list2.toArray(new String[list2.size()]);
 
         // build adapter to show todo cursor
         SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.item_todo,
-                new String[]{"text1","text2"}, new int[]{android.R.id.text1,android.R.id.text2});
+                new String[]{"content"}, new int[]{android.R.id.content});
         //SimpleAdapter adapter = new ShopListAdapter(this.getApplicationContext(), aaa);
 //				R.layout.item_todo, cursor, new String[] { db.FIELD_LIST_TITLE,
 //						db.FIELD_LIST_CREATED, db.FIELD_LIST_CROSSED },
@@ -151,6 +151,10 @@ public class ShopListActivity extends Activity implements OnCrossListener {
                                 // create new list from name entered
                                 String title = ((TextView) view.findViewById(android.R.id.text1)).getText().toString();
                                 if (title.length() > 0) {
+                                    Product product = new Product();
+                                    product.setName(title);
+                                    product.setShoplistid(1);
+                                    AppBase.shopListRest.addProduct(1,product);
 //							db.createEntry(null, title, 0);
 //							cursor.requery();
                                     list.invalidateViews();

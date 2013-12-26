@@ -8,7 +8,11 @@ import com.op.cookit.AppBase;
 import com.op.cookit.model.Product;
 import com.op.cookit.model.ShopList;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -55,6 +59,27 @@ public class ShopListRest {
     }
 
     public void addProduct(Integer shopList, Product product){
+        StringBuilder urlBuilder = new StringBuilder();
+        urlBuilder
+                .append(AppBase.BASE_REST_URL)
+                .append("product/");
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        try {
+            String prodJSON =  new Gson().toJson(product, Product.class);
+
+            HttpEntity<String> entity = new HttpEntity<String>(prodJSON,headers);
+            restTemplate.put(urlBuilder.toString(), entity);
+
+            //restTemplate.postForObject(urlBuilder.toString(), prodJSON, String.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

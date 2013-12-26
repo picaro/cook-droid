@@ -11,7 +11,10 @@ public class AppBase
 {
 	public static final String SETTINGS_FILE = Environment.getExternalStorageDirectory() + "/Android/data/com.op.cookcloud/preferences.dat";
 	public static final String SETTINGS ="op.cookdroid";
-	
+
+    public static final String TAG ="cookdroid";
+
+
 	public static final String PREF_CHANGELOG = "changelog";
 	public static final String PREF_APP_VERSION = "app.version"; 
 	
