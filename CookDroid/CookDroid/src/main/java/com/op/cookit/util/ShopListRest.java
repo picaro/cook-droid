@@ -15,10 +15,12 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.Charset;
+
 /**
  * Created by picaro on 24.12.13.
  */
-public class ShopListRest {
+public class ShopListRest extends BaseRest{
 
     public ShopList getShopList(Integer id){
         ShopList shopList = null;
@@ -54,8 +56,26 @@ public class ShopListRest {
         }
     }
 
-    public void crossProduct(Integer shopList, Integer productId){
+    public void crossProduct(Integer shopList, Product product){
+        StringBuilder urlBuilder = new StringBuilder();
+        urlBuilder
+                .append(AppBase.BASE_REST_URL)
+                .append("product/");
+        RestTemplate restTemplate = new RestTemplate();
 
+        HttpHeaders headers = getHttpHeaders();
+
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        try {
+            product.setCrossed(!product.getCrossed());
+            String prodJSON =  new Gson().toJson(product, Product.class);
+
+            HttpEntity<String> entity = new HttpEntity<String>(prodJSON,headers);
+            restTemplate.put(urlBuilder.toString(), entity);
+            //restTemplate.postForObject(urlBuilder.toString(), prodJSON, String.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void addProduct(Integer shopList, Product product){
@@ -65,9 +85,7 @@ public class ShopListRest {
                 .append("product/");
         RestTemplate restTemplate = new RestTemplate();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
+        HttpHeaders headers = getHttpHeaders();
 
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
         try {
@@ -75,12 +93,19 @@ public class ShopListRest {
 
             HttpEntity<String> entity = new HttpEntity<String>(prodJSON,headers);
             restTemplate.put(urlBuilder.toString(), entity);
-
             //restTemplate.postForObject(urlBuilder.toString(), prodJSON, String.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    private HttpHeaders getHttpHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        //headers.setContentType(MediaType.APPLICATION_JSON);
+        Charset utf8 = Charset.forName("UTF-8");
+        MediaType mediaType = new MediaType("application", "json", utf8);
+        headers.setContentType(mediaType);
+        return headers;
     }
 
 }
