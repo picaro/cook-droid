@@ -20,6 +20,7 @@ package com.op.cookit.shoplist;
 import android.graphics.Paint;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -33,13 +34,16 @@ public class CrossBinder implements SimpleAdapter.ViewBinder {
         switch (view.getId()) {
             case android.R.id.content:
                 // binding to parent container should set the crossed value
+                ImageView icon = (ImageView) view.findViewById(android.R.id.icon);
                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
                 text1.setText(((Product) product).getName());
 
                 boolean crossed = ((Product) product).getCrossed();
                 if (crossed) {
+                    icon.setImageState(new int[] { android.R.attr.state_checked }, true);
                     text1.setPaintFlags(text1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 } else {
+                    icon.setImageState(new int[] { }, true);
                     text1.setPaintFlags(text1.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
                 }
                 return true;

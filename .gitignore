@@ -9,3 +9,8 @@
 /*.iml
 /.idea
 /out/production/
+/CookDroid/CookDroid/src/main/gen/com/op/cookit/BuildConfig.java
+
+/CookDroid/CookDroid/src/main/gen/com/op/cookit/Manifest.java
+
+/CookDroid/CookDroid/src/main/gen/com/op/cookit/R.java

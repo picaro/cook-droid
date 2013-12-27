@@ -7,6 +7,14 @@
     android:paddingTop="10dip"
     android:paddingBottom="10dip">
 
+    <ImageView
+        android:id="@android:id/icon"
+        android:src="@drawable/checkmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip"
+        />
+
     <TextView
         android:id="@android:id/text1"
         android:layout_width="wrap_content"
@@ -14,5 +22,15 @@
         android:singleLine="true"
         android:layout_toRightOf="@android:id/icon"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/imgdel"
+        android:src="@drawable/ic_text_dot_c_invert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:padding="5dip"
+        android:layout_alignTop="@android:id/text1"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

@@ -81,17 +81,25 @@ public class ShopListActivity extends Activity implements OnCrossListener {
     }
 
     public void onCross(int position, boolean crossed) {
-        MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.cross);
-        mPlayer.setLooping(false);
-        mPlayer.start();
+        Log.e(AppBase.TAG, "onCross");
         int viewIndex = position - list.getFirstVisiblePosition();
-        Product product = shopList.getProductList().get(viewIndex);
-        AppBase.shopListRest.crossProduct(1, product);
-        //product.setCrossed(produ);
-        list.refreshDrawableState();
-        list.invalidate();
-        sAdapter.notifyDataSetChanged();
-        Log.e("a", "CROSS");
+        if (viewIndex < shopList.getProductList().size() && viewIndex >= 0) {
+            Product product = shopList.getProductList().get(viewIndex);
+
+            if (product.getCrossed().booleanValue() != crossed) {
+                AppBase.shopListRest.crossProduct(1, product);
+
+                if (product.getCrossed()) {
+                    MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.cross);
+                    mPlayer.setLooping(false);
+                    mPlayer.start();
+                }
+
+                list.refreshDrawableState();
+                list.invalidate();
+                sAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
