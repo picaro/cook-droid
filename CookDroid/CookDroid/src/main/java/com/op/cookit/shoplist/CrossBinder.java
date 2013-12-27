@@ -26,11 +26,12 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.op.cookit.AppBase;
+import com.op.cookit.R;
 import com.op.cookit.model.Product;
 
 public class CrossBinder implements SimpleAdapter.ViewBinder {
 
-    public boolean setViewValue(View view, Object product, String testValue) {
+    public boolean setViewValue(View view, final Object product, String testValue) {
         Log.d(AppBase.TAG, "CrossBinder");
         switch (view.getId()) {
             case android.R.id.content:
@@ -38,6 +39,10 @@ public class CrossBinder implements SimpleAdapter.ViewBinder {
                 ImageView icon = (ImageView) view.findViewById(android.R.id.icon);
                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
                 text1.setText(((Product) product).getName());
+                ImageView delicon = (ImageView) view.findViewById(R.id.imgdel);
+
+
+
 
                 boolean crossed = ((Product) product).getCrossed();
                 if (crossed) {

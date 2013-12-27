@@ -1,45 +1,64 @@
 package com.op.cookit.shoplist;
 
 import android.content.Context;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.SimpleAdapter;
 
+import com.op.cookit.AppBase;
 import com.op.cookit.R;
 import com.op.cookit.model.Product;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
  * Created by alexander.pastukhov on 12/25/13.
  */
-public class ShopListAdapter extends ArrayAdapter<Product> {
-    private final Context context;
-    private final Product[] values;
+public class ShopListAdapter extends SimpleAdapter {
 
-    public ShopListAdapter(Context context, Product[] values) {
-        super(context, R.layout.item_todo, values);
-        this.context = context;
-        this.values = values;
+    private  List<? extends Map<String, ?>> data;
+
+    /**
+     * Constructor
+     *
+     * @param context  The context where the View associated with this SimpleAdapter is running
+     * @param data     A List of Maps. Each entry in the List corresponds to one row in the list. The
+     *                 Maps contain the data for each row, and should include all the entries specified in
+     *                 "from"
+     * @param resource Resource identifier of a view layout that defines the views for this list
+     *                 item. The layout file should include at least those named views defined in "to"
+     * @param from     A list of column names that will be added to the Map associated with each
+     *                 item.
+     * @param to       The views that should display column in the "from" parameter. These should all be
+     *                 TextViews. The first N views in this list are given the values of the first N columns
+     */
+    public ShopListAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
+        super(context, data, resource, from, to);
+        this.data = data;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.item_todo, parent, false);
-        TextView textView = (TextView) rowView.findViewById(android.R.id.text1);
-        //ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-        textView.setText(values[position].getName());
-        // Change the icon for Windows and iPhone
-        //String s = values[position];
-//        if (s.startsWith("iPhone")) {
-//            imageView.setImageResource(R.drawable.no);
-//        } else {
-//            imageView.setImageResource(R.drawable.ok);
-//        }
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        Log.e("", "view:" + position);
 
-        return rowView;
+        View view = super.getView(position, convertView, parent);
+        ImageView delicon = (ImageView) view.findViewById(R.id.imgdel);
+        final Product product = (Product)((HashMap) getItem(position)).get("content");
+        delicon.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Log.e("", "delview:" + position);
+                AppBase.shopListRest.deleteProduct(1, product.getId());
+                data.remove(getItem(position));
+                notifyDataSetChanged();
+            }
+        });
+
+
+        return view;
     }
 }

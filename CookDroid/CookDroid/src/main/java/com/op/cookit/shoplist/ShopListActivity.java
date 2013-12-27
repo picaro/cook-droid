@@ -37,6 +37,7 @@ public class ShopListActivity extends Activity implements OnCrossListener {
 
     private ShopList shopList;
     private SimpleAdapter sAdapter;
+    ArrayList<Map<String, Object>> productsMap;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class ShopListActivity extends Activity implements OnCrossListener {
 
     public void onStart() {
         super.onStart();
-
+        productsMap = new ArrayList<Map<String, Object>>();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -62,23 +63,25 @@ public class ShopListActivity extends Activity implements OnCrossListener {
         shopList = AppBase.shopListRest.getShopList(1);
         List<Product> productList = shopList.getProductList();
 
-        ArrayList<Map<String, Object>> productsMap = new ArrayList<Map<String, Object>>();
         for (Product product : productList) {
             Map<String, Object> list2 = new HashMap<String, Object>();
             list2.put("content", product);
-            //list2.put("text1", product.getName());
             productsMap.add(list2);
         }
-        sAdapter = new SimpleAdapter(this, productsMap, R.layout.item_todo,
+        sAdapter = new ShopListAdapter(this, productsMap, R.layout.item_todo,
                 new String[]{"content"}, new int[]{android.R.id.content});
         sAdapter.setViewBinder(new CrossBinder());
         list.setAdapter(sAdapter);
 
+        list.getChildAt(0);
+
+        Log.d("","log");
     }
 
     public void onStop() {
         super.onStop();
     }
+
 
     public void onCross(int position, boolean crossed) {
         Log.e(AppBase.TAG, "onCross");
@@ -95,8 +98,8 @@ public class ShopListActivity extends Activity implements OnCrossListener {
                     mPlayer.start();
                 }
 
+              //  list.refreshDrawableState();
                 list.refreshDrawableState();
-                list.invalidate();
                 sAdapter.notifyDataSetChanged();
             }
         }
@@ -127,9 +130,15 @@ public class ShopListActivity extends Activity implements OnCrossListener {
                                     product.setName(title);
                                     product.setShoplistid(1);
                                     AppBase.shopListRest.addProduct(1, product);
-//							db.createEntry(null, title, 0);
-//							cursor.requery();
+
+                                    Map<String, Object> list2 = new HashMap<String, Object>();
+                                    list2.put("content", product);
+                                    productsMap.add(list2);
+                                    
                                     list.invalidateViews();
+                                    list.refreshDrawableState();
+                                    sAdapter.notifyDataSetChanged();
+                                    sAdapter.notifyDataSetInvalidated();
                                 }
                             }
                         })
