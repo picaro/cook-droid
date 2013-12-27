@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -80,6 +81,9 @@ public class ShopListActivity extends Activity implements OnCrossListener {
     }
 
     public void onCross(int position, boolean crossed) {
+        MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.cross);
+        mPlayer.setLooping(false);
+        mPlayer.start();
         int viewIndex = position - list.getFirstVisiblePosition();
         Product product = shopList.getProductList().get(viewIndex);
         AppBase.shopListRest.crossProduct(1, product);
