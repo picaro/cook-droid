@@ -4,6 +4,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#FF9900</item>
     </style>
 
     <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
