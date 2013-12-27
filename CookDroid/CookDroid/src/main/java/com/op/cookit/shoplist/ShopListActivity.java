@@ -134,11 +134,7 @@ public class ShopListActivity extends Activity implements OnCrossListener {
                                     Map<String, Object> list2 = new HashMap<String, Object>();
                                     list2.put("content", product);
                                     productsMap.add(list2);
-                                    
-                                    list.invalidateViews();
-                                    list.refreshDrawableState();
                                     sAdapter.notifyDataSetChanged();
-                                    sAdapter.notifyDataSetInvalidated();
                                 }
                             }
                         })

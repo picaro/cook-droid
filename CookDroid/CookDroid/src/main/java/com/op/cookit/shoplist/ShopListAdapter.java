@@ -1,6 +1,7 @@
 package com.op.cookit.shoplist;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,20 @@ public class ShopListAdapter extends SimpleAdapter {
             }
         });
 
+        ImageView icon = (ImageView) view.findViewById(android.R.id.icon);
+        icon.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Log.e("", "cross:" + position);
+                AppBase.shopListRest.crossProduct(1, product);
+                //data.remove(getItem(position));
+                if (product.getCrossed()) {
+                 MediaPlayer mPlayer = MediaPlayer.create(view.getContext(), R.raw.cross);
+                 mPlayer.setLooping(false);
+                 mPlayer.start();
+                }
+                notifyDataSetChanged();
+            }
+        });
 
         return view;
     }
