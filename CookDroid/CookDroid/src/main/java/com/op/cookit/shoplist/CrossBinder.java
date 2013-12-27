@@ -17,6 +17,7 @@
 
 package com.op.cookit.shoplist;
 
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 import android.view.View;
@@ -40,11 +41,15 @@ public class CrossBinder implements SimpleAdapter.ViewBinder {
 
                 boolean crossed = ((Product) product).getCrossed();
                 if (crossed) {
-                    icon.setImageState(new int[] { android.R.attr.state_checked }, true);
+                    //icon.setImageState(new int[] { android.R.attr.state_checked }, true);
+                    icon.setImageResource(android.R.drawable.checkbox_on_background);
                     text1.setPaintFlags(text1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    text1.setTextColor(Color.GRAY);
                 } else {
-                    icon.setImageState(new int[] { }, true);
+                    icon.setImageResource(android.R.drawable.checkbox_off_background);
+                    //icon.setImageState(new int[] { }, true);
                     text1.setPaintFlags(text1.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+                    text1.setTextColor(Color.BLACK);
                 }
                 return true;
 

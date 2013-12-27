@@ -25,12 +25,11 @@ import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.util.Log;
 
 import com.op.cookit.AppBase;
 import com.op.cookit.R;
 import com.op.cookit.util.Utils;
-
-//import com.op.kclock.full.settings.Utils;
 
 public class Changelog {
     private static final String TAG = "Changelog";
@@ -43,7 +42,7 @@ public class Changelog {
             PackageInfo pi = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 1);
             currentVersion = pi.versionCode;
         } catch (NameNotFoundException e) {
-            //Log.e(TAG, "Package name not found", e);
+            Log.e(TAG, "Package name not found", e);
             return false;
         }
         if (prefVersion != 0) {

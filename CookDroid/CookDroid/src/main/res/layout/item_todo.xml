@@ -12,7 +12,7 @@
         android:src="@drawable/checkmark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dip"
+        android:padding="10dip"
         />
 
     <TextView
@@ -20,17 +20,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
+        android:paddingLeft="10dip"
         android:layout_toRightOf="@android:id/icon"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+
     <ImageView
         android:id="@+id/imgdel"
-        android:src="@drawable/ic_text_dot_c_invert"
+        android:src="@android:drawable/ic_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
         android:padding="5dip"
+        android:paddingRight="10dip"
+        android:layout_alignParentEnd="true"
         android:layout_alignTop="@android:id/text1"
-        android:layout_alignParentEnd="true" />
+        />
 
 </RelativeLayout>
