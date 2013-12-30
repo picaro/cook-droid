@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -30,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ShopListActivity extends Activity implements OnCrossListener {
+public class ShopListActivity extends Fragment implements OnCrossListener {
 
     protected CrossView cross;
     protected ListView list;
@@ -40,15 +42,29 @@ public class ShopListActivity extends Activity implements OnCrossListener {
     ArrayList<Map<String, Object>> productsMap;
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_shoplist, container, false);
+
+        // Retrieve the TextView widget that will display results.
+        //mResults = (TextView)v.findViewById(R.id.results);
+
+        // This allows us to later extend the text buffer.
+        //mResults.setText(mResults.getText(), TextView.BufferType.EDITABLE);
+
+        return v;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shoplist);
+        // setContentView(R.layout.fragment_shoplist);
+//!!!!!!
+        this.cross = (CrossView) this.getActivity().findViewById(R.id.crossview);
+        this.list = (ListView) this.getActivity().findViewById(android.R.id.list);
 
-        this.cross = (CrossView) this.findViewById(R.id.crossview);
-        this.list = (ListView) this.findViewById(android.R.id.list);
-
-        this.registerForContextMenu(list);
-        cross.addOnCrossListener(this);
+//        this.registerForContextMenu(list);
+ //       cross.addOnCrossListener(this);
 
     }
 
@@ -61,19 +77,20 @@ public class ShopListActivity extends Activity implements OnCrossListener {
 
         // connect up with database
         shopList = AppBase.shopListRest.getShopList(1);
-        List<Product> productList = shopList.getProductList();
+        List<Product> productList = //new ArrayList<Product>();//
+         shopList.getProductList();
 
         for (Product product : productList) {
             Map<String, Object> list2 = new HashMap<String, Object>();
             list2.put("content", product);
             productsMap.add(list2);
         }
-        sAdapter = new ShopListAdapter(this, productsMap, R.layout.item_todo,
+        sAdapter = new ShopListAdapter(this.getActivity(), productsMap, R.layout.item_todo,
                 new String[]{"content"}, new int[]{android.R.id.content});
         sAdapter.setViewBinder(new CrossBinder());
-        list.setAdapter(sAdapter);
+  //      list.setAdapter(sAdapter);
 
-        list.getChildAt(0);
+    //    list.getChildAt(0);
 
         Log.d("","log");
     }
@@ -93,7 +110,7 @@ public class ShopListActivity extends Activity implements OnCrossListener {
                 AppBase.shopListRest.crossProduct(1, product);
 
                 if (product.getCrossed()) {
-                    MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.cross);
+                    MediaPlayer mPlayer = MediaPlayer.create(this.getActivity(), R.raw.cross);
                     mPlayer.setLooping(false);
                     mPlayer.start();
                 }
@@ -115,10 +132,10 @@ public class ShopListActivity extends Activity implements OnCrossListener {
             public boolean onMenuItemClick(MenuItem item) {
 
                 // prompt user for new todo entry
-                LayoutInflater inflater = (LayoutInflater) ShopListActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater inflater = (LayoutInflater) ShopListActivity.this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View view = inflater.inflate(R.layout.dia_newitem, null);
 
-                new AlertDialog.Builder(ShopListActivity.this)
+                new AlertDialog.Builder(ShopListActivity.this.getActivity())
                         .setView(view)
                         .setTitle(R.string.todo_add_title)
                         .setPositiveButton(R.string.todo_add_pos, new DialogInterface.OnClickListener() {

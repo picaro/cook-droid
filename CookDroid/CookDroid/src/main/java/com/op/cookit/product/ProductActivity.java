@@ -100,7 +100,7 @@ public class ProductActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.product);
+        setContentView(R.layout.fragment_product);
 
 
         txtScanResult = (TextView) findViewById(R.id.scan_result);
