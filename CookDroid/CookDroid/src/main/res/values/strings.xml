@@ -58,4 +58,16 @@
 	<string name="todo_cross">Cross-off entry</string>
 	<string name="todo_delete">Delete entry</string>
 
+	<string name="title_section1">Refrigerator</string>
+    <string name="title_section2">ShopList</string>
+    <string name="title_recipes">Recipes</string>
+    <string name="title_circles">Circles</string>
+    <string name="title_products">Products</string>
+    <string name="title_shops">Shops</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+
 </resources>
