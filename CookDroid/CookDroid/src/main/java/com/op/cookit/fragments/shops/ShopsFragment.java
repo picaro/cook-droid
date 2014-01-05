@@ -1,5 +1,6 @@
 package com.op.cookit.fragments.shops;
 
+import android.app.Activity;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
@@ -16,6 +17,7 @@ import android.widget.SimpleCursorAdapter;
 
 import com.op.cookit.AppBase;
 import com.op.cookit.syncadapter.ProductsContentProvider;
+import com.op.cookit.syncadapter.SyncUtils;
 
 
 public class ShopsFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor>  {
@@ -40,6 +42,14 @@ public class ShopsFragment extends ListFragment implements LoaderManager.LoaderC
     private SimpleCursorAdapter mAdapter;
 
     private OnFragmentInteractionListener mListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // Create account, if needed
+        SyncUtils.CreateSyncAccount(activity);
+    }
 
     /**
      * Use this factory method to create a new instance of

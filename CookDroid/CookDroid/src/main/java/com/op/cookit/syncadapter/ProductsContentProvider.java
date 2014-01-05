@@ -14,11 +14,7 @@ import com.op.cookit.AppBase;
  */
 public class ProductsContentProvider extends ContentProvider {
 
-    public static final String PATH = "tvshows";
-    public static final int PATH_TOKEN = 100;
-    public static final String PATH_FOR_ID = "tvshows/*";
-    public static final int PATH_FOR_ID_TOKEN = 200;
-
+    public static final String CONTENT_AUTHORITY = "com.example.android.network.sync.basicsyncadapter";
 
     public static final Uri CONTENT_URI =
             Uri.parse("content://com.op.cookit.syncadapter.provider");
@@ -26,7 +22,6 @@ public class ProductsContentProvider extends ContentProvider {
     public static class Columns {
         public static final String ID = "_id";
         public static final String CITY = "city";
-        public static final String TEMPERATURE = "temperature";
     }
 
     @Override
