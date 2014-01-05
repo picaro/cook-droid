@@ -53,14 +53,14 @@ public class MainActivity extends Activity
     }
 
     public void onSectionAttached(int number) {
+        FragmentManager fragmentManager = getFragmentManager();
         switch (number) {
             case 1:
-                mTitle = getString(R.string.title_section1);
+                mTitle = getString(R.string.title_refr);
                 break;
             case 2:
-                mTitle = getString(R.string.title_section2);
+                mTitle = getString(R.string.title_shoplist);
                 ShopsFragment aaa = ShopsFragment.newInstance("1","2");
-                FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, aaa)
                         .commit();
@@ -75,7 +75,10 @@ public class MainActivity extends Activity
                 mTitle = getString(R.string.title_products);
                 break;
             case 6:
-                mTitle = getString(R.string.title_shops);
+                ShopsFragment aaa2 = ShopsFragment.newInstance("1","2");
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, aaa2)
+                        .commit();
                 break;
         }
     }

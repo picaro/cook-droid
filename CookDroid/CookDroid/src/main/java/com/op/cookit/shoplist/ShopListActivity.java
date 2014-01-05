@@ -42,7 +42,7 @@ public class ShopListActivity extends Activity implements OnCrossListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shoplist);
+        setContentView(R.layout.fragment_shoplist);
 
         this.cross = (CrossView) this.findViewById(R.id.crossview);
         this.list = (ListView) this.findViewById(android.R.id.list);

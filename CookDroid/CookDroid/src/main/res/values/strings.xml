@@ -58,8 +58,8 @@
 	<string name="todo_cross">Cross-off entry</string>
 	<string name="todo_delete">Delete entry</string>
 
-	<string name="title_section1">Refrigerator</string>
-    <string name="title_section2">ShopList</string>
+	<string name="title_refr">Refrigerator</string>
+    <string name="title_shoplist">ShopList</string>
     <string name="title_recipes">Recipes</string>
     <string name="title_circles">Circles</string>
     <string name="title_products">Products</string>

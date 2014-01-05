@@ -31,7 +31,18 @@
         android:layout_height="match_parent">
 
         <LinearLayout style="@style/LoginFormContainer"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Cook Droid"
+                android:id="@+id/textView2"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.25"
+                android:paddingBottom="20dp" />
 
             <EditText
                 android:id="@+id/email"
@@ -55,10 +66,29 @@
                 android:imeOptions="actionUnspecified" />
 
             <Button android:id="@+id/sign_in_button"
-                android:layout_width="wrap_content"
+                android:layout_width="346dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in_register"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:layout_gravity="right" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Haven't got an account yet?"
+                android:id="@+id/textView"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.69"
+                android:paddingTop="40dp" />
+
+            <Button android:id="@+id/sign_up_button"
+                android:layout_width="349dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="action_sign_up"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
                 android:layout_gravity="right" />

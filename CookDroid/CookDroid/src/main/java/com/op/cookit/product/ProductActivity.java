@@ -1,11 +1,5 @@
 package com.op.cookit.product;
 
-import com.google.gson.Gson;
-import com.op.cookit.AppBase;
-import com.op.cookit.R;
-import com.op.cookit.model.ShopList;
-import com.op.cookit.util.SystemUiHider;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -15,6 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.op.cookit.AppBase;
+import com.op.cookit.R;
+import com.op.cookit.model.ShopList;
+import com.op.cookit.util.SystemUiHider;
 
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -100,7 +99,7 @@ public class ProductActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.product);
+        setContentView(R.layout.fragment_product);
 
 
         txtScanResult = (TextView) findViewById(R.id.scan_result);
