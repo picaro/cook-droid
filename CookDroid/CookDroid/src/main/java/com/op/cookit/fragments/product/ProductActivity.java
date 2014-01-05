@@ -1,4 +1,4 @@
-package com.op.cookit.product;
+package com.op.cookit.fragments.product;
 
 import android.app.Activity;
 import android.content.Intent;

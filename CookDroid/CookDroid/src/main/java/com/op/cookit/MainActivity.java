@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-;import com.op.cookit.shops.ShopsFragment;
+;import com.op.cookit.fragments.shops.ShopsFragment;
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -60,7 +60,7 @@ public class MainActivity extends Activity
                 break;
             case 2:
                 mTitle = getString(R.string.title_shoplist);
-                ShopsFragment aaa = ShopsFragment.newInstance("1","2");
+                ShopsFragment aaa = ShopsFragment.newInstance("1", "2");
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, aaa)
                         .commit();
@@ -72,10 +72,10 @@ public class MainActivity extends Activity
                 mTitle = getString(R.string.title_circles);
                 break;
             case 5:
-                mTitle = getString(R.string.title_products);
+                mTitle = getString(R.string.title_scaner);
                 break;
             case 6:
-                ShopsFragment aaa2 = ShopsFragment.newInstance("1","2");
+                ShopsFragment aaa2 = ShopsFragment.newInstance("1", "2");
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, aaa2)
                         .commit();

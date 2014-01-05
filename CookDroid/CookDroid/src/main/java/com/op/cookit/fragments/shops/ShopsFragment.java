@@ -1,4 +1,4 @@
-package com.op.cookit.shops;
+package com.op.cookit.fragments.shops;
 
 import android.app.Fragment;
 import android.net.Uri;

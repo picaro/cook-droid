@@ -199,9 +199,21 @@ public class LoginActivity extends Activity {
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
 
             try {
+//                StringBuilder urlBuilder = new StringBuilder();
+//                    urlBuilder
+//                            .append(AppBase.BASE_REST_URL)
+//                            .append("login/");
+//                    RestTemplate restTemplate = new RestTemplate();
+//                    restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+//                    try {
+//                        String result = (String)restTemplate.getForObject(urlBuilder.toString(), String.class);
+//                        //shopList =  new Gson().fromJson(result, ShopList.class);
+//                        //Log.d(">>", "" + result + " shopList:" + shopList);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
                 // Simulate network access.
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
@@ -216,7 +228,6 @@ public class LoginActivity extends Activity {
                 }
             }
 
-            // TODO: register the new account here.
             return true;
         }
 

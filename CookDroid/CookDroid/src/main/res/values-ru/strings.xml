@@ -5,5 +5,35 @@
     <string name="button.scan">Сканировать</string>
 	<string name="msg.scan">Поднесите камеру к штртхкоду</string>
 
-	
+    <!-- Eula -->
+    <string name="eula_title">Лицензия</string>
+    <string name="eula_accept">Принять</string>
+    <string name="eula_refuse">Отказаться</string>
+
+    <string name="name">Имя</string>
+    <string name="save">Сохранить</string>
+    <string name="edit">Редактировать</string>
+    <string name="delete">Удалить</string>
+    <string name="ok">OK</string>
+    <string name="cancel">отмена</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="back">Назад</string>
+    <string name="add">Новый</string>
+    <string name="exit">Выход</string>
+    <string name="info">Инфо</string>
+    <string name="settime">Установить время</string>
+    <string name="delete_all">Удалить все</string>
+    <string name="min">мин</string>
+    <string name="hour">час</string>
+    <string name="sec">сек</string>
+    <string name="set">ок</string>
+
+    <string name="title_refr">Холодильник</string>
+    <string name="title_shoplist">Что купить?</string>
+    <string name="title_recipes">Рецепты</string>
+    <string name="title_circles">Круги</string>
+    <string name="title_scaner">Сканер</string>
+    <string name="title_shops">Магазины</string>
+
 </resources>

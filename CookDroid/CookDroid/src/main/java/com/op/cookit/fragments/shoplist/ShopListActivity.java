@@ -1,4 +1,4 @@
-package com.op.cookit.shoplist;
+package com.op.cookit.fragments.shoplist;
 
 
 import android.app.Activity;

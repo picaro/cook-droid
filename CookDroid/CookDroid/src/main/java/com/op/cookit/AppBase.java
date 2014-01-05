@@ -21,7 +21,7 @@ public class AppBase
 	public static final String PREF_EULA = "eula";
 	public static final String PREF_EULA_ACCEPTED = "eula.accepted";
 
-	public static final int DB_VERSION=6;
+	//public static final int DB_VERSION=6;
 
     public static final String BASE_REST_URL = "http://cookcloud.jelastic.neohost.net/rest/";
 
