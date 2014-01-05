@@ -42,7 +42,8 @@
             android:windowSoftInputMode="adjustResize|stateVisible"></activity>
         <service
             android:name=".syncadapter.SyncService"
-            android:exported="true">
+            android:exported="true"
+            android:process=":sync">
             <intent-filter>
                 <action
                     android:name="android.content.SyncAdapter" />
@@ -51,6 +52,10 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter" />
         </service>
+        <provider
+            android:name=".syncadapter.ProductsContentProvider"
+            android:authorities="com.op.cookit.syncadapter.provider"
+            android:exported="false" />
 
     </application>
 

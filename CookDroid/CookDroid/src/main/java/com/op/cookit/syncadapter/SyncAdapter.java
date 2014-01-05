@@ -23,6 +23,9 @@ import android.content.ContentProviderClient;
 import android.content.Context;
 import android.content.SyncResult;
 import android.os.Bundle;
+import android.util.Log;
+
+import com.op.cookit.AppBase;
 
 import java.util.Date;
 
@@ -48,6 +51,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle extras, String authority,
         ContentProviderClient provider, SyncResult syncResult) {
 
+        Log.e(AppBase.TAG, "onPerformSync");
+
 //        List<User> users;
 //        List<Status> statuses;
 //        String authtoken = null;
@@ -64,10 +69,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 //            mLastUpdated = new Date();
 //            // update platform contacts.
 //            Log.d(TAG, "Calling contactManager's sync contacts");
-//            ContactManager.syncContacts(mContext, account.name, users);
+//            SyncManager.syncContacts(mContext, account.name, users);
 //            // fetch and update status messages for all the synced users.
 //            statuses = NetworkUtilities.fetchFriendStatuses(account, authtoken);
-//            ContactManager.insertStatuses(mContext, account.name, statuses);
+//            SyncManager.insertStatuses(mContext, account.name, statuses);
 //        } catch (final AuthenticatorException e) {
 //            syncResult.stats.numParseExceptions++;
 //            Log.e(TAG, "AuthenticatorException", e);
@@ -89,4 +94,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 //            Log.e(TAG, "JSONException", e);
 //        }
     }
+
+
 }

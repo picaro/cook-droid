@@ -3,7 +3,6 @@ package com.op.cookit.util;
 import android.util.Log;
 
 import com.google.gson.Gson;
-
 import com.op.cookit.AppBase;
 import com.op.cookit.model.Product;
 import com.op.cookit.model.ShopList;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
@@ -23,6 +21,7 @@ import java.nio.charset.Charset;
 public class ShopListRest extends BaseRest{
 
     public ShopList getShopList(Integer id){
+        Log.i(AppBase.TAG, "getShopList");
         ShopList shopList = null;
         StringBuilder urlBuilder = new StringBuilder();
         urlBuilder

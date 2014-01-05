@@ -1,24 +1,43 @@
 package com.op.cookit.fragments.shops;
 
-import android.app.Fragment;
+import android.app.ListFragment;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Loader;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.SimpleCursorAdapter;
 
-import com.op.cookit.R;
+import com.op.cookit.AppBase;
+import com.op.cookit.syncadapter.ProductsContentProvider;
 
 
-public class ShopsFragment extends Fragment {
+public class ShopsFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor>  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    String[] numbers_text = new String[] { "one", "two", "three", "four",
+            "five", "six", "seven", "eight", "nine", "ten", "eleven",
+            "twelve", "thirteen", "fourteen", "fifteen" };
+    String[] numbers_digits = new String[] { "1", "2", "3", "4", "5", "6", "7",
+            "8", "9", "10", "11", "12", "13", "14", "15" };
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    /**
+     * Cursor adapter for controlling ListView results.
+     */
+    private SimpleCursorAdapter mAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -55,16 +74,32 @@ public class ShopsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shops, container, false);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                inflater.getContext(), android.R.layout.simple_list_item_1,
+                numbers_text);
+
+//        CursorLoader new CursorLoader(getActivity(),  // Context
+//                ProductsContentProvider.CONTENT_URI, // URI
+//                null,                // Projection
+//                null,                           // Selection
+//                null,                           // Selection args
+//                null); // Sort
+
+        Cursor mCursor = getActivity().getApplicationContext().getContentResolver().query(ProductsContentProvider.CONTENT_URI, null, null,
+                null, null);
+        mCursor.getColumnCount();
+
+        setListAdapter(adapter);
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
+//    // TODO: Rename method, update argument and hook method into UI event
+//    public void onButtonPressed(Uri uri) {
+//        if (mListener != null) {
+//            mListener.onFragmentInteraction(uri);
+//        }
+//    }
 
 
 
@@ -88,5 +123,35 @@ public class ShopsFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
+
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        // We only have one loader, so we can ignore the value of i.
+        // (It'll be '0', as set in onCreate().)
+
+        Log.e(AppBase.TAG, "onCreateLoader");
+
+
+        return new CursorLoader(getActivity(),  // Context
+                ProductsContentProvider.CONTENT_URI, // URI
+                null,                // Projection
+                null,                           // Selection
+                null,                           // Selection args
+                null); // Sort
+
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        mAdapter.changeCursor(cursor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mAdapter.changeCursor(null);
+    }
+
 
 }

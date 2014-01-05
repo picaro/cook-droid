@@ -1,13 +1,11 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/shops_list"
+    android:name="com.op.cookit.fragments.shops.ShopsFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.op.cookit.fragments.shops.ShopsFragment">
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    tools:context=".ShopsFragment"
+    tools:layout="@android:layout/list_content" />
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="hello_blank_fragment" />
-
-</FrameLayout>
