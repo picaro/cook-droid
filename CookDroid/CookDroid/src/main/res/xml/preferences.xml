@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/preferences_title" >
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="notifications_checkbox"
+        android:persistent="true"
+        android:summary="@string/preferences_notifications_summary"
+        android:title="@string/preferences_notifications_title" />
+    
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="notifications_messaging"        
+        android:persistent="true"
+        android:title="@string/preferences_messaging_title" />    
+
+    <Preference
+        android:key="data"
+        android:persistent="false"
+        android:summary="@string/preferences_data_summary"
+        android:title="@string/preferences_data" />
+    <Preference
+        android:key="gps"
+        android:persistent="false"
+        android:summary="@string/preferences_gps_summary"
+        android:title="@string/preferences_gps" />
+
+
+</PreferenceScreen>

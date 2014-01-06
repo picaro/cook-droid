@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.op.cookit.AppBase;
 import com.op.cookit.R;
+import com.op.cookit.model.Person;
 
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -214,7 +215,15 @@ public class LoginActivity extends Activity {
                     restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                     try {
                         String result = (String)restTemplate.postForObject(urlBuilder.toString(),"", String.class);
-                        //shopList =  new Gson().fromJson(result, ShopList.class);
+
+                        //TODO remove hardcode
+                        Person person = new Person();
+                        person.setEmail("aaa@aaa.aa");
+                        person.setPassword("11111");
+                        person.setFirstName("Ivan");
+                        person.setFirstName("Кучин");
+                        AppBase.saveLoggedUser(person);
+
                        Log.e("login>>", "" + result + " :" );
                     } catch (Exception e) {
                         e.printStackTrace();
