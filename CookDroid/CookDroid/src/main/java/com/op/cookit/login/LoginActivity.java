@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -15,7 +16,11 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.op.cookit.AppBase;
 import com.op.cookit.R;
+
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -201,19 +206,19 @@ public class LoginActivity extends Activity {
         protected Boolean doInBackground(Void... params) {
 
             try {
-//                StringBuilder urlBuilder = new StringBuilder();
-//                    urlBuilder
-//                            .append(AppBase.BASE_REST_URL)
-//                            .append("login/");
-//                    RestTemplate restTemplate = new RestTemplate();
-//                    restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-//                    try {
-//                        String result = (String)restTemplate.getForObject(urlBuilder.toString(), String.class);
-//                        //shopList =  new Gson().fromJson(result, ShopList.class);
-//                        //Log.d(">>", "" + result + " shopList:" + shopList);
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
+                StringBuilder urlBuilder = new StringBuilder();
+                    urlBuilder
+                            .append(AppBase.BASE_URL)
+                            .append("j_spring_security_check");
+                    RestTemplate restTemplate = new RestTemplate();
+                    restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                    try {
+                        String result = (String)restTemplate.postForObject(urlBuilder.toString(),"", String.class);
+                        //shopList =  new Gson().fromJson(result, ShopList.class);
+                       Log.e("login>>", "" + result + " :" );
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 // Simulate network access.
                 Thread.sleep(2000);
             } catch (InterruptedException e) {

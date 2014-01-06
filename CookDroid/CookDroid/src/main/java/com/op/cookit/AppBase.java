@@ -31,7 +31,8 @@ public class AppBase extends Application
 
 	//public static final int DB_VERSION=6;
 
-    public static final String BASE_REST_URL = "http://cookcloud.jelastic.neohost.net/rest/";
+    public static final String BASE_URL = "http://cookcloud.jelastic.neohost.net/";
+    public static final String BASE_REST_URL = BASE_URL + "rest/";
 
     public static ShopListRest shopListRest = new ShopListRest();
 
