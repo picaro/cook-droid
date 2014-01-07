@@ -9,10 +9,10 @@
 
     <string name="login_progress_signing_in">Signing in&#8230;</string>
 
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_invalid_email">Этот e-mail неправильный</string>
+    <string name="error_invalid_password">Пароль слишком короткий</string>
     <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
+    <string name="error_field_required">Заполните поле</string>
 
     <string name="action_login">войти</string>
     <string name="action_signup">регистрация</string>

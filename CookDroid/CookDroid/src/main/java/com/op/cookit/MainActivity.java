@@ -13,7 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-;import com.op.cookit.fragments.shops.ShopsFragment;
+;import com.op.cookit.fragments.shoplist.ShopListFragment;
+import com.op.cookit.fragments.shops.ShopsFragment;
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -56,13 +57,17 @@ public class MainActivity extends Activity
         FragmentManager fragmentManager = getFragmentManager();
         switch (number) {
             case 1:
-                mTitle = getString(R.string.title_refr);
+                mTitle = getString(R.string.title_shoplist);
+                ShopListFragment shopListFragment = ShopListFragment.newInstance("1", "2");
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, shopListFragment)
+                        .commit();
                 break;
             case 2:
                 mTitle = getString(R.string.title_shoplist);
-                ShopsFragment aaa = ShopsFragment.newInstance("1", "2");
+                ShopsFragment shopsFragment = ShopsFragment.newInstance("1", "2");
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, aaa)
+                        .replace(R.id.container, shopsFragment)
                         .commit();
                 break;
             case 3:

@@ -4,9 +4,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.op.cookit.model.Product;
 
 import java.util.List;
 
@@ -19,20 +17,26 @@ public class ProductLocal extends Model {
 	// Define table fields
 	@Column(name = "name")
 	private String name;
-	
+
+    @Column(name = "outid")
+    private Integer outid;
+
+    @Column(name = "note")
+    private String note;
+
+    @Column(name = "shoplistid")
+    private Integer shoplistid;
+
+    @Column(name = "crossed")
+    private Boolean crossed = false;
+
 	public ProductLocal() {
 		super();
 	}
 	
-	// Parse model from JSON
-	public ProductLocal(JSONObject object){
-		super();
+	public ProductLocal(Product object){
 
-		try {
-			this.name = object.getString("title");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+	    ///this.name = .getString("title");
 	}
 	
 	// Getters
