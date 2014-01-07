@@ -1,21 +1,29 @@
 package com.op.cookit.fragments.shoplist;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Loader;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import com.op.cookit.AppBase;
 import com.op.cookit.R;
@@ -25,6 +33,8 @@ import com.op.cookit.syncadapter.ProductsContentProvider;
 import com.op.cookit.syncadapter.SyncUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -88,6 +98,8 @@ public class ShopListFragment extends Fragment implements LoaderManager.LoaderCa
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -100,14 +112,81 @@ public class ShopListFragment extends Fragment implements LoaderManager.LoaderCa
         this.cross = (CrossView) view.findViewById(R.id.crossview);
         this.list = (ListView) view.findViewById(android.R.id.list);
 
+        setHasOptionsMenu(true);
         this.registerForContextMenu(list);
         cross.addOnCrossListener(this);
-
         return view;
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu,MenuInflater menuInflater) {
 
+        // show menu to create new todo entry
+        MenuItem add = menu.add(R.string.todo_add);
+        add.setIcon(android.R.drawable.ic_menu_add);
+        add.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                // prompt user for new todo entry
+                LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View view = inflater.inflate(R.layout.dia_newitem, null);
+
+                new AlertDialog.Builder(getActivity())
+                        .setView(view)
+                        .setTitle(R.string.todo_add_title)
+                        .setPositiveButton(R.string.todo_add_pos, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // create new list from name entered
+                                String title = ((TextView) view.findViewById(android.R.id.text1)).getText().toString();
+                                if (title.length() > 0) {
+                                    Product product = new Product();
+                                    product.setName(title);
+                                    product.setShoplistid(1);
+                                    AppBase.shopListRest.addProduct(1, product);
+
+                                    Map<String, Object> list2 = new HashMap<String, Object>();
+                                    list2.put("content", product);
+                                    productsMap.add(list2);
+                                    sAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        })
+                        .setNegativeButton(R.string.todo_add_neg, null).create().show();
+
+                return true;
+            }
+        });
+
+    //    return true;
+
+    }
+
+    public void onStart() {
+        super.onStart();
+        productsMap = new ArrayList<Map<String, Object>>();
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        // connect up with database
+        shopList = AppBase.shopListRest.getShopList(1);
+        List<Product> productList = shopList.getProductList();
+
+        for (Product product : productList) {
+            Map<String, Object> list2 = new HashMap<String, Object>();
+            list2.put("content", product);
+            productsMap.add(list2);
+        }
+        sAdapter = new ShopListAdapter(this.getActivity(), productsMap, R.layout.item_todo,
+                new String[]{"content"}, new int[]{android.R.id.content});
+        sAdapter.setViewBinder(new CrossBinder());
+        list.setAdapter(sAdapter);
+
+        list.getChildAt(0);
+
+        Log.d("","log");
+    }
 
     public void onCross(int position, boolean crossed) {
         Log.e(AppBase.TAG, "onCross");
