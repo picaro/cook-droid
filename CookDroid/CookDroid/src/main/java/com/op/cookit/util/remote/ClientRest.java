@@ -1,4 +1,4 @@
-package com.op.cookit.util;
+package com.op.cookit.util.remote;
 
 import android.util.Log;
 
@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 import com.op.cookit.AppBase;
 import com.op.cookit.model.Product;
 import com.op.cookit.model.ShopList;
+import com.op.cookit.model.inner.PersonLocal;
+import com.op.cookit.util.BaseRest;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,7 +20,7 @@ import java.nio.charset.Charset;
 /**
  * Created by picaro on 24.12.13.
  */
-public class ShopListRest extends BaseRest{
+public class ClientRest extends BaseRest {
 
     public ShopList getShopList(Integer id){
         Log.i(AppBase.TAG, "getShopList");
@@ -107,4 +109,8 @@ public class ShopListRest extends BaseRest{
         return headers;
     }
 
+    public String sendDeviceInformation(PersonLocal personLocal, String mInfo) {
+        Log.e(AppBase.TAG,"sendDeviceInformation:" + personLocal.toString() + " - " +  mInfo);
+        return null;
+    }
 }

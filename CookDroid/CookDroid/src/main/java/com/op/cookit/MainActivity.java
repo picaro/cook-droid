@@ -166,6 +166,9 @@ public class MainActivity extends Activity
             SharedPreferences.Editor editor = mPrefs.edit();
             editor.putInt(AppBase.APP_RUNS_COUNT, appRuns + 1);
 
+            Log.e(AppBase.TAG,"requestForcedSync");
+            AppBase.requestForcedSync();
+            Log.e(AppBase.TAG, "requestForcedSync end");
 
             return rootView;
         }

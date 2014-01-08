@@ -15,13 +15,13 @@ import android.os.Environment;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 
-import com.op.cookit.model.Person;
+import com.google.gson.Gson;
+import com.op.cookit.model.inner.PersonLocal;
 import com.op.cookit.syncadapter.GenericAccountService;
 import com.op.cookit.syncadapter.ProductsContentProvider;
-import com.op.cookit.util.ShopListRest;
-
-import java.util.Locale;
+import com.op.cookit.util.remote.ClientRest;
 
 /**
  * c lass with app settings const
@@ -44,22 +44,21 @@ public class AppBase extends Application {
     public static final String BASE_URL = "http://cookcloud.jelastic.neohost.net/";
     public static final String BASE_REST_URL = BASE_URL + "rest/";
     public static final String APP_RUNS_COUNT = "APP_RUNS_COUNT";
+    public static final String PREFS_KEY_PERSON = "PREFS_KEY_PERSON";
 
-    public static ShopListRest shopListRest = new ShopListRest();
+    public static ClientRest clientRest = new ClientRest();
 
     private static SharedPreferences mPrefs;
 
-    private Account appAccount;
+    private static Account appAccount;
 
     @Override
     public void onCreate() {
         super.onCreate();
         setupAppAccount();
-
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = mPrefs.edit();
-
     }
 
     public static void installShortcurt(Context context) {
@@ -79,7 +78,7 @@ public class AppBase extends Application {
     }
 
 
-    public void requestForcedSync() {
+    public static void requestForcedSync() {
         Bundle bundle = new Bundle();
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
         ContentResolver.requestSync(appAccount, ProductsContentProvider.CONTENT_AUTHORITY, bundle);
@@ -94,59 +93,24 @@ public class AppBase extends Application {
             return;
         }
         Log.i(TAG, "UASpring account not present, creating...");
-
         appAccount = new Account(GenericAccountService.ACCOUNT_NAME, GenericAccountService.ACCOUNT_TYPE);
         //usually it will contain real user info, like login/pass
         accountManager.addAccountExplicitly(appAccount, null, null);
-
         //Enable AutoSync
         ContentResolver.setSyncAutomatically(appAccount, ProductsContentProvider.CONTENT_AUTHORITY, true);
     }
 
-    public static void saveLoggedUser(Person person) {
+    public static void saveLoggedUser(PersonLocal person) {
         SharedPreferences.Editor editor = mPrefs.edit();
-
-//        editor.putString(AppConstants.PREFS_KEY_USER_NAME, account.getName());
-//        editor.putString(AppConstants.PREFS_KEY_USER_FIST_NAME, account.getFirstName());
-//        editor.putString(AppConstants.PREFS_KEY_USER_LAST_NAME, account.getLastName());
-//        editor.putString(AppConstants.PREFS_KEY_USER_DISPLAY_NAME, account.getDisplayName());
-//        editor.putString(AppConstants.PREFS_KEY_USER_EMAIL, account.getEmail());
-//        editor.putString(AppConstants.PREFS_KEY_USER_PHONE_NUMBER, account.getPhoneNumber());
-//        editor.putString(AppConstants.PREFS_KEY_USER_FULL_PHONE_NUMBER, account.getFullPhoneNumber());
-//        editor.putString(AppConstants.PREFS_KEY_USER_PHONE_PREFIX, account.getPhonePrefix());
-//        editor.putString(AppConstants.PREFS_KEY_USER_ACCOUNT_TYPE, account.getAccountType().name());
-//        editor.putString(AppConstants.PREFS_KEY_USER_SECURE_QUESTION, account.getSecurityQuestion());
-//        editor.putLong(AppConstants.PREFS_KEY_USER_TIME_UPDATED, account.getTimeUpdated());
-//        savePassword(account, editor, false);
-
+        String personJSON =  new Gson().toJson(person, PersonLocal.class);
+        editor.putString(PREFS_KEY_PERSON, personJSON);
         editor.commit();
-
     }
 
-//    public void updateUserCredentials(UserAccount account) {
-//
-//        Editor editor = mPrefs.edit();
-//
-//        updateIfNotEmpty(editor, AppConstants.PREFS_KEY_USER_NAME, account.getName());
-//        updateIfNotEmpty(editor, AppConstants.PREFS_KEY_USER_FIST_NAME, account.getFirstName());
-//        updateIfNotEmpty(editor, AppConstants.PREFS_KEY_USER_LAST_NAME, account.getLastName());
-//        updateIfNotEmpty(editor, AppConstants.PREFS_KEY_USER_DISPLAY_NAME, account.getDisplayName());
-//        updateIfNotEmpty(editor, AppConstants.PREFS_KEY_USER_EMAIL, account.getEmail());
-//        updateIfNotEmpty(editor, AppConstants.PREFS_KEY_USER_PHONE_NUMBER, account.getPhoneNumber());
-//        updateIfNotEmpty(editor, AppConstants.PREFS_KEY_USER_FULL_PHONE_NUMBER, account.getFullPhoneNumber());
-//        updateIfNotEmpty(editor, AppConstants.PREFS_KEY_USER_PHONE_PREFIX, account.getPhonePrefix());
-//        updateIfNotEmpty(editor, AppConstants.PREFS_KEY_USER_ACCOUNT_TYPE, account.getAccountType().name()); //NULLPOINTER
-//        updateIfNotEmpty(editor, AppConstants.PREFS_KEY_USER_TIME_UPDATED, account.getTimeUpdated());
-//        updateIfNotEmpty(editor, AppConstants.PREFS_KEY_USER_SECURE_QUESTION, account.getSecurityQuestion());
-//        savePassword(account, editor, true);
-//
-//        editor.commit();
-//    }
+    public static Boolean isUserLogged(){
+        return false;
+    }
 
-
-    /**
-     * @return
-     */
     public String getApplicationVersionName() {
 
         String name = getPackageName();
@@ -156,34 +120,20 @@ public class AppBase extends Application {
             pi = getPackageManager().getPackageInfo(name, 0);
             return pi.versionName;
         } catch (PackageManager.NameNotFoundException e) {
-
         }
 
         return "";
     }
 
-    public Locale getLocale() {
-        return getResources().getConfiguration().locale;
-    }
 
-    public String getDeviceInformation() {
-
-        String SEPERATOR = ",";
-
+    public static String getDeviceInformation(View view) {
+        String SEP = ";";
         StringBuilder sb = new StringBuilder();
-        sb.append(android.os.Build.MANUFACTURER);
-        sb.append(SEPERATOR);
-        sb.append(android.os.Build.DEVICE);
-        sb.append(SEPERATOR);
-        sb.append(android.os.Build.MODEL);
-        sb.append(SEPERATOR);
-        //sb.append("PRODUCT=" + android.os.Build.PRODUCT);
-        //sb.append(SEPERATOR);
-        sb.append(android.os.Build.VERSION.SDK);
-        //sb.append(System.getProperty("os.version"));
-
+        sb.append(android.os.Build.MANUFACTURER).append(SEP);
+        sb.append(android.os.Build.DEVICE).append(SEP);
+        sb.append(android.os.Build.MODEL).append(SEP);
+        sb.append(view.getResources().getConfiguration().locale);
         return sb.toString();
-
     }
 
 }

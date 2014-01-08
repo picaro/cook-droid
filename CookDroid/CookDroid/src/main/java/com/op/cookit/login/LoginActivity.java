@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.op.cookit.AppBase;
 import com.op.cookit.R;
 import com.op.cookit.model.Person;
+import com.op.cookit.model.inner.PersonLocal;
+import com.op.cookit.util.remote.SendOsInfoAsyncTask;
 
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -206,15 +208,17 @@ public class LoginActivity extends Activity {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             try {
-                String result = (String) restTemplate.postForObject(urlBuilder.toString(), "", String.class);
+                String result = "";//(String) restTemplate.postForObject(urlBuilder.toString(), "", String.class);
 
                 //TODO remove hardcode
-                Person person = new Person();
+                PersonLocal person = new PersonLocal();
                 person.setEmail("aaa@aaa.aa");
                 person.setPassword("11111");
                 person.setFirstName("Ivan");
                 person.setFirstName("Кучин");
                 AppBase.saveLoggedUser(person);
+
+                new SendOsInfoAsyncTask(AppBase.getDeviceInformation(mLoginFormView.getRootView())).execute(person);
 
                 Log.e("login>>", "" + result + " :");
             } catch (Exception e) {

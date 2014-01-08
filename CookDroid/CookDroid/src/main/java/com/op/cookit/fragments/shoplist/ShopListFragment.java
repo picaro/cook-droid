@@ -144,7 +144,7 @@ public class ShopListFragment extends Fragment implements LoaderManager.LoaderCa
                                     Product product = new Product();
                                     product.setName(title);
                                     product.setShoplistid(1);
-                                    AppBase.shopListRest.addProduct(1, product);
+                                    AppBase.clientRest.addProduct(1, product);
 
                                     Map<String, Object> list2 = new HashMap<String, Object>();
                                     list2.put("content", product);
@@ -170,7 +170,7 @@ public class ShopListFragment extends Fragment implements LoaderManager.LoaderCa
         StrictMode.setThreadPolicy(policy);
 
         // connect up with database
-        shopList = AppBase.shopListRest.getShopList(1);
+        shopList = AppBase.clientRest.getShopList(1);
         List<Product> productList = shopList.getProductList();
 
         for (Product product : productList) {
@@ -195,7 +195,7 @@ public class ShopListFragment extends Fragment implements LoaderManager.LoaderCa
             Product product = shopList.getProductList().get(viewIndex);
 
             if (product.getCrossed().booleanValue() != crossed) {
-                AppBase.shopListRest.crossProduct(1, product);
+                AppBase.clientRest.crossProduct(1, product);
 
                 if (product.getCrossed()) {
                     MediaPlayer mPlayer = MediaPlayer.create(this.getActivity(), R.raw.cross);

@@ -34,9 +34,8 @@ public class ProductLocal extends Model {
 		super();
 	}
 	
-	public ProductLocal(Product object){
-
-	    ///this.name = .getString("title");
+	public ProductLocal(Product product){
+	    name = product.getName();
 	}
 	
 	// Getters

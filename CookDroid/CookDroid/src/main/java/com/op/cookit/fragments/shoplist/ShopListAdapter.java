@@ -53,7 +53,7 @@ public class ShopListAdapter extends SimpleAdapter {
         delicon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Log.e("", "delview:" + position);
-                AppBase.shopListRest.deleteProduct(1, product.getId());
+                AppBase.clientRest.deleteProduct(1, product.getId());
                 data.remove(getItem(position));
                 notifyDataSetChanged();
             }
@@ -63,7 +63,7 @@ public class ShopListAdapter extends SimpleAdapter {
         icon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Log.e("", "cross:" + position);
-                AppBase.shopListRest.crossProduct(1, product);
+                AppBase.clientRest.crossProduct(1, product);
                 //data.remove(getItem(position));
                 if (product.getCrossed()) {
                  MediaPlayer mPlayer = MediaPlayer.create(view.getContext(), R.raw.cross);
