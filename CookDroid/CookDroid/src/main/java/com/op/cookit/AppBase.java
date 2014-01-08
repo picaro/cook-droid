@@ -24,26 +24,26 @@ import com.op.cookit.util.ShopListRest;
 import java.util.Locale;
 
 /**
- *c lass with app settings const
-*/
-public class AppBase extends Application
-{
-	public static final String SETTINGS_FILE = Environment.getExternalStorageDirectory() + "/Android/data/com.op.cookcloud/preferences.dat";
-	public static final String SETTINGS ="op.cookdroid";
+ * c lass with app settings const
+ */
+public class AppBase extends Application {
+    public static final String SETTINGS_FILE = Environment.getExternalStorageDirectory() + "/Android/data/com.op.cookcloud/preferences.dat";
+    public static final String SETTINGS = "op.cookdroid";
 
-    public static final String TAG ="cookdroid";
+    public static final String TAG = "cookdroid";
 
 
-	public static final String PREF_CHANGELOG = "changelog";
-	public static final String PREF_APP_VERSION = "app.version"; 
-	
-	public static final String PREF_EULA = "eula";
-	public static final String PREF_EULA_ACCEPTED = "eula.accepted";
+    public static final String PREF_CHANGELOG = "changelog";
+    public static final String PREF_APP_VERSION = "app.version";
 
-	//public static final int DB_VERSION=6;
+    public static final String PREF_EULA = "eula";
+    public static final String PREF_EULA_ACCEPTED = "eula.accepted";
+
+    //public static final int DB_VERSION=6;
 
     public static final String BASE_URL = "http://cookcloud.jelastic.neohost.net/";
     public static final String BASE_REST_URL = BASE_URL + "rest/";
+    public static final String APP_RUNS_COUNT = "APP_RUNS_COUNT";
 
     public static ShopListRest shopListRest = new ShopListRest();
 
@@ -58,27 +58,12 @@ public class AppBase extends Application
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = mPrefs.edit();
+
     }
-
-
-    /**
-     *
-     * @return
-     */
-    private boolean validateUserCredentials() {
-
-        return false;//
-        // validateName() &&
-                //!TextUtils.isEmpty(mPrefs.getString(AppConstants.PREFS_KEY_USER_DISPLAY_NAME, "")) &&
-//                !TextUtils.isEmpty(mPrefs.getString(AppConstants.PREFS_KEY_USER_EMAIL, "")) &&
-//                !TextUtils.isEmpty(mPrefs.getString(AppConstants.PREFS_KEY_USER_PHONE_PREFIX, "")) &&
-//                !TextUtils.isEmpty(mPrefs.getString(AppConstants.PREFS_KEY_USER_PHONE_NUMBER, ""));
-    }
-
-
 
     public static void installShortcurt(Context context) {
-
+        Log.d(TAG,"installShortcurt");
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.setComponent(new ComponentName(context.getPackageName(), MainActivity.class.getName()));
@@ -86,7 +71,7 @@ public class AppBase extends Application
         Intent result = new Intent();
         result.putExtra(Intent.EXTRA_SHORTCUT_INTENT, intent);
         result.putExtra(Intent.EXTRA_SHORTCUT_NAME, context.getString(R.string.app_name));
-        Parcelable iconResource = Intent.ShortcutIconResource.fromContext(context, R.drawable.icon);
+        Parcelable iconResource = Intent.ShortcutIconResource.fromContext(context, R.drawable.ic_launcher);
         result.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
         result.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
         result.putExtra("duplicate", false);
@@ -162,7 +147,7 @@ public class AppBase extends Application
     /**
      * @return
      */
-    public String getApplicationVersionName(){
+    public String getApplicationVersionName() {
 
         String name = getPackageName();
         PackageInfo pi;

@@ -28,14 +28,7 @@ import org.springframework.web.client.RestTemplate;
  * well.
  */
 public class LoginActivity extends Activity {
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello",
-            "bar@example.com:world"
-    };
+
 
     /**
      * The default email to populate the email field with.
@@ -206,43 +199,38 @@ public class LoginActivity extends Activity {
         @Override
         protected Boolean doInBackground(Void... params) {
 
+            StringBuilder urlBuilder = new StringBuilder();
+            urlBuilder
+                    .append(AppBase.BASE_URL)
+                    .append("j_spring_security_check");
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             try {
-                StringBuilder urlBuilder = new StringBuilder();
-                    urlBuilder
-                            .append(AppBase.BASE_URL)
-                            .append("j_spring_security_check");
-                    RestTemplate restTemplate = new RestTemplate();
-                    restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-                    try {
-                        String result = (String)restTemplate.postForObject(urlBuilder.toString(),"", String.class);
+                String result = (String) restTemplate.postForObject(urlBuilder.toString(), "", String.class);
 
-                        //TODO remove hardcode
-                        Person person = new Person();
-                        person.setEmail("aaa@aaa.aa");
-                        person.setPassword("11111");
-                        person.setFirstName("Ivan");
-                        person.setFirstName("Кучин");
-                        AppBase.saveLoggedUser(person);
+                //TODO remove hardcode
+                Person person = new Person();
+                person.setEmail("aaa@aaa.aa");
+                person.setPassword("11111");
+                person.setFirstName("Ivan");
+                person.setFirstName("Кучин");
+                AppBase.saveLoggedUser(person);
 
-                       Log.e("login>>", "" + result + " :" );
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+                Log.e("login>>", "" + result + " :");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
             return true;
+            // Simulate network access.
+
+//            for (String credential : DUMMY_CREDENTIALS) {
+//                String[] pieces = credential.split(":");
+//                if (pieces[0].equals(mEmail)) {
+//                    // Account exists, return true if the password matches.
+//                    return pieces[1].equals(mPassword);
+//                }
+//            }
+
         }
 
         @Override

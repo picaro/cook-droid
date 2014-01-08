@@ -4,8 +4,11 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -152,6 +155,18 @@ public class MainActivity extends Activity
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
+
+
+            //install shortcut
+            SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+            Integer appRuns = mPrefs.getInt(AppBase.APP_RUNS_COUNT, 0);
+            if (appRuns == 0) {
+                AppBase.installShortcurt(this.getActivity());
+            }
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.putInt(AppBase.APP_RUNS_COUNT, appRuns + 1);
+
+
             return rootView;
         }
 
