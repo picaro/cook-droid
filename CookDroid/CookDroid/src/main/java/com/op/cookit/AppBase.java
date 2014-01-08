@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.gson.Gson;
+import com.op.cookit.model.ShopList;
 import com.op.cookit.model.inner.PersonLocal;
 import com.op.cookit.syncadapter.GenericAccountService;
 import com.op.cookit.syncadapter.ProductsContentProvider;
@@ -108,7 +109,17 @@ public class AppBase extends Application {
     }
 
     public static Boolean isUserLogged(){
+        String personJson = mPrefs.getString(PREFS_KEY_PERSON,null);
+        if (personJson != null) return true;
         return false;
+    }
+
+    public static PersonLocal getLoggedUser(){
+        String personJson = mPrefs.getString(PREFS_KEY_PERSON,null);
+        if (personJson == null) {
+            return null;
+        }
+        return new Gson().fromJson(personJson, PersonLocal.class);
     }
 
     public String getApplicationVersionName() {
@@ -126,13 +137,13 @@ public class AppBase extends Application {
     }
 
 
-    public static String getDeviceInformation(View view) {
+    public String getDeviceInformation() {
         String SEP = ";";
         StringBuilder sb = new StringBuilder();
         sb.append(android.os.Build.MANUFACTURER).append(SEP);
         sb.append(android.os.Build.DEVICE).append(SEP);
         sb.append(android.os.Build.MODEL).append(SEP);
-        sb.append(view.getResources().getConfiguration().locale);
+        sb.append(getResources().getConfiguration().locale);
         return sb.toString();
     }
 

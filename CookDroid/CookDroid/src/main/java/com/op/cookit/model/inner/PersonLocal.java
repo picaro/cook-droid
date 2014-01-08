@@ -25,6 +25,10 @@ public class PersonLocal implements Serializable {
         return firstName;
     }
 
+    public String getDisplayName() {
+        return firstName + " " + lastName;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }

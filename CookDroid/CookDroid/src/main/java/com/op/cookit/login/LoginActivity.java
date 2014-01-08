@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.op.cookit.AppBase;
 import com.op.cookit.R;
-import com.op.cookit.model.Person;
 import com.op.cookit.model.inner.PersonLocal;
 import com.op.cookit.util.remote.SendOsInfoAsyncTask;
 
@@ -40,11 +39,13 @@ public class LoginActivity extends Activity {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
+    private UserLoginAsyncTask mAuthTask = null;
 
     // Values for email and password at the time of the login attempt.
     private String mEmail;
     private String mPassword;
+
+    private AppBase appBase;
 
     // UI references.
     private EditText mEmailView;
@@ -75,6 +76,8 @@ public class LoginActivity extends Activity {
                 return false;
             }
         });
+
+        appBase = (AppBase) this.getApplication();
 
         mLoginFormView = findViewById(R.id.login_form);
         mLoginStatusView = findViewById(R.id.login_status);
@@ -148,7 +151,7 @@ public class LoginActivity extends Activity {
             // perform the user login attempt.
             mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
             showProgress(true);
-            mAuthTask = new UserLoginTask();
+            mAuthTask = new UserLoginAsyncTask();
             mAuthTask.execute((Void) null);
         }
     }
@@ -197,7 +200,7 @@ public class LoginActivity extends Activity {
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginAsyncTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
 
@@ -215,26 +218,16 @@ public class LoginActivity extends Activity {
                 person.setEmail("aaa@aaa.aa");
                 person.setPassword("11111");
                 person.setFirstName("Ivan");
-                person.setFirstName("Кучин");
+                person.setFirstName("aaaaa");
                 AppBase.saveLoggedUser(person);
 
-                new SendOsInfoAsyncTask(AppBase.getDeviceInformation(mLoginFormView.getRootView())).execute(person);
+                new SendOsInfoAsyncTask(appBase.getDeviceInformation()).execute(person);
 
                 Log.e("login>>", "" + result + " :");
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return true;
-            // Simulate network access.
-
-//            for (String credential : DUMMY_CREDENTIALS) {
-//                String[] pieces = credential.split(":");
-//                if (pieces[0].equals(mEmail)) {
-//                    // Account exists, return true if the password matches.
-//                    return pieces[1].equals(mPassword);
-//                }
-//            }
-
         }
 
         @Override

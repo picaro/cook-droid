@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 ;import com.op.cookit.fragments.shoplist.ShopListFragment;
 import com.op.cookit.fragments.shops.ShopsFragment;
+import com.op.cookit.model.inner.PersonLocal;
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -105,7 +106,13 @@ public class MainActivity extends Activity
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
+            PersonLocal personLocal = AppBase.getLoggedUser();
+            if (personLocal != null) {
+                getMenuInflater().inflate(R.menu.main_logged, menu);
+                menu.getItem(0).setTitle(personLocal.getDisplayName());
+            } else {
+                getMenuInflater().inflate(R.menu.main, menu);
+            }
             restoreActionBar();
             return true;
         }
