@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-;import com.op.cookit.fragments.shoplist.ShopListFragment;
+import com.op.cookit.fragments.shoplist.ShopListFragment;
 import com.op.cookit.fragments.shops.ShopsFragment;
 import com.op.cookit.model.inner.PersonLocal;
 
