@@ -253,14 +253,9 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         if (item.getItemId() == R.id.action_login) {
-            //Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this.getActivity(), LoginActivity.class);
-            //EditText editText = (EditText) findViewById(R.id.edit_message);
-            //String message = editText.getText().toString();
-            //intent.putExtra(EXTRA_MESSAGE, message);
             startActivity(intent);
-
-            return true;
+             return true;
         }
 
         return super.onOptionsItemSelected(item);

@@ -1,10 +1,9 @@
-package com.op.cookit.login;
+package com.op.cookit.signup;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 import com.op.cookit.AppBase;
 import com.op.cookit.R;
 import com.op.cookit.model.inner.PersonLocal;
-import com.op.cookit.signup.SignUpActivity;
 import com.op.cookit.util.remote.SendOsInfoAsyncTask;
 
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -30,18 +28,12 @@ import org.springframework.web.client.RestTemplate;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class LoginActivity extends Activity {
-
-
-    /**
-     * The default email to populate the email field with.
-     */
-    public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
+public class SignUpActivity extends Activity {
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginAsyncTask mAuthTask = null;
+    private SignUpAsyncTask mAuthTask = null;
 
     // Values for email and password at the time of the login attempt.
     private String mEmail;
@@ -63,7 +55,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
 
         // Set up the login form.
-        mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
+     //   mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
         mEmailView = (EditText) findViewById(R.id.email);
         mEmailView.setText(mEmail);
 
@@ -89,14 +81,6 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
                 attemptLogin();
-            }
-        });
-
-        findViewById(R.id.sign_up_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), SignUpActivity.class);
-                startActivity(intent);
             }
         });
     }
@@ -161,7 +145,7 @@ public class LoginActivity extends Activity {
             // perform the user login attempt.
             mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
             showProgress(true);
-            mAuthTask = new UserLoginAsyncTask();
+            mAuthTask = new SignUpAsyncTask();
             mAuthTask.execute((Void) null);
         }
     }
@@ -210,7 +194,7 @@ public class LoginActivity extends Activity {
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginAsyncTask extends AsyncTask<Void, Void, Boolean> {
+    public class SignUpAsyncTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
 
@@ -228,7 +212,7 @@ public class LoginActivity extends Activity {
                 person.setEmail("aaa@aaa.aa");
                 person.setPassword("11111");
                 person.setFirstName("Ivan");
-                person.setLastName("Vasilev");
+                person.setFirstName("aaaaa");
                 AppBase.saveLoggedUser(person);
 
                 new SendOsInfoAsyncTask(appBase.getDeviceInformation()).execute(person);

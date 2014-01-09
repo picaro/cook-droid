@@ -41,6 +41,10 @@
             android:name="com.op.cookit.login.LoginActivity"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize|stateVisible"></activity>
+        <activity
+            android:name="com.op.cookit.signup.SignUpActivity"
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="adjustResize|stateVisible"></activity>
         <service
             android:name=".syncadapter.SyncService"
             android:exported="true"
