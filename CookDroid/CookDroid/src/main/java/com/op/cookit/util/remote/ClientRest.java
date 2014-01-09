@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.op.cookit.AppBase;
+import com.op.cookit.model.Person;
 import com.op.cookit.model.Product;
 import com.op.cookit.model.ShopList;
 import com.op.cookit.model.inner.PersonLocal;
@@ -21,6 +22,54 @@ import java.nio.charset.Charset;
  * Created by picaro on 24.12.13.
  */
 public class ClientRest extends BaseRest {
+
+    public PersonLocal logIn() {
+        StringBuilder urlBuilder = new StringBuilder();
+        urlBuilder
+                .append(AppBase.BASE_URL)
+                .append("j_spring_security_check");
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        try {
+            String result = "";
+            //TODO remove hardcode
+            PersonLocal person = new PersonLocal();
+            person.setEmail("aaa@aaa.aa");
+            person.setPassword("11111");
+            person.setFirstName("Ivan");
+            person.setLastName("Vasilev");
+            person.setGender("M");
+            person.setPhone("+31111111");
+            AppBase.saveLoggedUser(person);
+
+            Log.e("login>>", "" + result + " :");
+            return person;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean signUP(Person person) {
+        StringBuilder urlBuilder = new StringBuilder();
+        urlBuilder
+                .append(AppBase.BASE_REST_URL)
+                .append("person/");
+        RestTemplate restTemplate = new RestTemplate();
+        Log.e(AppBase.TAG, "signUP:" + urlBuilder.toString());
+        HttpHeaders headers = getHttpHeaders();
+
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        try {
+            String prodJSON =  new Gson().toJson(person, Person.class);
+            Log.e(AppBase.TAG, prodJSON);
+            HttpEntity<String> entity = new HttpEntity<String>(prodJSON,headers);
+            restTemplate.put(urlBuilder.toString(), entity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
 
     public ShopList getShopList(Integer id){
         Log.i(AppBase.TAG, "getShopList");
@@ -113,4 +162,5 @@ public class ClientRest extends BaseRest {
         Log.e(AppBase.TAG,"sendDeviceInformation:" + personLocal.toString() + " - " +  mInfo);
         return null;
     }
+
 }

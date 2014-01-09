@@ -5,6 +5,8 @@ import java.util.Date;
 
 public class Person implements Serializable {
 
+    private Integer id;
+
     private String firstName;
 
     private String lastName;
@@ -17,9 +19,9 @@ public class Person implements Serializable {
 
     private String gender;
 
-    private Date date_registration;
+    private Long date_registration;
 
-    private Date dob;
+    private Long dob;
 
     public String getFirstName() {
         return firstName;
@@ -69,20 +71,28 @@ public class Person implements Serializable {
         this.gender = gender;
     }
 
-    public Date getDate_registration() {
+    public Long getDate_registration() {
         return date_registration;
     }
 
-    public void setDate_registration(Date date_registration) {
+    public void setDate_registration(Long date_registration) {
         this.date_registration = date_registration;
     }
 
-    public Date getDob() {
+    public Long getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(Long dob) {
         this.dob = dob;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Override

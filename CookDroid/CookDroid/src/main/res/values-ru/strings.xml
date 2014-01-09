@@ -35,5 +35,7 @@
     <string name="title_circles">Круги</string>
     <string name="title_scaner">Сканер</string>
     <string name="title_shops">Магазины</string>
+    <string name="prompt_firstname">First name</string>
+    <string name="prompt_lastname">Last name</string>
 
 </resources>

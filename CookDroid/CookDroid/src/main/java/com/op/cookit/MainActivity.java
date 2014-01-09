@@ -167,11 +167,14 @@ public class MainActivity extends Activity
             //install shortcut
             SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
             Integer appRuns = mPrefs.getInt(AppBase.APP_RUNS_COUNT, 0);
+            Log.e(AppBase.TAG,"appRuns" + appRuns);
             if (appRuns == 0) {
+                Log.e(AppBase.TAG,"install shortcut");
                 AppBase.installShortcurt(this.getActivity());
             }
             SharedPreferences.Editor editor = mPrefs.edit();
             editor.putInt(AppBase.APP_RUNS_COUNT, appRuns + 1);
+            editor.commit();
 
             Log.e(AppBase.TAG,"requestForcedSync");
             AppBase.requestForcedSync();

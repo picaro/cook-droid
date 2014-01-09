@@ -21,6 +21,7 @@ import com.op.cookit.AppBase;
 import com.op.cookit.R;
 import com.op.cookit.model.inner.PersonLocal;
 import com.op.cookit.signup.SignUpActivity;
+import com.op.cookit.util.remote.ClientRest;
 import com.op.cookit.util.remote.SendOsInfoAsyncTask;
 
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -213,30 +214,8 @@ public class LoginActivity extends Activity {
     public class UserLoginAsyncTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
-
-            StringBuilder urlBuilder = new StringBuilder();
-            urlBuilder
-                    .append(AppBase.BASE_URL)
-                    .append("j_spring_security_check");
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-            try {
-                String result = "";//(String) restTemplate.postForObject(urlBuilder.toString(), "", String.class);
-
-                //TODO remove hardcode
-                PersonLocal person = new PersonLocal();
-                person.setEmail("aaa@aaa.aa");
-                person.setPassword("11111");
-                person.setFirstName("Ivan");
-                person.setLastName("Vasilev");
-                AppBase.saveLoggedUser(person);
-
-                new SendOsInfoAsyncTask(appBase.getDeviceInformation()).execute(person);
-
-                Log.e("login>>", "" + result + " :");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            PersonLocal person = AppBase.clientRest.logIn();
+            new SendOsInfoAsyncTask(appBase.getDeviceInformation()).execute(person);
             return true;
         }
 

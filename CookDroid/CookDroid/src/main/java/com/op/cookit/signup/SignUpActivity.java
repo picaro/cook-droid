@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -18,53 +17,60 @@ import android.widget.TextView;
 
 import com.op.cookit.AppBase;
 import com.op.cookit.R;
-import com.op.cookit.model.inner.PersonLocal;
-import com.op.cookit.util.remote.SendOsInfoAsyncTask;
+import com.op.cookit.model.Person;
 
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+import java.util.Calendar;
 
 /**
- * Activity which displays a login screen to the user, offering registration as
- * well.
+ * Activity which displays a register screen
  */
 public class SignUpActivity extends Activity {
 
     /**
-     * Keep track of the login task to ensure we can cancel it if requested.
+     * Keep track of the register task to ensure we can cancel it if requested.
      */
     private SignUpAsyncTask mAuthTask = null;
 
-    // Values for email and password at the time of the login attempt.
+    // Values for email and password at the time of the register attempt.
+    private String mFirstName;
+    private String mLastName;
     private String mEmail;
     private String mPassword;
 
     private AppBase appBase;
 
     // UI references.
+    private EditText mFirstNameView;
+    private EditText mLastNameView;
     private EditText mEmailView;
     private EditText mPasswordView;
-    private View mLoginFormView;
-    private View mLoginStatusView;
-    private TextView mLoginStatusMessageView;
+    private View mFormView;
+    private View mStatusView;
+    private TextView mStatusMessageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_signup);
 
         // Set up the login form.
-     //   mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
+        //   mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
         mEmailView = (EditText) findViewById(R.id.email);
         mEmailView.setText(mEmail);
+
+        mFirstNameView = (EditText) findViewById(R.id.first_name);
+        mFirstNameView.setText(mFirstName);
+
+        mLastNameView = (EditText) findViewById(R.id.last_name);
+        mLastNameView.setText(mLastName);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    attemptRequest();
                     return true;
                 }
                 return false;
@@ -73,14 +79,14 @@ public class SignUpActivity extends Activity {
 
         appBase = (AppBase) this.getApplication();
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mLoginStatusView = findViewById(R.id.login_status);
-        mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
+        mFormView = findViewById(R.id.signup_form);
+        mStatusView = findViewById(R.id.signup_status);
+        mStatusMessageView = (TextView) findViewById(R.id.signup_status_message);
 
-        findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.sign_up_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                attemptRequest();
             }
         });
     }
@@ -94,20 +100,24 @@ public class SignUpActivity extends Activity {
     }
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
+     * Attempts to register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    public void attemptLogin() {
+    public void attemptRequest() {
         if (mAuthTask != null) {
             return;
         }
 
         // Reset errors.
+        mFirstNameView.setError(null);
+        mLastNameView.setError(null);
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
+        mFirstName = mFirstNameView.getText().toString();
+        mLastName = mLastNameView.getText().toString();
         mEmail = mEmailView.getText().toString();
         mPassword = mPasswordView.getText().toString();
 
@@ -143,7 +153,7 @@ public class SignUpActivity extends Activity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
+            mStatusMessageView.setText(R.string.login_progress_signing_in);
             showProgress(true);
             mAuthTask = new SignUpAsyncTask();
             mAuthTask.execute((Void) null);
@@ -161,32 +171,32 @@ public class SignUpActivity extends Activity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mLoginStatusView.setVisibility(View.VISIBLE);
-            mLoginStatusView.animate()
+            mStatusView.setVisibility(View.VISIBLE);
+            mStatusView.animate()
                     .setDuration(shortAnimTime)
                     .alpha(show ? 1 : 0)
                     .setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
+                            mStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
                         }
                     });
 
-            mLoginFormView.setVisibility(View.VISIBLE);
-            mLoginFormView.animate()
+            mFormView.setVisibility(View.VISIBLE);
+            mFormView.animate()
                     .setDuration(shortAnimTime)
                     .alpha(show ? 0 : 1)
                     .setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                            mFormView.setVisibility(show ? View.GONE : View.VISIBLE);
                         }
                     });
         } else {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
-            mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 
@@ -197,30 +207,17 @@ public class SignUpActivity extends Activity {
     public class SignUpAsyncTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
-
-            StringBuilder urlBuilder = new StringBuilder();
-            urlBuilder
-                    .append(AppBase.BASE_URL)
-                    .append("j_spring_security_check");
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-            try {
-                String result = "";//(String) restTemplate.postForObject(urlBuilder.toString(), "", String.class);
-
-                //TODO remove hardcode
-                PersonLocal person = new PersonLocal();
-                person.setEmail("aaa@aaa.aa");
-                person.setPassword("11111");
-                person.setFirstName("Ivan");
-                person.setFirstName("aaaaa");
-                AppBase.saveLoggedUser(person);
-
-                new SendOsInfoAsyncTask(appBase.getDeviceInformation()).execute(person);
-
-                Log.e("login>>", "" + result + " :");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            Person person = new Person();
+            person.setFirstName(mFirstName);
+            person.setLastName(mLastName);
+            person.setEmail(mEmail);
+            person.setPassword(mPassword);
+            person.setGender("M");
+            person.setPhone("+3444444");
+            person.setDob(Calendar.getInstance().getTimeInMillis());
+            person.setDate_registration(Calendar.getInstance().getTimeInMillis());
+            AppBase.clientRest.signUP(person);
+            AppBase.clientRest.logIn();//TODO real data
             return true;
         }
 
