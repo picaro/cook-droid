@@ -27,14 +27,14 @@ import java.util.Calendar;
 /**
  * Activity which displays a register screen
  */
-public class AddShopFragment extends Fragment {
+public class ShopFragment extends Fragment {
 
     /**
      * Keep track of the register task to ensure we can cancel it if requested.
      */
     private SignUpAsyncTask mAuthTask = null;
 
-    private AddShopFragment fragment = this;
+    private ShopFragment fragment = this;
     private View view;
 
     // Values for email and password at the time of the register attempt.
@@ -215,8 +215,8 @@ public class AddShopFragment extends Fragment {
         }
     }
 
-    public static AddShopFragment newInstance() {
-        AddShopFragment fragment = new AddShopFragment();
+    public static ShopFragment newInstance() {
+        ShopFragment fragment = new ShopFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

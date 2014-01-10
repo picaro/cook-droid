@@ -1,8 +1,7 @@
-package com.op.cookit.fragments.fridge;
+package com.op.cookit.fragments.circles;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -21,7 +20,7 @@ import com.op.cookit.syncadapter.ProductsContentProvider;
 import com.op.cookit.syncadapter.SyncUtils;
 
 
-public class FridgeFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>  {
+public class CircleFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>  {
     /**
      * Cursor adapter for controlling ListView results.
      */
@@ -29,8 +28,9 @@ public class FridgeFragment extends Fragment implements LoaderManager.LoaderCall
 
     private OnFragmentInteractionListener mListener;
 
-    private FridgeFragment fragment = this;
+    private CircleFragment fragment = this;
     private View view;
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -46,13 +46,13 @@ public class FridgeFragment extends Fragment implements LoaderManager.LoaderCall
      *
      * @return A new instance of fragment ShopsFragment.
      */
-    public static FridgeFragment newInstance() {
-        FridgeFragment fragment = new FridgeFragment();
+    public static CircleFragment newInstance() {
+        CircleFragment fragment = new CircleFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
-    public FridgeFragment() {
+    public CircleFragment() {
         // Required empty public constructor
     }
 
@@ -69,11 +69,10 @@ public class FridgeFragment extends Fragment implements LoaderManager.LoaderCall
                 null, null);
         mCursor.getColumnCount();
 
-        view = inflater.inflate(R.layout.fragment_fridge,
+        view = inflater.inflate(R.layout.fragment_circles,
                 container, false);
-        //view.setBackgroundResource(R.drawable.fridgetop);
-
         return view;
+
     }
 
 
