@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.op.cookit.fragments.shoplist.ShopListFragment;
 import com.op.cookit.fragments.shops.ShopsFragment;
+import com.op.cookit.intro.Changelog;
+import com.op.cookit.intro.Eula;
 import com.op.cookit.model.inner.PersonLocal;
 
 public class MainActivity extends Activity
@@ -170,8 +172,16 @@ public class MainActivity extends Activity
             Log.e(AppBase.TAG,"appRuns" + appRuns);
             if (appRuns == 0) {
                 Log.e(AppBase.TAG,"install shortcut");
+
                 AppBase.installShortcurt(this.getActivity());
             }
+
+            Changelog.show(this.getActivity());
+
+            if (!mPrefs.getBoolean(AppBase.PREF_EULA_ACCEPTED, false)) {
+                Eula.show(this.getActivity());
+            }
+
             SharedPreferences.Editor editor = mPrefs.edit();
             editor.putInt(AppBase.APP_RUNS_COUNT, appRuns + 1);
             editor.commit();
