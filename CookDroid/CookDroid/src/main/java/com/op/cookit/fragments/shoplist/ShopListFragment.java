@@ -87,6 +87,7 @@ public class ShopListFragment extends Fragment implements LoaderManager.LoaderCa
         fragment.setArguments(args);
         return fragment;
     }
+
     public ShopListFragment() {
         // Required empty public constructor
     }

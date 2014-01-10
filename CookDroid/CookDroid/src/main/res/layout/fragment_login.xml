@@ -1,9 +1,10 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.op.cookit.signup.SignUpActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <!-- Login progress -->
-    <LinearLayout android:id="@+id/signup_status"
+    <LinearLayout android:id="@+id/login_status"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"/>
         <TextView
-            android:id="@+id/signup_status_message"
+            android:id="@+id/login_status_message"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:fontFamily="sans-serif-light"
             android:layout_width="wrap_content"
@@ -24,9 +25,9 @@
             android:text="@string/login_progress_signing_in" />
     </LinearLayout>
 
-    <!-- Sign Up form -->
+    <!-- Login form -->
     <ScrollView
-        android:id="@+id/signup_form"
+        android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -38,29 +39,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Register"
-                android:id="@+id/caption_signup"
+                android:text="Cook Droid"
+                android:id="@+id/textView2"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0.25"
                 android:paddingBottom="20dp" />
-
-            <EditText
-                android:id="@+id/first_name"
-                android:singleLine="true"
-                android:maxLines="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="@string/prompt_firstname" />
-
-            <EditText
-                android:id="@+id/last_name"
-                android:singleLine="true"
-                android:maxLines="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="@string/prompt_lastname" />
 
             <EditText
                 android:id="@+id/email"
@@ -83,8 +66,27 @@
                 android:imeActionId="@+id/login"
                 android:imeOptions="actionUnspecified" />
 
-            <Button android:id="@+id/sign_up_button"
+            <Button android:id="@+id/sign_in_button"
                 android:layout_width="346dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/action_login"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:layout_gravity="right" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/have_no_account"
+                android:id="@+id/textView"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.69"
+                android:paddingTop="40dp" />
+
+            <Button android:id="@+id/sign_up_button"
+                android:layout_width="349dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_signup"
@@ -95,4 +97,4 @@
         </LinearLayout>
 
     </ScrollView>
-</merge>
+</LinearLayout>

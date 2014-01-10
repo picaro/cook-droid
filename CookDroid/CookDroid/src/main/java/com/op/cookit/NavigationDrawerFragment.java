@@ -4,7 +4,7 @@ package com.op.cookit;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
-import android.content.Intent;
+import android.app.FragmentManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,7 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.op.cookit.login.LoginActivity;
+import com.op.cookit.fragments.login.LoginFragment;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -251,10 +251,16 @@ public class NavigationDrawerFragment extends Fragment {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
+        FragmentManager fragmentManager = getFragmentManager();
 
         if (item.getItemId() == R.id.action_login) {
-            Intent intent = new Intent(this.getActivity(), LoginActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(this.getActivity(), LoginActivity.class);
+//            startActivity(intent);!!!
+
+            LoginFragment shopsFragment = LoginFragment.newInstance();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, shopsFragment)
+                    .commit();
              return true;
         }
 
