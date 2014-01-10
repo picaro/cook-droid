@@ -120,17 +120,13 @@ public class ShopListFragment extends Fragment implements LoaderManager.LoaderCa
 
     }
 
+
     @Override
-    public void onCreateOptionsMenu(Menu menu,MenuInflater menuInflater) {
-
-        // show menu to create new todo entry
-        MenuItem add = menu.add(R.string.todo_add);
-        add.setIcon(android.R.drawable.ic_menu_add);
-        add.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                // prompt user for new todo entry
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case R.id.action_add:
                 LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View view = inflater.inflate(R.layout.dia_newitem, null);
 
@@ -156,12 +152,22 @@ public class ShopListFragment extends Fragment implements LoaderManager.LoaderCa
                         })
                         .setNegativeButton(R.string.todo_add_neg, null).create().show();
 
+
                 return true;
-            }
-        });
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
-    //    return true;
+    @Override
+    public void onCreateOptionsMenu(Menu menu,MenuInflater menuInflater) {
 
+        // show menu to create new todo entry
+        menu.clear();
+        getActivity().getMenuInflater().inflate(R.menu.shoplist, menu);
+        super.onCreateOptionsMenu(menu, menuInflater);
+
+        return;
     }
 
     public void onStart() {
@@ -171,8 +177,8 @@ public class ShopListFragment extends Fragment implements LoaderManager.LoaderCa
         StrictMode.setThreadPolicy(policy);
 
         // connect up with database
-        shopList = AppBase.clientRest.getShopList(1);
-        List<Product> productList = shopList.getProductList();
+        shopList = new ShopList();//AppBase.clientRest.getShopList(1);
+        List<Product> productList = new ArrayList<Product>();//shopList.getProductList();
 
         for (Product product : productList) {
             Map<String, Object> list2 = new HashMap<String, Object>();

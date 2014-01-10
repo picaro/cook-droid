@@ -1,12 +1,14 @@
 package com.op.cookit.fragments.product;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -28,12 +30,15 @@ import jim.h.common.android.zxinglib.integrator.IntentResult;
  *
  * @see SystemUiHider
  */
-public class ProductActivity extends Activity {
+public class ProductFragment extends Fragment {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
     private static final boolean AUTO_HIDE = true;
+
+    private ProductFragment fragment = this;
+    private View view;
 
     private Handler  handler = new Handler();
     private TextView txtScanResult;
@@ -72,7 +77,9 @@ public class ProductActivity extends Activity {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             try {
+                Log.e(AppBase.TAG, ">>before");
                 String result = (String)restTemplate.getForObject(url, String.class);
+                Log.e(AppBase.TAG, ">>result" + result);
                 product =  new Gson().fromJson(result, ShopList.class);
             	Log.d(">>", ""+ result + " prod:" + product);
             } catch (Exception e) {
@@ -94,42 +101,58 @@ public class ProductActivity extends Activity {
     }
 	
 	private static final int UPDATE_IMAGE = 0;
-	
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        view = inflater.inflate(R.layout.fragment_product,
+                container, false);
 
-        setContentView(R.layout.fragment_product);
 
-
-        txtScanResult = (TextView) findViewById(R.id.scan_result);
+        txtScanResult = (TextView) view.findViewById(R.id.scan_result);
         txtScanResult.setText("");
 
 
-		View btnScan = findViewById(R.id.scan_button);
+        View btnScan = view.findViewById(R.id.scan_button);
         // Scan button
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // set the last parameter to true to open front light if available
-                IntentIntegrator.initiateScan(ProductActivity.this, R.layout.capture,
+                IntentIntegrator.initiateScan(ProductFragment.this.getActivity(), R.layout.capture,
                         R.id.viewfinder_view, R.id.preview_view, true);
             }
         });
 
         new RetreiveFeedTask().execute("");
+
+        return view;
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
+    public static ProductFragment newInstance() {
+        ProductFragment fragment = new ProductFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+//    @Override
+//    protected void onPostCreate(Bundle savedInstanceState) {
+//        super.onPostCreate(savedInstanceState);
+//    }
+
+
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case IntentIntegrator.REQUEST_CODE:

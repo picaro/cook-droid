@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.op.cookit.fragments.product.ProductFragment;
 import com.op.cookit.fragments.shoplist.ShopListFragment;
 import com.op.cookit.fragments.shops.ShopsFragment;
 import com.op.cookit.intro.Changelog;
@@ -70,20 +71,24 @@ public class MainActivity extends Activity
                         .commit();
                 break;
             case 2:
-                mTitle = getString(R.string.title_shoplist);
-                ShopsFragment shopsFragment = ShopsFragment.newInstance("1", "2");
+//                mTitle = getString(R.string.title_shoplist);
+//                ShopsFragment shopsFragment = ShopsFragment.newInstance("1", "2");
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.container, shopsFragment)
+//                        .commit();
+                break;
+            case 3:
+                mTitle = getString(R.string.title_scaner);
+                ProductFragment shopsFragment = ProductFragment.newInstance();
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, shopsFragment)
                         .commit();
-                break;
-            case 3:
-                mTitle = getString(R.string.title_recipes);
                 break;
             case 4:
                 mTitle = getString(R.string.title_circles);
                 break;
             case 5:
-                mTitle = getString(R.string.title_scaner);
+                mTitle = getString(R.string.title_circles);
                 break;
             case 6:
                 ShopsFragment aaa2 = ShopsFragment.newInstance("1", "2");

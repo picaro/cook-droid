@@ -26,12 +26,6 @@ public class ShopsFragment extends ListFragment implements LoaderManager.LoaderC
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    String[] numbers_text = new String[] { "one", "two", "three", "four",
-            "five", "six", "seven", "eight", "nine", "ten", "eleven",
-            "twelve", "thirteen", "fourteen", "fifteen" };
-    String[] numbers_digits = new String[] { "1", "2", "3", "4", "5", "6", "7",
-            "8", "9", "10", "11", "12", "13", "14", "15" };
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -84,22 +78,12 @@ public class ShopsFragment extends ListFragment implements LoaderManager.LoaderC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                inflater.getContext(), android.R.layout.simple_list_item_1,
-                numbers_text);
-
-//        CursorLoader new CursorLoader(getActivity(),  // Context
-//                ProductsContentProvider.CONTENT_URI, // URI
-//                null,                // Projection
-//                null,                           // Selection
-//                null,                           // Selection args
-//                null); // Sort
 
         Cursor mCursor = getActivity().getApplicationContext().getContentResolver().query(ProductsContentProvider.CONTENT_URI, null, null,
                 null, null);
         mCursor.getColumnCount();
 
-        setListAdapter(adapter);
+        //setListAdapter(adapter);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
