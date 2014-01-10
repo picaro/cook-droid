@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -60,6 +61,15 @@ public class MainActivity extends Activity
                 .commit();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+        Fragment fragment = (Fragment) this.getFragmentManager().findFragmentByTag("ProductFragment");
+        if(fragment != null){
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
     public void onSectionAttached(int number) {
         FragmentManager fragmentManager = getFragmentManager();
         switch (number) {
@@ -81,7 +91,7 @@ public class MainActivity extends Activity
                 mTitle = getString(R.string.title_scaner);
                 ProductFragment shopsFragment = ProductFragment.newInstance();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, shopsFragment)
+                        .replace(R.id.container, shopsFragment,"ProductFragment")
                         .commit();
                 break;
             case 4:

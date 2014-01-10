@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.op.cookit.AppBase;
 import com.op.cookit.R;
-import com.op.cookit.model.ShopList;
+import com.op.cookit.model.Product;
 import com.op.cookit.util.SystemUiHider;
 
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -40,9 +40,9 @@ public class ProductFragment extends Fragment {
     private ProductFragment fragment = this;
     private View view;
 
-    private Handler  handler = new Handler();
+    private Handler handler = new Handler();
     private TextView txtScanResult;
-	//RetreiveFeedTask rt = new RetreiveFeedTask();
+    //RetreiveFeedTask rt = new RetreiveFeedTask();
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
@@ -68,20 +68,20 @@ public class ProductFragment extends Fragment {
     class RetreiveFeedTask extends AsyncTask<String, Void, String> {
 
         private Exception exception;
-		
-		public ShopList product;
+
+        public Product product;
 
         protected String doInBackground(String... urls) {
-            //String url = "http://cookcloud.jelastic.neohost.net/rest/barcode/" + urls[0];
-            String url = AppBase.BASE_REST_URL + "shoplist/1";
+
+            String url = "http://cookcloud.jelastic.neohost.net/rest/" + "barcode/" + urls[0];
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             try {
-                Log.e(AppBase.TAG, ">>before");
-                String result = (String)restTemplate.getForObject(url, String.class);
+                Log.e(AppBase.TAG, ">>before" + url);
+                String result = (String) restTemplate.getForObject(url, String.class);
                 Log.e(AppBase.TAG, ">>result" + result);
-                product =  new Gson().fromJson(result, ShopList.class);
-            	Log.d(">>", ""+ result + " prod:" + product);
+                product = new Gson().fromJson(result, Product.class);
+                Log.d(">>", "" + result + " prod:" + product);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -90,17 +90,16 @@ public class ProductFragment extends Fragment {
 
         }
 
-        protected void onPostExecute(String result)
-        {
-            if (product != null){
+        protected void onPostExecute(String result) {
+            if (product != null) {
                 txtScanResult.setText(product.toString());
             } else {
                 txtScanResult.setText("not found");
             }
         }
     }
-	
-	private static final int UPDATE_IMAGE = 0;
+
+    private static final int UPDATE_IMAGE = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -139,19 +138,6 @@ public class ProductFragment extends Fragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-//    @Override
-//    protected void onPostCreate(Bundle savedInstanceState) {
-//        super.onPostCreate(savedInstanceState);
-//    }
-
-
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
@@ -166,10 +152,10 @@ public class ProductFragment extends Fragment {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-							
-							
-							new RetreiveFeedTask().execute(result);
-                          //  txtScanResult.setText(result);
+
+
+                            new RetreiveFeedTask().execute(result);
+                            //  txtScanResult.setText(result);
                         }
                     });
                 }
