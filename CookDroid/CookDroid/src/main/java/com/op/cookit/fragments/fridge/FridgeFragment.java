@@ -1,6 +1,7 @@
-package com.op.cookit.fragments.shops;
+package com.op.cookit.fragments.fridge;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
@@ -12,21 +13,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.SimpleCursorAdapter;
 
 import com.op.cookit.AppBase;
+import com.op.cookit.R;
 import com.op.cookit.syncadapter.ProductsContentProvider;
 import com.op.cookit.syncadapter.SyncUtils;
 
 
-public class ShopsFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor>  {
+public class FridgeFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>  {
     /**
      * Cursor adapter for controlling ListView results.
      */
     private SimpleCursorAdapter mAdapter;
 
     private OnFragmentInteractionListener mListener;
+
+    private FridgeFragment fragment = this;
+    private View view;
 
     @Override
     public void onAttach(Activity activity) {
@@ -42,14 +46,13 @@ public class ShopsFragment extends ListFragment implements LoaderManager.LoaderC
      *
      * @return A new instance of fragment ShopsFragment.
      */
-    public static ShopsFragment newInstance() {
-        ShopsFragment fragment = new ShopsFragment();
+    public static FridgeFragment newInstance() {
+        FridgeFragment fragment = new FridgeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
-
-    public ShopsFragment() {
+    public FridgeFragment() {
         // Required empty public constructor
     }
 
@@ -66,8 +69,9 @@ public class ShopsFragment extends ListFragment implements LoaderManager.LoaderC
                 null, null);
         mCursor.getColumnCount();
 
-        //setListAdapter(adapter);
-        return super.onCreateView(inflater, container, savedInstanceState);
+        view = inflater.inflate(R.layout.fragment_fridge,
+                container, false);
+        return view;
     }
 
 

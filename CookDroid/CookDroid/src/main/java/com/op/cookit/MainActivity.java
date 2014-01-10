@@ -17,7 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.op.cookit.fragments.circles.CirclesFragment;
+import com.op.cookit.fragments.fridge.FridgeFragment;
 import com.op.cookit.fragments.product.ProductFragment;
+import com.op.cookit.fragments.recipes.RecipesFragment;
 import com.op.cookit.fragments.shoplist.ShopListFragment;
 import com.op.cookit.fragments.shops.ShopsFragment;
 import com.op.cookit.intro.Changelog;
@@ -81,29 +84,38 @@ public class MainActivity extends Activity
                         .commit();
                 break;
             case 2:
-//                mTitle = getString(R.string.title_shoplist);
-//                ShopsFragment shopsFragment = ShopsFragment.newInstance("1", "2");
-//                fragmentManager.beginTransaction()
-//                        .replace(R.id.container, shopsFragment)
-//                        .commit();
+                mTitle = getString(R.string.title_refr);
+                FridgeFragment fridgeFragment = FridgeFragment.newInstance();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, fridgeFragment)
+                        .commit();
                 break;
             case 3:
                 mTitle = getString(R.string.title_scaner);
-                ProductFragment shopsFragment = ProductFragment.newInstance();
+                ProductFragment productFragment = ProductFragment.newInstance();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, shopsFragment,"ProductFragment")
+                        .replace(R.id.container, productFragment, "ProductFragment")
                         .commit();
                 break;
             case 4:
                 mTitle = getString(R.string.title_circles);
+                CirclesFragment circlesFragment = CirclesFragment.newInstance();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, circlesFragment)
+                        .commit();
                 break;
             case 5:
-                mTitle = getString(R.string.title_circles);
+                mTitle = getString(R.string.title_recipes);
+                RecipesFragment fragment = RecipesFragment.newInstance();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commit();
                 break;
             case 6:
-                ShopsFragment aaa2 = ShopsFragment.newInstance("1", "2");
+                mTitle = getString(R.string.title_shops);
+                ShopsFragment shopsFragment = ShopsFragment.newInstance();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, aaa2)
+                        .replace(R.id.container, shopsFragment)
                         .commit();
                 break;
         }

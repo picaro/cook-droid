@@ -35,6 +35,7 @@ public class SignUpFragment extends Fragment {
     private SignUpAsyncTask mAuthTask = null;
 
     private SignUpFragment fragment = this;
+    private View view;
 
     // Values for email and password at the time of the register attempt.
     private String mFirstName;
@@ -43,7 +44,6 @@ public class SignUpFragment extends Fragment {
     private String mPassword;
 
     private AppBase appBase;
-    private View view;
 
     // UI references.
     private EditText mFirstNameView;
