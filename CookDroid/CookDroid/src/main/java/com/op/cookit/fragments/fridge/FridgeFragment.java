@@ -71,6 +71,8 @@ public class FridgeFragment extends Fragment implements LoaderManager.LoaderCall
 
         view = inflater.inflate(R.layout.fragment_fridge,
                 container, false);
+        //view.setBackgroundResource(R.drawable.fridgetop);
+
         return view;
     }
 
