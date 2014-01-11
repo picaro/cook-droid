@@ -111,7 +111,7 @@ public class LoginFragment extends Fragment {
                 //startActivity(intent);
                 SignUpFragment shopsFragment = SignUpFragment.newInstance();
                 getActivity().getFragmentManager().beginTransaction()
-                        .replace(R.id.container, shopsFragment)
+                        .replace(R.id.container, shopsFragment,SignUpFragment.class.getName())
                         .commit();
             }
         });

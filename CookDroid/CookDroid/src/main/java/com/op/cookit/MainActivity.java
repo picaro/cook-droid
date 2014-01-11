@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.op.cookit.fragments.circles.CirclesFragment;
 import com.op.cookit.fragments.fridge.FridgeFragment;
@@ -34,6 +35,11 @@ public class MainActivity extends Activity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
+
+    private long lastPressTime;
+
+    private static final long DOUBLE_PRESS_INTERVAL = 3000000000l; // value in
+
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -80,42 +86,42 @@ public class MainActivity extends Activity
                 mTitle = getString(R.string.title_shoplist);
                 ShopListFragment shopListFragment = ShopListFragment.newInstance("1", "2");
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, shopListFragment)
+                        .replace(R.id.container, shopListFragment).addToBackStack(null)
                         .commit();
                 break;
             case 2:
                 mTitle = getString(R.string.title_refr);
                 FridgeFragment fridgeFragment = FridgeFragment.newInstance();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, fridgeFragment)
+                        .replace(R.id.container, fridgeFragment).addToBackStack(null)
                         .commit();
                 break;
             case 3:
                 mTitle = getString(R.string.title_scaner);
                 ProductFragment productFragment = ProductFragment.newInstance();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, productFragment, "ProductFragment")
+                        .replace(R.id.container, productFragment, "ProductFragment").addToBackStack(null)
                         .commit();
                 break;
             case 4:
                 mTitle = getString(R.string.title_circles);
                 CirclesFragment circlesFragment = CirclesFragment.newInstance();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, circlesFragment)
+                        .replace(R.id.container, circlesFragment).addToBackStack(null)
                         .commit();
                 break;
             case 5:
                 mTitle = getString(R.string.title_recipes);
                 RecipesFragment fragment = RecipesFragment.newInstance();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, fragment)
+                        .replace(R.id.container, fragment).addToBackStack(null)
                         .commit();
                 break;
             case 6:
                 mTitle = getString(R.string.title_shops);
                 ShopsFragment shopsFragment = ShopsFragment.newInstance();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, shopsFragment)
+                        .replace(R.id.container, shopsFragment).addToBackStack(null)
                         .commit();
                 break;
         }
@@ -127,6 +133,34 @@ public class MainActivity extends Activity
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
+
+    private void exit() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.v(AppBase.TAG, "onBackPressed() called");
+        long pressTime = System.nanoTime();
+        if (pressTime - lastPressTime <= DOUBLE_PRESS_INTERVAL) {
+            // this is a double click event
+            super.onBackPressed();
+            exit();
+        } else {
+            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                getFragmentManager().popBackStack();
+            } else {
+                    Toast.makeText(this, getString(R.string.toast_press_back),
+                    Toast.LENGTH_SHORT).show();
+                    lastPressTime = pressTime;
+            }
+        }
+    }
+
 
 
     @Override

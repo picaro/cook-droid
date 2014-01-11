@@ -161,12 +161,9 @@ public class ShopListFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public void onCreateOptionsMenu(Menu menu,MenuInflater menuInflater) {
-
-        // show menu to create new todo entry
         menu.clear();
-        getActivity().getMenuInflater().inflate(R.menu.shoplist, menu);
+        getActivity().getMenuInflater().inflate(R.menu.menu_add, menu);
         super.onCreateOptionsMenu(menu, menuInflater);
-
         return;
     }
 

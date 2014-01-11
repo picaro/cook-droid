@@ -242,7 +242,6 @@ public class ShopFragment extends Fragment {
         }
 
 
-
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;

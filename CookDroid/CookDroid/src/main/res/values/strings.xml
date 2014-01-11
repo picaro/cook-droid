@@ -70,6 +70,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="prompt_firstname">First name</string>
     <string name="prompt_lastname">Last name</string>
+    <string name="toast_press_back">Press Back once more to exit</string>
 
 
 </resources>

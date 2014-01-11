@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SimpleCursorAdapter;
@@ -71,16 +73,18 @@ public class RecipesFragment extends Fragment implements LoaderManager.LoaderCal
 
         view = inflater.inflate(R.layout.fragment_recipes,
                 container, false);
+        setHasOptionsMenu(true);
         return view;
     }
 
 
-//    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu,MenuInflater menuInflater) {
+        menu.clear();
+        getActivity().getMenuInflater().inflate(R.menu.menu_add, menu);
+        super.onCreateOptionsMenu(menu, menuInflater);
+        return;
+    }
 
 
 

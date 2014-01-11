@@ -11,12 +11,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SimpleCursorAdapter;
 
 import com.op.cookit.AppBase;
 import com.op.cookit.R;
+import com.op.cookit.fragments.shops.ShopFragment;
 import com.op.cookit.syncadapter.ProductsContentProvider;
 import com.op.cookit.syncadapter.SyncUtils;
 
@@ -72,12 +76,35 @@ public class CirclesFragment extends Fragment implements LoaderManager.LoaderCal
 
         view = inflater.inflate(R.layout.fragment_circles,
                 container, false);
+        setHasOptionsMenu(true);
         return view;
 
     }
 
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu,MenuInflater menuInflater) {
+        menu.clear();
+        getActivity().getMenuInflater().inflate(R.menu.menu_add, menu);
+        super.onCreateOptionsMenu(menu, menuInflater);
+        return;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case R.id.action_add:
+                CircleFragment circleFragment = CircleFragment.newInstance();
+                getActivity().getFragmentManager().beginTransaction()
+                        .replace(R.id.container, circleFragment,CircleFragment.class.getName())
+                        .commit();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
     @Override

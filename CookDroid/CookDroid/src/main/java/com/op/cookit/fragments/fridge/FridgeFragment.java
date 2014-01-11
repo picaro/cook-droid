@@ -2,7 +2,6 @@ package com.op.cookit.fragments.fridge;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -11,12 +10,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SimpleCursorAdapter;
 
 import com.op.cookit.AppBase;
 import com.op.cookit.R;
+import com.op.cookit.fragments.shops.ShopFragment;
 import com.op.cookit.syncadapter.ProductsContentProvider;
 import com.op.cookit.syncadapter.SyncUtils;
 
@@ -71,12 +74,31 @@ public class FridgeFragment extends Fragment implements LoaderManager.LoaderCall
 
         view = inflater.inflate(R.layout.fragment_fridge,
                 container, false);
-        //view.setBackgroundResource(R.drawable.fridgetop);
-
+        setHasOptionsMenu(true);
         return view;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case R.id.action_add:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu,MenuInflater menuInflater) {
+        Log.e(AppBase.TAG,"fr onCreateOptionsMenu");
+        super.onCreateOptionsMenu(menu, menuInflater);
+        menu.clear();
+        getActivity().getMenuInflater().inflate(R.menu.menu_add, menu);
+        return;
+    }
 
 
 
