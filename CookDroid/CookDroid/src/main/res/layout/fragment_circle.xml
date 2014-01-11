@@ -3,19 +3,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:layout_weight="1">
-
-
-        <TextView
-            android:id="@+id/scan_result"
+    <!-- Sign up progress -->
+    <LinearLayout android:id="@+id/status"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <ProgressBar style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
-            android:text="Product"
-            android:layout_height="wrap_content" />
-
-
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+        <TextView
+            android:id="@+id/status_message"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:fontFamily="sans-serif-light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/login_progress_signing_in" />
     </LinearLayout>
+
+    <!-- Sign Up form -->
+    <ScrollView
+        android:id="@+id/signup_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout style="@style/LoginFormContainer"
+            android:orientation="vertical"
+            android:weightSum="1">
+			
+		
+		<EditText
+			android:id="@+id/name"
+			android:singleLine="true"
+			android:maxLines="1"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:hint="name" />
+		
+		
+
+            <Button android:id="@+id/add_button"
+                android:layout_width="346dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Add"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:layout_gravity="right" />
+
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>

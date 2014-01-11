@@ -59,39 +59,39 @@ public class ShopFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        view = inflater.inflate(R.layout.fragment_signup,
+        view = inflater.inflate(R.layout.fragment_shop,
                 container, false);
 
         // Set up the login form.
         //   mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
-        mEmailView = (EditText) view.findViewById(R.id.email);
-        mEmailView.setText(mEmail);
-
-        mFirstNameView = (EditText) view.findViewById(R.id.first_name);
-        mFirstNameView.setText(mFirstName);
-
-        mLastNameView = (EditText) view.findViewById(R.id.last_name);
-        mLastNameView.setText(mLastName);
-
-        mPasswordView = (EditText) view.findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptRequest();
-                    return true;
-                }
-                return false;
-            }
-        });
-
+//        mEmailView = (EditText) view.findViewById(R.id.email);
+//        mEmailView.setText(mEmail);
+//
+//        mFirstNameView = (EditText) view.findViewById(R.id.first_name);
+//        mFirstNameView.setText(mFirstName);
+//
+//        mLastNameView = (EditText) view.findViewById(R.id.last_name);
+//        mLastNameView.setText(mLastName);
+//
+//        mPasswordView = (EditText) view.findViewById(R.id.password);
+//        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+//                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+//                    attemptRequest();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//
         appBase = (AppBase) this.getActivity().getApplication();
 
         mFormView = view.findViewById(R.id.signup_form);
         mStatusView = view.findViewById(R.id.signup_status);
         mStatusMessageView = (TextView) view.findViewById(R.id.signup_status_message);
 
-        view.findViewById(R.id.sign_up_button).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.add_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptRequest();
