@@ -26,6 +26,7 @@
     </LinearLayout>
 
     <!-- Sign Up form -->
+
     <ScrollView
         android:id="@+id/signup_form"
         android:layout_width="match_parent"
@@ -35,6 +36,11 @@
             android:orientation="vertical"
             android:weightSum="1">
 
+            <ImageButton
+                android:layout_width="126dp"
+                android:layout_height="156dp"
+                android:id="@+id/imageButton"
+                android:background="@drawable/ic_launcher" />
 
 			<EditText
 				android:id="@+id/name"
@@ -42,18 +48,7 @@
 				android:maxLines="1"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:hint="name" />
-
-
-
-            <Button android:id="@+id/add_button"
-                android:layout_width="346dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Add"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:layout_gravity="right" />
+				android:hint="@string/name" />
 
         </LinearLayout>
 

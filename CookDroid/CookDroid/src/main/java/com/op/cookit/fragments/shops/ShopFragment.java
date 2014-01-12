@@ -8,13 +8,11 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -91,12 +89,12 @@ public class ShopFragment extends Fragment {
         mStatusView = view.findViewById(R.id.signup_status);
         mStatusMessageView = (TextView) view.findViewById(R.id.signup_status_message);
 
-        view.findViewById(R.id.add_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptRequest();
-            }
-        });
+//        view.findViewById(R.id.add_button).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                attemptRequest();
+//            }
+//        });
 
         return view;
     }

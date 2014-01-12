@@ -1,8 +1,8 @@
 package com.op.cookit.fragments.shops;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -19,8 +19,8 @@ import android.view.ViewGroup;
 import android.widget.SimpleCursorAdapter;
 
 import com.op.cookit.AppBase;
+import com.op.cookit.MainActivity;
 import com.op.cookit.R;
-import com.op.cookit.fragments.signup.SignUpFragment;
 import com.op.cookit.syncadapter.ProductsContentProvider;
 import com.op.cookit.syncadapter.SyncUtils;
 
@@ -77,14 +77,14 @@ public class ShopsFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch(item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.action_add:
+                ((MainActivity)getActivity()).setActionBarTitle("Add Shop");
+
                 ShopFragment shopFragment = ShopFragment.newInstance();
                 getActivity().getFragmentManager().beginTransaction()
-                        .replace(R.id.container, shopFragment,ShopFragment.class.getName())
+                        .replace(R.id.container, shopFragment, ShopFragment.class.getName())
                         .commit();
 
                 return true;
@@ -94,7 +94,7 @@ public class ShopsFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
 
-                @Override
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         menu.clear();
         getActivity().getMenuInflater().inflate(R.menu.menu_add, menu);

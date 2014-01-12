@@ -61,6 +61,11 @@ public class MainActivity extends Activity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
+    public void setActionBarTitle(String title){
+        mTitle = title;
+        getActionBar().setTitle(title);
+    }
+
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
@@ -73,7 +78,7 @@ public class MainActivity extends Activity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
-        Fragment fragment = (Fragment) this.getFragmentManager().findFragmentByTag("ProductFragment");
+        Fragment fragment = (Fragment) this.getFragmentManager().findFragmentByTag(ProductFragment.class.getName());
         if(fragment != null){
             fragment.onActivityResult(requestCode, resultCode, data);
         }
@@ -100,7 +105,7 @@ public class MainActivity extends Activity
                 mTitle = getString(R.string.title_scaner);
                 ProductFragment productFragment = ProductFragment.newInstance();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, productFragment, "ProductFragment").addToBackStack(null)
+                        .replace(R.id.container, productFragment, ProductFragment.class.getName()).addToBackStack(null)
                         .commit();
                 break;
             case 4:
