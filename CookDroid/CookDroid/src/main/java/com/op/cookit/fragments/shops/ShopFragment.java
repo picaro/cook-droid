@@ -11,12 +11,14 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.op.cookit.AppBase;
+import com.op.cookit.MainActivity;
 import com.op.cookit.R;
 import com.op.cookit.model.Person;
 
@@ -89,6 +91,8 @@ public class ShopFragment extends Fragment {
         mStatusView = view.findViewById(R.id.signup_status);
         mStatusMessageView = (TextView) view.findViewById(R.id.signup_status_message);
 
+        setHasOptionsMenu(true);
+
 //        view.findViewById(R.id.add_button).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -105,11 +109,23 @@ public class ShopFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_save:
+                attemptRequest();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        menu.clear();
+        getActivity().getMenuInflater().inflate(R.menu.menu_edit, menu);
         super.onCreateOptionsMenu(menu, menuInflater);
-        this.getActivity().getMenuInflater().inflate(R.menu.login, menu);
+        return;
     }
 
     /**
@@ -123,41 +139,41 @@ public class ShopFragment extends Fragment {
         }
 
         // Reset errors.
-        mFirstNameView.setError(null);
-        mLastNameView.setError(null);
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
+      //  mFirstNameView.setError(null);
+      //  mLastNameView.setError(null);
+      //  mEmailView.setError(null);
+     //   mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        mFirstName = mFirstNameView.getText().toString();
-        mLastName = mLastNameView.getText().toString();
-        mEmail = mEmailView.getText().toString();
-        mPassword = mPasswordView.getText().toString();
+    //    mFirstName = mFirstNameView.getText().toString();
+     //   mLastName = mLastNameView.getText().toString();
+     //   mEmail = mEmailView.getText().toString();
+      //  mPassword = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password.
-        if (TextUtils.isEmpty(mPassword)) {
-            mPasswordView.setError(getString(R.string.error_field_required));
-            focusView = mPasswordView;
-            cancel = true;
-        } else if (mPassword.length() < 4) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(mEmail)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!mEmail.contains("@")) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }
+//        if (TextUtils.isEmpty(mPassword)) {
+//            mPasswordView.setError(getString(R.string.error_field_required));
+//            focusView = mPasswordView;
+//            cancel = true;
+//        } else if (mPassword.length() < 4) {
+//            mPasswordView.setError(getString(R.string.error_invalid_password));
+//            focusView = mPasswordView;
+//            cancel = true;
+//        }
+//
+//        // Check for a valid email address.
+//        if (TextUtils.isEmpty(mEmail)) {
+//            mEmailView.setError(getString(R.string.error_field_required));
+//            focusView = mEmailView;
+//            cancel = true;
+//        } else if (!mEmail.contains("@")) {
+//            mEmailView.setError(getString(R.string.error_invalid_email));
+//            focusView = mEmailView;
+//            cancel = true;
+//        }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first

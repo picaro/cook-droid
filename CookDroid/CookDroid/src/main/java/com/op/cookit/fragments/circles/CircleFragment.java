@@ -69,6 +69,8 @@ public class CircleFragment extends Fragment implements LoaderManager.LoaderCall
                 null, null);
         mCursor.getColumnCount();
 
+        setHasOptionsMenu(true);
+
         view = inflater.inflate(R.layout.fragment_circle,
                 container, false);
         return view;

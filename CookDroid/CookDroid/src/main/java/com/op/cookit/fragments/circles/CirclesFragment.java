@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.SimpleCursorAdapter;
 
 import com.op.cookit.AppBase;
+import com.op.cookit.MainActivity;
 import com.op.cookit.R;
 import com.op.cookit.fragments.shops.ShopFragment;
 import com.op.cookit.syncadapter.ProductsContentProvider;
@@ -97,6 +98,8 @@ public class CirclesFragment extends Fragment implements LoaderManager.LoaderCal
         {
             case R.id.action_add:
                 CircleFragment circleFragment = CircleFragment.newInstance();
+                ((MainActivity)getActivity())
+                        .setActionBarTitle(getResources().getText(R.id.action_add).toString());
                 getActivity().getFragmentManager().beginTransaction()
                         .replace(R.id.container, circleFragment,CircleFragment.class.getName())
                         .commit();

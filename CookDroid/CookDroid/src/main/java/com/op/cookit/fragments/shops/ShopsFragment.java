@@ -80,8 +80,7 @@ public class ShopsFragment extends Fragment implements LoaderManager.LoaderCallb
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                ((MainActivity)getActivity()).setActionBarTitle("Add Shop");
-
+                ((MainActivity)getActivity()).setActionBarTitle(getActivity().getResources().getString(R.id.action_add));
                 ShopFragment shopFragment = ShopFragment.newInstance();
                 getActivity().getFragmentManager().beginTransaction()
                         .replace(R.id.container, shopFragment, ShopFragment.class.getName())
