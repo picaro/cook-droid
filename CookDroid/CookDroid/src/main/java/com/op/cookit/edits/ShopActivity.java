@@ -6,22 +6,26 @@ import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.op.cookit.AppBase;
 import com.op.cookit.R;
-import com.op.cookit.model.Person;
+import com.op.cookit.model.Shop;
 
-import java.util.Calendar;
+import java.io.File;
 
 /**
  * Activity which displays a register screen
@@ -37,53 +41,28 @@ public class ShopActivity extends Activity {
 
     // Values for email and password at the time of the register attempt.
     private String mName;
-//    private String mLastName;
-//    private String mEmail;
-//    private String mPassword;
-
     private AppBase appBase;
 
+    private static final int PICK_FROM_CAMERA = 1;
+    private static final int CROP_FROM_CAMERA = 2;
 
     // UI references.
     private EditText mNameView;
-//    private EditText mLastNameView;
-//    private EditText mEmailView;
-//    private EditText mPasswordView;
+
     private View mFormView;
     private View mStatusView;
     private TextView mStatusMessageView;
+
+    private Uri mImageCaptureUri;
+    Bitmap mPhoto;
+    boolean mPhotoChanged;
+    ImageButton mPhotoImageView;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.action_shop);
-//        view = inflater.inflate(R.layout.action_shop,
-//                container, false);
-
-        // Set up the login form.
-        //   mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
-//        mEmailView = (EditText) view.findViewById(R.id.email);
-//        mEmailView.setText(mEmail);
-//
-//        mNameView = (EditText) view.findViewById(R.id.first_name);
-//        mNameView.setText(mName);
-//
-//        mLastNameView = (EditText) view.findViewById(R.id.last_name);
-//        mLastNameView.setText(mLastName);
-//
-//        mPasswordView = (EditText) view.findViewById(R.id.password);
-//        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-//                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-//                    attemptRequest();
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-//
         appBase = (AppBase) getApplication();
 
         mFormView = findViewById(R.id.signup_form);
@@ -98,35 +77,21 @@ public class ShopActivity extends Activity {
                 attemptRequest();
             }
         });
-//        setHasOptionsMenu(true);
 
-//        view.findViewById(R.id.add_button).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                attemptRequest();
-//            }
-//        });
-
+        //Create path for temp file
+        mImageCaptureUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),
+                "tmp_contact_" + String.valueOf(System.currentTimeMillis()) + ".jpg"));
+        mPhotoImageView = (ImageButton) findViewById(R.id.imageButton);
+        mPhotoImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                takePicture.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+                takePicture.putExtra("return-data", true);
+                startActivityForResult(takePicture, PICK_FROM_CAMERA);
+            }
+        });
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_save:
-//                attemptRequest();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//
-////        getMenuInflater().inflate(R.menu.menu_edit, menu);
-//        super.onCreateOptionsMenu(menu);
-//        return true;
-//    }
 
     /**
      * Attempts to register the account specified by the login form.
@@ -139,41 +104,9 @@ public class ShopActivity extends Activity {
         }
 
         // Reset errors.
-      //  mNameView.setError(null);
-      //  mLastNameView.setError(null);
-      //  mEmailView.setError(null);
-     //   mPasswordView.setError(null);
-
-        // Store values at the time of the login attempt.
-    //    mName = mNameView.getText().toString();
-     //   mLastName = mLastNameView.getText().toString();
-     //   mEmail = mEmailView.getText().toString();
-      //  mPassword = mPasswordView.getText().toString();
-
+        //mNameView.setError(null);
         boolean cancel = false;
         View focusView = null;
-
-        // Check for a valid password.
-//        if (TextUtils.isEmpty(mPassword)) {
-//            mPasswordView.setError(getString(R.string.error_field_required));
-//            focusView = mPasswordView;
-//            cancel = true;
-//        } else if (mPassword.length() < 4) {
-//            mPasswordView.setError(getString(R.string.error_invalid_password));
-//            focusView = mPasswordView;
-//            cancel = true;
-//        }
-//
-//        // Check for a valid email address.
-//        if (TextUtils.isEmpty(mEmail)) {
-//            mEmailView.setError(getString(R.string.error_field_required));
-//            focusView = mEmailView;
-//            cancel = true;
-//        } else if (!mEmail.contains("@")) {
-//            mEmailView.setError(getString(R.string.error_invalid_email));
-//            focusView = mEmailView;
-//            cancel = true;
-//        }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -195,7 +128,7 @@ public class ShopActivity extends Activity {
         View v = inflator.inflate(R.layout.menu_edit, null);
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowHomeEnabled (false);
+        actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setCustomView(v);
@@ -249,15 +182,11 @@ public class ShopActivity extends Activity {
     public class SignUpAsyncTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
- //           Person person = new Person();
- //           person.setFirstName(mName);
-//            person.setLastName(mLastName);
-//            person.setEmail(mEmail);
-//            person.setPassword(mPassword);
- //           person.setGender("M");
-   //         person.setDate_registration(Calendar.getInstance().getTimeInMillis());
-        //    AppBase.clientRest. signUP(person);
-            AppBase.clientRest.logIn();//TODO real data
+            Shop shop = new Shop();
+            shop.setName(mName);
+            shop.setName("mName");
+            shop.setUserid(1);
+            AppBase.clientRest.addShop(shop);
             return true;
         }
 
@@ -268,10 +197,8 @@ public class ShopActivity extends Activity {
             showProgress(false);
 
             if (success) {
-                //getActivity().getFragmentManager().beginTransaction().remove(fragment).commit();
+                finish();
             } else {
-//                mPasswordView.setError(getString(R.string.error_incorrect_password));
-//                mPasswordView.requestFocus();
             }
         }
 
@@ -279,6 +206,57 @@ public class ShopActivity extends Activity {
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
+        }
+    }
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+
+        switch (requestCode) {
+
+            case CROP_FROM_CAMERA: {
+                final Bundle extras = data.getExtras();
+                if (extras != null) {
+                    Bitmap photo = extras.getParcelable("data");
+
+                    mPhoto = photo;
+                    mPhotoChanged = true;
+
+
+                    mPhotoImageView.setImageBitmap(photo);
+                    //setPhotoPresent(true);
+                }
+
+                //Wysie_Soh: Delete the temporary file
+                File f = new File(mImageCaptureUri.getPath());
+                if (f.exists()) {
+                    f.delete();
+                }
+
+                InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                mgr.showSoftInput(mPhotoImageView, InputMethodManager.SHOW_IMPLICIT);
+
+                break;
+            }
+
+            case PICK_FROM_CAMERA: {
+                Intent intent = new Intent("com.android.camera.action.CROP");
+                intent.setDataAndType(mImageCaptureUri, "image/*");
+                intent.putExtra("scaleUpIfNeeded", true);
+                intent.putExtra("outputX", 126);
+                intent.putExtra("outputY", 126);
+                intent.putExtra("aspectX", 1);
+                intent.putExtra("aspectY", 1);
+                intent.putExtra("scale", true);
+                intent.putExtra("return-data", true);
+                startActivityForResult(intent, CROP_FROM_CAMERA);
+
+                break;
+
+            }
         }
     }
 }

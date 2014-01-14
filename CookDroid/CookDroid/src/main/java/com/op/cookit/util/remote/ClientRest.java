@@ -4,8 +4,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.op.cookit.AppBase;
+import com.op.cookit.model.Circle;
 import com.op.cookit.model.Person;
 import com.op.cookit.model.Product;
+import com.op.cookit.model.Shop;
 import com.op.cookit.model.ShopList;
 import com.op.cookit.model.inner.PersonLocal;
 import com.op.cookit.util.BaseRest;
@@ -163,4 +165,47 @@ public class ClientRest extends BaseRest {
         return null;
     }
 
+    public void addShop(Shop shop) {
+        Log.i(AppBase.TAG, "addShop");
+
+        StringBuilder urlBuilder = new StringBuilder();
+        urlBuilder
+                .append(AppBase.BASE_REST_URL)
+                .append("shop/");
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = getHttpHeaders();
+
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        try {
+            String prodJSON =  new Gson().toJson(shop, Shop.class);
+            Log.d(AppBase.TAG, "addShop:" + prodJSON);
+            HttpEntity<String> entity = new HttpEntity<String>(prodJSON,headers);
+            restTemplate.put(urlBuilder.toString(), entity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addCircle(Circle circle) {
+        Log.i(AppBase.TAG, "addCircle");
+
+        StringBuilder urlBuilder = new StringBuilder();
+        urlBuilder
+                .append(AppBase.BASE_REST_URL)
+                .append("circle/");
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = getHttpHeaders();
+
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        try {
+            String prodJSON =  new Gson().toJson(circle, Circle.class);
+            Log.d(AppBase.TAG, "addCircle:" + prodJSON);
+            HttpEntity<String> entity = new HttpEntity<String>(prodJSON,headers);
+            restTemplate.put(urlBuilder.toString(), entity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

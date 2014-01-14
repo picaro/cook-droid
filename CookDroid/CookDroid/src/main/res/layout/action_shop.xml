@@ -1,8 +1,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.op.cookit.login.LoginActivity">
+    tools:context="com.op.cookit.edits.ShopActivity">
 
-    <!-- Sign up progress -->
     <LinearLayout android:id="@+id/status"
         android:visibility="gone"
         android:layout_width="wrap_content"
@@ -21,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="@string/login_progress_signing_in" />
+            android:text="@string/save_progress" />
     </LinearLayout>
 
     <!-- Sign Up form -->
@@ -37,9 +36,9 @@
 
             <ImageButton
                 android:layout_width="126dp"
-                android:layout_height="156dp"
+                android:layout_height="126dp"
                 android:id="@+id/imageButton"
-                android:background="@drawable/ic_launcher" />
+                android:background="@drawable/shop" />
 
 			<EditText
 				android:id="@+id/name"

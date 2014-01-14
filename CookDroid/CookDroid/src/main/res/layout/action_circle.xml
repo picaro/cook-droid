@@ -3,18 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Sign up progress -->
-    <LinearLayout android:id="@+id/status"
+    <LinearLayout
+        android:id="@+id/status"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center_horizontal"
         android:orientation="vertical">
-        <ProgressBar style="?android:attr/progressBarStyleLarge"
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp" />
+
         <TextView
             android:id="@+id/status_message"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -22,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="@string/login_progress_signing_in" />
+            android:text="@string/save_progress" />
     </LinearLayout>
 
     <!-- Sign Up form -->
@@ -31,29 +34,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout style="@style/LoginFormContainer"
+        <LinearLayout
+            style="@style/LoginFormContainer"
             android:orientation="vertical"
             android:weightSum="1">
-			
-		
-		<EditText
-			android:id="@+id/name"
-			android:singleLine="true"
-			android:maxLines="1"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:hint="name" />
-		
-		
 
-            <Button android:id="@+id/add_button"
-                android:layout_width="346dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Add"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:layout_gravity="right" />
+            <ImageButton
+                android:layout_width="126dp"
+                android:layout_height="126dp"
+                android:id="@+id/imageButton"
+                android:background="@drawable/circle" />
+
+
+            <EditText
+                android:id="@+id/name"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/name" />
 
         </LinearLayout>
 
