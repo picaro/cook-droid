@@ -2,9 +2,9 @@ package com.op.cookit.fragments.circles;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -21,7 +21,7 @@ import android.widget.SimpleCursorAdapter;
 import com.op.cookit.AppBase;
 import com.op.cookit.MainActivity;
 import com.op.cookit.R;
-import com.op.cookit.fragments.shops.ShopFragment;
+import com.op.cookit.edits.CircleActivity;
 import com.op.cookit.syncadapter.ProductsContentProvider;
 import com.op.cookit.syncadapter.SyncUtils;
 
@@ -97,12 +97,8 @@ public class CirclesFragment extends Fragment implements LoaderManager.LoaderCal
         switch(item.getItemId())
         {
             case R.id.action_add:
-                CircleFragment circleFragment = CircleFragment.newInstance();
-                ((MainActivity)getActivity())
-                        .setActionBarTitle(getResources().getText(R.id.action_add).toString());
-                getActivity().getFragmentManager().beginTransaction()
-                        .replace(R.id.container, circleFragment,CircleFragment.class.getName())
-                        .commit();
+                Intent intent = new Intent(getActivity().getApplicationContext(), CircleActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="fill_horizontal">
+
+
+    <ImageButton android:src="@drawable/check_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
+        android:id="@+id/action_save"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"/>
+
+</RelativeLayout>
+

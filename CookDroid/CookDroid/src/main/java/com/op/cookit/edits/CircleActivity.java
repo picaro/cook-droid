@@ -1,7 +1,6 @@
-package com.op.cookit.fragments.circles;
+package com.op.cookit.edits;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -9,18 +8,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.SimpleCursorAdapter;
 
 import com.op.cookit.AppBase;
 import com.op.cookit.R;
 import com.op.cookit.syncadapter.ProductsContentProvider;
-import com.op.cookit.syncadapter.SyncUtils;
 
 
-public class CircleFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>  {
+public class CircleActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor>  {
     /**
      * Cursor adapter for controlling ListView results.
      */
@@ -28,64 +23,35 @@ public class CircleFragment extends Fragment implements LoaderManager.LoaderCall
 
     private OnFragmentInteractionListener mListener;
 
-    private CircleFragment fragment = this;
-    private View view;
+    private CircleActivity fragment = this;
 
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        // Create account, if needed
-        SyncUtils.CreateSyncAccount(activity);
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment ShopsFragment.
-     */
-    public static CircleFragment newInstance() {
-        CircleFragment fragment = new CircleFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-    public CircleFragment() {
+    public CircleActivity() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        setContentView(R.layout.action_circle);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        Cursor mCursor = getActivity().getApplicationContext().getContentResolver().query(ProductsContentProvider.CONTENT_URI, null, null,
+        Cursor mCursor = getApplicationContext().getContentResolver().query(ProductsContentProvider.CONTENT_URI, null, null,
                 null, null);
         mCursor.getColumnCount();
 
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
 
-        view = inflater.inflate(R.layout.fragment_circle,
+/*
+        view = inflater.inflate(R.layout.action_circle,
                 container, false);
-        return view;
-
+*/
     }
 
 
 
 
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -112,7 +78,7 @@ public class CircleFragment extends Fragment implements LoaderManager.LoaderCall
         Log.e(AppBase.TAG, "onCreateLoader");
 
 
-        return new CursorLoader(getActivity(),  // Context
+        return new CursorLoader(this,  // Context
                 ProductsContentProvider.CONTENT_URI, // URI
                 null,                // Projection
                 null,                           // Selection

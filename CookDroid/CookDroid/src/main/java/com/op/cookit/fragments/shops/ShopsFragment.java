@@ -1,10 +1,10 @@
 package com.op.cookit.fragments.shops;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -21,6 +21,8 @@ import android.widget.SimpleCursorAdapter;
 import com.op.cookit.AppBase;
 import com.op.cookit.MainActivity;
 import com.op.cookit.R;
+import com.op.cookit.edits.CircleActivity;
+import com.op.cookit.edits.ShopActivity;
 import com.op.cookit.syncadapter.ProductsContentProvider;
 import com.op.cookit.syncadapter.SyncUtils;
 
@@ -32,6 +34,8 @@ public class ShopsFragment extends Fragment implements LoaderManager.LoaderCallb
     private SimpleCursorAdapter mAdapter;
 
     private OnFragmentInteractionListener mListener;
+
+    private View view;
 
     @Override
     public void onAttach(Activity activity) {
@@ -73,18 +77,17 @@ public class ShopsFragment extends Fragment implements LoaderManager.LoaderCallb
         setHasOptionsMenu(true);
 
         //setListAdapter(adapter);
-        return super.onCreateView(inflater, container, savedInstanceState);
+        view = super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                ((MainActivity)getActivity()).setActionBarTitle(getActivity().getResources().getString(R.id.action_add));
-                ShopFragment shopFragment = ShopFragment.newInstance();
-                getActivity().getFragmentManager().beginTransaction()
-                        .replace(R.id.container, shopFragment, ShopFragment.class.getName())
-                        .commit();
+                Intent intent = new Intent(getActivity().getApplicationContext(), ShopActivity.class);
+                startActivity(intent);
+
 
                 return true;
             default:

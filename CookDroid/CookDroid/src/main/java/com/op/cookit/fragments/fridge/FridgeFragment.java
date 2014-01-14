@@ -19,7 +19,6 @@ import android.widget.SimpleCursorAdapter;
 
 import com.op.cookit.AppBase;
 import com.op.cookit.R;
-import com.op.cookit.fragments.shops.ShopFragment;
 import com.op.cookit.syncadapter.ProductsContentProvider;
 import com.op.cookit.syncadapter.SyncUtils;
 

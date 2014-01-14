@@ -1,24 +1,21 @@
-package com.op.cookit.fragments.shops;
+package com.op.cookit.edits;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Fragment;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
+import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.op.cookit.AppBase;
-import com.op.cookit.MainActivity;
 import com.op.cookit.R;
 import com.op.cookit.model.Person;
 
@@ -27,15 +24,14 @@ import java.util.Calendar;
 /**
  * Activity which displays a register screen
  */
-public class ShopFragment extends Fragment {
+public class AddProdListActivity extends Activity {
 
     /**
      * Keep track of the register task to ensure we can cancel it if requested.
      */
     private SignUpAsyncTask mAuthTask = null;
 
-    private ShopFragment fragment = this;
-    private View view;
+    private AddProdListActivity fragment = this;
 
     // Values for email and password at the time of the register attempt.
     private String mFirstName;
@@ -44,7 +40,6 @@ public class ShopFragment extends Fragment {
     private String mPassword;
 
     private AppBase appBase;
-
 
     // UI references.
     private EditText mFirstNameView;
@@ -56,76 +51,56 @@ public class ShopFragment extends Fragment {
     private TextView mStatusMessageView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        view = inflater.inflate(R.layout.fragment_shop,
-                container, false);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.fragment_);
+//        view = inflater.inflate(R.layout.fragment_signup,
+//                container, false);
 
         // Set up the login form.
         //   mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
-//        mEmailView = (EditText) view.findViewById(R.id.email);
-//        mEmailView.setText(mEmail);
-//
-//        mFirstNameView = (EditText) view.findViewById(R.id.first_name);
-//        mFirstNameView.setText(mFirstName);
-//
-//        mLastNameView = (EditText) view.findViewById(R.id.last_name);
-//        mLastNameView.setText(mLastName);
-//
-//        mPasswordView = (EditText) view.findViewById(R.id.password);
-//        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-//                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-//                    attemptRequest();
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-//
-        appBase = (AppBase) this.getActivity().getApplication();
+        mEmailView = (EditText) findViewById(R.id.email);
+        mEmailView.setText(mEmail);
 
-        mFormView = view.findViewById(R.id.signup_form);
-        mStatusView = view.findViewById(R.id.signup_status);
-        mStatusMessageView = (TextView) view.findViewById(R.id.signup_status_message);
+        mFirstNameView = (EditText) findViewById(R.id.first_name);
+        mFirstNameView.setText(mFirstName);
 
-        setHasOptionsMenu(true);
+        mLastNameView = (EditText) findViewById(R.id.last_name);
+        mLastNameView.setText(mLastName);
 
-//        view.findViewById(R.id.add_button).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                attemptRequest();
-//            }
-//        });
+        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                    attemptRequest();
+                    return true;
+                }
+                return false;
+            }
+        });
 
-        return view;
-    }
+        appBase = (AppBase) getApplication();
 
+        mFormView = findViewById(R.id.signup_form);
+        mStatusView = findViewById(R.id.signup_status);
+        mStatusMessageView = (TextView) findViewById(R.id.signup_status_message);
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_save:
+        findViewById(R.id.sign_up_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 attemptRequest();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+            }
+        });
+
     }
 
+
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-        menu.clear();
-        getActivity().getMenuInflater().inflate(R.menu.menu_edit, menu);
-        super.onCreateOptionsMenu(menu, menuInflater);
-        return;
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.login, menu);
+        return true;
     }
 
     /**
@@ -139,41 +114,41 @@ public class ShopFragment extends Fragment {
         }
 
         // Reset errors.
-      //  mFirstNameView.setError(null);
-      //  mLastNameView.setError(null);
-      //  mEmailView.setError(null);
-     //   mPasswordView.setError(null);
+        mFirstNameView.setError(null);
+        mLastNameView.setError(null);
+        mEmailView.setError(null);
+        mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-    //    mFirstName = mFirstNameView.getText().toString();
-     //   mLastName = mLastNameView.getText().toString();
-     //   mEmail = mEmailView.getText().toString();
-      //  mPassword = mPasswordView.getText().toString();
+        mFirstName = mFirstNameView.getText().toString();
+        mLastName = mLastNameView.getText().toString();
+        mEmail = mEmailView.getText().toString();
+        mPassword = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password.
-//        if (TextUtils.isEmpty(mPassword)) {
-//            mPasswordView.setError(getString(R.string.error_field_required));
-//            focusView = mPasswordView;
-//            cancel = true;
-//        } else if (mPassword.length() < 4) {
-//            mPasswordView.setError(getString(R.string.error_invalid_password));
-//            focusView = mPasswordView;
-//            cancel = true;
-//        }
-//
-//        // Check for a valid email address.
-//        if (TextUtils.isEmpty(mEmail)) {
-//            mEmailView.setError(getString(R.string.error_field_required));
-//            focusView = mEmailView;
-//            cancel = true;
-//        } else if (!mEmail.contains("@")) {
-//            mEmailView.setError(getString(R.string.error_invalid_email));
-//            focusView = mEmailView;
-//            cancel = true;
-//        }
+        if (TextUtils.isEmpty(mPassword)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
+        } else if (mPassword.length() < 4) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(mEmail)) {
+            mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
+            cancel = true;
+        } else if (!mEmail.contains("@")) {
+            mEmailView.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailView;
+            cancel = true;
+        }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -229,12 +204,6 @@ public class ShopFragment extends Fragment {
         }
     }
 
-    public static ShopFragment newInstance() {
-        ShopFragment fragment = new ShopFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     /**
      * Represents an asynchronous login/registration task used to authenticate
@@ -249,11 +218,14 @@ public class ShopFragment extends Fragment {
             person.setEmail(mEmail);
             person.setPassword(mPassword);
             person.setGender("M");
+            person.setPhone("+3444444");
+            person.setDob(Calendar.getInstance().getTimeInMillis());
             person.setDate_registration(Calendar.getInstance().getTimeInMillis());
             AppBase.clientRest.signUP(person);
             AppBase.clientRest.logIn();//TODO real data
             return true;
         }
+
 
 
         @Override
@@ -262,7 +234,7 @@ public class ShopFragment extends Fragment {
             showProgress(false);
 
             if (success) {
-                getActivity().getFragmentManager().beginTransaction().remove(fragment).commit();
+                //getFragmentManager().beginTransaction().remove(fragment).commit();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

@@ -37,6 +37,18 @@
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".edits.CircleActivity"
+            android:label="@string/add"
+            android:windowSoftInputMode="adjustResize|stateVisible"></activity>
+        <activity
+            android:name=".edits.AddProdListActivity"
+            android:label="@string/add"
+            android:windowSoftInputMode="adjustResize|stateVisible"></activity>
+        <activity
+            android:name=".edits.ShopActivity"
+            android:label="@string/add"
+            android:windowSoftInputMode="adjustResize|stateVisible"></activity>
         <service
             android:name=".syncadapter.SyncService"
             android:exported="true"
