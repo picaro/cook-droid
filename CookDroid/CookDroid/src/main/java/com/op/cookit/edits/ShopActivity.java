@@ -68,7 +68,7 @@ public class ShopActivity extends Activity {
         mFormView = findViewById(R.id.signup_form);
         mStatusView = findViewById(R.id.status);
         mStatusMessageView = (TextView) findViewById(R.id.status_message);
-
+        mNameView = (EditText) findViewById(R.id.name);
         restoreActionBar();
         ImageButton ibItem1 = (ImageButton) findViewById(R.id.action_save);
         ibItem1.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +104,8 @@ public class ShopActivity extends Activity {
         }
 
         // Reset errors.
-        //mNameView.setError(null);
+        mNameView.setError(null);
+        mName = mNameView.getText().toString();
         boolean cancel = false;
         View focusView = null;
 
@@ -184,7 +185,6 @@ public class ShopActivity extends Activity {
         protected Boolean doInBackground(Void... params) {
             Shop shop = new Shop();
             shop.setName(mName);
-            shop.setName("mName");
             shop.setUserid(1);
             AppBase.clientRest.addShop(shop);
             return true;

@@ -27,7 +27,6 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -72,8 +71,19 @@
         </service>
         <provider
             android:name=".syncadapter.ProductsContentProvider"
-            android:authorities="com.op.cookit.syncadapter.provider"
-            android:exported="false" />
+            android:authorities="com.op.cookit.syncadapter"
+            android:exported="false" >
+            <meta-data
+                android:name="AA_DB_NAME"
+                android:value="cookdroid.db" />
+            <meta-data
+                android:name="AA_DB_VERSION"
+                android:value="2" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </provider>
 
     </application>
 

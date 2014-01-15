@@ -27,7 +27,7 @@ import com.op.cookit.util.remote.ClientRest;
 /**
  * c lass with app settings const
  */
-public class AppBase extends Application {
+public class AppBase extends com.activeandroid.app.Application {
     public static final String SETTINGS_FILE = Environment.getExternalStorageDirectory() + "/Android/data/com.op.cookcloud/preferences.dat";
     public static final String SETTINGS = "op.cookdroid";
 

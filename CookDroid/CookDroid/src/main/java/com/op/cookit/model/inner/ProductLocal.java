@@ -24,6 +24,9 @@ public class ProductLocal extends Model {
     @Column(name = "note")
     private String note;
 
+    @Column(name = "imgpath")
+    private String imgPath;
+
     @Column(name = "shoplistid")
     private Integer shoplistid;
 
@@ -42,13 +45,58 @@ public class ProductLocal extends Model {
 	public String getName() {
 		return name;
 	}
-	
-	// Record Finders
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getOutid() {
+        return outid;
+    }
+
+    public void setOutid(Integer outid) {
+        this.outid = outid;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+
+    public Integer getShoplistid() {
+        return shoplistid;
+    }
+
+    public void setShoplistid(Integer shoplistid) {
+        this.shoplistid = shoplistid;
+    }
+
+    public Boolean getCrossed() {
+        return crossed;
+    }
+
+    public void setCrossed(Boolean crossed) {
+        this.crossed = crossed;
+    }
+
+    // Record Finders
 	public static ProductLocal byId(long id) {
 	   return new Select().from(ProductLocal.class).where("id = ?", id).executeSingle();
 	}
 	
 	public static List<ProductLocal> recentItems() {
-      return new Select().from(ProductLocal.class).orderBy("id DESC").limit("300").execute();
+
+      return new Select().from(ProductLocal.class).execute();// .orderBy("id DESC").limit("300").execute();
 	}
 }

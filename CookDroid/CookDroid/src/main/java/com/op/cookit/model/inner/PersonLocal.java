@@ -5,6 +5,10 @@ import java.util.Date;
 
 public class PersonLocal implements Serializable {
 
+    private Integer id;
+
+    private Integer outId;
+
     private String firstName;
 
     private String lastName;
@@ -87,6 +91,22 @@ public class PersonLocal implements Serializable {
 
     public void setDob(Date dob) {
         this.dob = dob;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getOutId() {
+        return outId;
+    }
+
+    public void setOutId(Integer outId) {
+        this.outId = outId;
     }
 
     @Override

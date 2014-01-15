@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
@@ -29,6 +30,7 @@ import com.op.cookit.AppBase;
 import com.op.cookit.R;
 import com.op.cookit.model.Product;
 import com.op.cookit.model.ShopList;
+import com.op.cookit.model.inner.ProductLocal;
 import com.op.cookit.syncadapter.ProductsContentProvider;
 import com.op.cookit.syncadapter.SyncUtils;
 
@@ -38,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ShopListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> , OnCrossListener{
+public class ShopListFragment extends Fragment implements OnCrossListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -106,6 +108,13 @@ public class ShopListFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ProductLocal productLocal = new ProductLocal();
+        productLocal.setName("aaa");
+        productLocal.save();
+        ProductLocal productLocal2 = ProductLocal.byId(1L);
+        ProductLocal.recentItems();
+
         super.onCreateView(inflater,container,savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_shoplist,
                 container, false);
@@ -116,6 +125,20 @@ public class ShopListFragment extends Fragment implements LoaderManager.LoaderCa
         setHasOptionsMenu(true);
         this.registerForContextMenu(list);
         cross.addOnCrossListener(this);
+
+
+        Cursor cursor = getActivity().getContentResolver().query(ProductsContentProvider.CONTENT_URI, null, null,
+                null, null);
+        getActivity().startManagingCursor(cursor);
+        String from[] = { "name", "note" };
+        int to[] = { android.R.id.text1, android.R.id.text2 };
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(),
+                android.R.layout.simple_list_item_2, cursor, from, to);
+
+        ListView lvContact = (ListView) view.findViewById(R.id.lvContact);
+        lvContact.setAdapter(adapter);
+
+
         return view;
 
     }
@@ -141,11 +164,21 @@ public class ShopListFragment extends Fragment implements LoaderManager.LoaderCa
                                     Product product = new Product();
                                     product.setName(title);
                                     product.setShoplistid(1);
-                                    AppBase.clientRest.addProduct(1, product);
+                                    //AppBase.clientRest.addProduct(1, product);
 
-                                    Map<String, Object> list2 = new HashMap<String, Object>();
-                                    list2.put("content", product);
-                                    productsMap.add(list2);
+                                    //Map<String, Object> list2 = new HashMap<String, Object>();
+                                    //list2.put("content", product);
+                                    //productsMap.add(list2);
+                                    ContentValues cv = new ContentValues();
+                                    cv.put(ProductsContentProvider.Columns.NAME, "name 4");
+                                    cv.put(ProductsContentProvider.Columns.OUTID, 1);
+                                    cv.put(ProductsContentProvider.Columns.NOTE, "note 1");
+                                    cv.put(ProductsContentProvider.Columns.SHOPLISTID, 1);
+                                    cv.put(ProductsContentProvider.Columns.IMGPATH, "1");
+                                    Uri newUri = getActivity().getContentResolver().insert( ProductsContentProvider.CONTENT_URI, cv);
+                                    Log.d(AppBase.TAG, "insert, result Uri : " + newUri.toString());
+
+
                                     sAdapter.notifyDataSetChanged();
                                 }
                             }
@@ -169,6 +202,8 @@ public class ShopListFragment extends Fragment implements LoaderManager.LoaderCa
 
     public void onStart() {
         super.onStart();
+
+
         productsMap = new ArrayList<Map<String, Object>>();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -226,33 +261,33 @@ public class ShopListFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
 
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        // We only have one loader, so we can ignore the value of i.
-        // (It'll be '0', as set in onCreate().)
-
-        Log.e(AppBase.TAG, "onCreateLoader");
-
-
-        return new CursorLoader(getActivity(),  // Context
-                ProductsContentProvider.CONTENT_URI, // URI
-                null,                // Projection
-                null,                           // Selection
-                null,                           // Selection args
-                null); // Sort
-
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        mAdapter.changeCursor(cursor);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        mAdapter.changeCursor(null);
-    }
+//
+//    @Override
+//    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+//        // We only have one loader, so we can ignore the value of i.
+//        // (It'll be '0', as set in onCreate().)
+//
+//        Log.e(AppBase.TAG, "onCreateLoader");
+//
+//
+//        return new CursorLoader(getActivity(),  // Context
+//                ProductsContentProvider.CONTENT_URI, // URI
+//                null,                // Projection
+//                null,                           // Selection
+//                null,                           // Selection args
+//                null); // Sort
+//
+//    }
+//
+//    @Override
+//    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+//        mAdapter.changeCursor(cursor);
+//    }
+//
+//    @Override
+//    public void onLoaderReset(Loader<Cursor> loader) {
+//        mAdapter.changeCursor(null);
+//    }
 
 
 }
