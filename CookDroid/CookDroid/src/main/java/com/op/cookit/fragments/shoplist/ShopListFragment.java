@@ -109,11 +109,7 @@ public class ShopListFragment extends Fragment implements OnCrossListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ProductLocal productLocal = new ProductLocal();
-        productLocal.setName("aaa");
-        productLocal.save();
-        ProductLocal productLocal2 = ProductLocal.byId(1L);
-        ProductLocal.recentItems();
+
 
         super.onCreateView(inflater,container,savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_shoplist,
@@ -133,10 +129,13 @@ public class ShopListFragment extends Fragment implements OnCrossListener{
         String from[] = { "name", "note" };
         int to[] = { android.R.id.text1, android.R.id.text2 };
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(),
-                android.R.layout.simple_list_item_2, cursor, from, to);
+                R.layout.item_todo, cursor, from, to);
+//        sAdapter = new ShopListAdapter(this.getActivity(), productsMap, R.layout.item_todo,
+//                new String[]{"content"}, new int[]{android.R.id.content});
 
-        ListView lvContact = (ListView) view.findViewById(R.id.lvContact);
-        lvContact.setAdapter(adapter);
+        ListView list = (ListView) view.findViewById(R.id.lvContact);
+        list.setAdapter(adapter);
+        //lvContact.setAdapter(adapter);
 
 
         return view;
