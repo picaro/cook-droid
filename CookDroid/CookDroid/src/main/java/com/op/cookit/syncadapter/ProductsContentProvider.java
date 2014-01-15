@@ -111,6 +111,9 @@ public class ProductsContentProvider extends ContentProvider {
 //        SQLiteDatabase db = dbHelper.getWritableDatabase();
         int token = uriMatcher.match(uri);
         int rowsDeleted = -1;
+
+         Integer id = Integer.parseInt(selectionArgs[0]);
+        ProductLocal.delete(ProductLocal.class,id);
         switch (token) {
             case (URI_PRODUCTS):
 //                rowsDeleted = db.delete(TvShowsDbHelper.TVSHOWS_TABLE_NAME, selection, selectionArgs);

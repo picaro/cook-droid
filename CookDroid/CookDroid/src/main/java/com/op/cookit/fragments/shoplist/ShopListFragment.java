@@ -196,7 +196,9 @@ public class ShopListFragment extends Fragment implements LoaderManager.LoaderCa
         while (cursor.moveToNext()) {
             Map<String, Object> list2 = new HashMap<String, Object>();
             Product product = new Product();
+            product.setId(cursor.getInt(cursor.getColumnIndex(ProductsContentProvider.Columns.ID)));
             product.setName(cursor.getString(cursor.getColumnIndex(ProductsContentProvider.Columns.NAME)));
+            product.setNote(cursor.getString(cursor.getColumnIndex(ProductsContentProvider.Columns.NOTE)));
             product.setShoplistid(1);
             list2.put("content", product);
             productsMap.add(list2);

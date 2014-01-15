@@ -42,6 +42,9 @@ public class ProductLocal extends Model {
 	
 	public ProductLocal(Product product){
 	    name = product.getName();
+        note = product.getNote();
+        crossed = product.getCrossed();
+        outid = product.getId();
 	}
 
     public ProductLocal(ContentValues values) {

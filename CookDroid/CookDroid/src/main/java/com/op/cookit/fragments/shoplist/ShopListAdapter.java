@@ -57,10 +57,11 @@ public class ShopListAdapter extends SimpleAdapter {
         final Product product = (Product) ((HashMap) getItem(position)).get("content");
         delicon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Log.e("", "delview:" + position);
+                Log.e(AppBase.TAG, "delview:" + position);
+                Log.e(AppBase.TAG, "-----" + product.getId());
                 //AppBase.clientRest.deleteProduct(1, product.getId());
-                data.remove(getItem(position));
                 Integer deleted =  ((MainActivity)context).getContentResolver().delete( ProductsContentProvider.CONTENT_URI, "id = ?",new String[]{"" + product.getId()});
+                data.remove(getItem(position));
 
                 notifyDataSetChanged();
             }
