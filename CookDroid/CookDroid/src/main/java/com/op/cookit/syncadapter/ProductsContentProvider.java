@@ -1,20 +1,18 @@
 package com.op.cookit.syncadapter;
 
 //import android.content.ContentProvider;
+
 import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.ContextWrapper;
 import android.content.UriMatcher;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.util.Log;
 
-import com.activeandroid.ActiveAndroid;
-import com.activeandroid. content.ContentProvider;
-import com.activeandroid.app.Application;
+import com.activeandroid.content.ContentProvider;
 import com.op.cookit.AppBase;
+import com.op.cookit.model.Product;
 import com.op.cookit.model.inner.ProductLocal;
 
 import java.util.List;
@@ -34,10 +32,10 @@ public class ProductsContentProvider extends ContentProvider {
             + CONTENT_AUTHORITY + "/" + CONTACT_PATH);
 
     // общий Uri
-    static final int URI_CONTACTS = 1;
+    public static final int URI_PRODUCTS = 1;
 
     // Uri с указанным ID
-    static final int URI_CONTACTS_ID = 2;
+    public static final int URI_PRODUCT_ID = 2;
 
     public static class Columns {
         public static final String ID = "_id";
@@ -59,8 +57,8 @@ public class ProductsContentProvider extends ContentProvider {
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(CONTENT_AUTHORITY, CONTACT_PATH, URI_CONTACTS);
-        uriMatcher.addURI(CONTENT_AUTHORITY, CONTACT_PATH + "/#", URI_CONTACTS_ID);
+        uriMatcher.addURI(CONTENT_AUTHORITY, CONTACT_PATH, URI_PRODUCTS);
+        uriMatcher.addURI(CONTENT_AUTHORITY, CONTACT_PATH + "/#", URI_PRODUCT_ID);
     }
 
 
@@ -88,10 +86,15 @@ public class ProductsContentProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         Log.d(AppBase.TAG, "insert, " + uri.toString());
-        if (uriMatcher.match(uri) != URI_CONTACTS)
+        if (uriMatcher.match(uri) != URI_PRODUCTS)
             throw new IllegalArgumentException("Wrong URI: " + uri);
 
-        ProductLocal productLocal = new ProductLocal();
+        ProductLocal productLocal = new ProductLocal(values); //TODO get from ContentVal persist
+        productLocal.save();
+
+        Product product = new Product(productLocal);
+        AppBase.clientRest.addProduct(1, product);
+
         //productLocal.se
         Integer rowID = 1;
         //db = dbHelper.getWritableDatabase();
@@ -106,26 +109,27 @@ public class ProductsContentProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
 //        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//        int token = URI_MATCHER.match(uri);
-//        int rowsDeleted = -1;
-//        switch (token) {
-//            case (PATH_TOKEN):
+        int token = uriMatcher.match(uri);
+        int rowsDeleted = -1;
+        switch (token) {
+            case (URI_PRODUCTS):
 //                rowsDeleted = db.delete(TvShowsDbHelper.TVSHOWS_TABLE_NAME, selection, selectionArgs);
-//                break;
-//            case (PATH_FOR_ID_TOKEN):
+                break;
+            case (URI_PRODUCT_ID):
 //                String tvShowIdWhereClause = TvShowsDbHelper.TVSHOWS_COL_ID + "=" + uri.getLastPathSegment();
 //                if (!TextUtils.isEmpty(selection))
 //                    tvShowIdWhereClause += " AND " + selection;
 //                rowsDeleted = db.delete(TvShowsDbHelper.TVSHOWS_TABLE_NAME, tvShowIdWhereClause, selectionArgs);
-//                break;
-//            default:
-        throw new IllegalArgumentException("Unsupported URI: " + uri);
-//        }
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported URI: " + uri);
+        }
 //        // Notifying the changes, if there are any
-//        if (rowsDeleted != -1)
-//            getContext().getContentResolver().notifyChange(uri, null);
-//        return rowsDeleted;
+        if (rowsDeleted != -1)
+            getContext().getContentResolver().notifyChange(uri, null);
+        return rowsDeleted;
     }
+
 
     /**
      * Man..I'm tired..

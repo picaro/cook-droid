@@ -23,12 +23,6 @@
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/lvContact"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
-
     <Button
         android:id="@+id/scan_button"
         android:layout_width="fill_parent"

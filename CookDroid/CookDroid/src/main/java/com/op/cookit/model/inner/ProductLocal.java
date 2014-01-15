@@ -1,10 +1,13 @@
 package com.op.cookit.model.inner;
 
+import android.content.ContentValues;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 import com.op.cookit.model.Product;
+import com.op.cookit.syncadapter.ProductsContentProvider;
 
 import java.util.List;
 
@@ -40,8 +43,16 @@ public class ProductLocal extends Model {
 	public ProductLocal(Product product){
 	    name = product.getName();
 	}
-	
-	// Getters
+
+    public ProductLocal(ContentValues values) {
+        setName((String)values.get(ProductsContentProvider.Columns.NAME));
+        setNote((String)values.get(ProductsContentProvider.Columns.NOTE));
+        setOutid((Integer)values.get(ProductsContentProvider.Columns.OUTID));
+        setCrossed((Boolean)values.get(ProductsContentProvider.Columns.CROSSED));
+        setShoplistid((Integer)values.get(ProductsContentProvider.Columns.SHOPLISTID));
+    }
+
+    // Getters
 	public String getName() {
 		return name;
 	}

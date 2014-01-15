@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ShopListFragment extends Fragment implements OnCrossListener{
+public class ShopListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> , OnCrossListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -108,9 +108,6 @@ public class ShopListFragment extends Fragment implements OnCrossListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-
         super.onCreateView(inflater,container,savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_shoplist,
                 container, false);
@@ -121,34 +118,24 @@ public class ShopListFragment extends Fragment implements OnCrossListener{
         setHasOptionsMenu(true);
         this.registerForContextMenu(list);
         cross.addOnCrossListener(this);
-
-
         Cursor cursor = getActivity().getContentResolver().query(ProductsContentProvider.CONTENT_URI, null, null,
                 null, null);
         getActivity().startManagingCursor(cursor);
-        String from[] = { "name", "note" };
-        int to[] = { android.R.id.text1, android.R.id.text2 };
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(),
-                R.layout.item_todo, cursor, from, to);
-//        sAdapter = new ShopListAdapter(this.getActivity(), productsMap, R.layout.item_todo,
-//                new String[]{"content"}, new int[]{android.R.id.content});
-
-        ListView list = (ListView) view.findViewById(R.id.lvContact);
-        list.setAdapter(adapter);
-        //lvContact.setAdapter(adapter);
-
-
         return view;
 
     }
 
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch(item.getItemId())
-        {
-            case R.id.action_add:
+    public void onCreateOptionsMenu(Menu menu,MenuInflater menuInflater) {
+
+        // show menu to create new todo entry
+        MenuItem add = menu.add(R.string.todo_add);
+        add.setIcon(android.R.drawable.ic_menu_add);
+        add.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                // prompt user for new todo entry
                 LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View view = inflater.inflate(R.layout.dia_newitem, null);
 
@@ -163,13 +150,13 @@ public class ShopListFragment extends Fragment implements OnCrossListener{
                                     Product product = new Product();
                                     product.setName(title);
                                     product.setShoplistid(1);
-                                    //AppBase.clientRest.addProduct(1, product);
+                                   // AppBase.clientRest.addProduct(1, product);
 
-                                    //Map<String, Object> list2 = new HashMap<String, Object>();
-                                    //list2.put("content", product);
-                                    //productsMap.add(list2);
+                                    Map<String, Object> list2 = new HashMap<String, Object>();
+                                    list2.put("content", product);
+                                    productsMap.add(list2);
                                     ContentValues cv = new ContentValues();
-                                    cv.put(ProductsContentProvider.Columns.NAME, "name 4");
+                                    cv.put(ProductsContentProvider.Columns.NAME, title);
                                     cv.put(ProductsContentProvider.Columns.OUTID, 1);
                                     cv.put(ProductsContentProvider.Columns.NOTE, "note 1");
                                     cv.put(ProductsContentProvider.Columns.SHOPLISTID, 1);
@@ -177,45 +164,50 @@ public class ShopListFragment extends Fragment implements OnCrossListener{
                                     Uri newUri = getActivity().getContentResolver().insert( ProductsContentProvider.CONTENT_URI, cv);
                                     Log.d(AppBase.TAG, "insert, result Uri : " + newUri.toString());
 
-
                                     sAdapter.notifyDataSetChanged();
                                 }
                             }
                         })
                         .setNegativeButton(R.string.todo_add_neg, null).create().show();
 
-
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+            }
+        });
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu,MenuInflater menuInflater) {
-        menu.clear();
-        getActivity().getMenuInflater().inflate(R.menu.menu_add, menu);
-        super.onCreateOptionsMenu(menu, menuInflater);
-        return;
+        //    return true;
+
     }
 
     public void onStart() {
         super.onStart();
-
-
         productsMap = new ArrayList<Map<String, Object>>();
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
 
         // connect up with database
-        shopList = new ShopList();//AppBase.clientRest.getShopList(1);
-        List<Product> productList = new ArrayList<Product>();//shopList.getProductList();
-
-        for (Product product : productList) {
+//        shopList = AppBase.clientRest.getShopList(1);
+//        List<Product> productList = shopList.getProductList();
+//
+//        for (Product product : productList) {
+//            Map<String, Object> list2 = new HashMap<String, Object>();
+//            list2.put("content", product);
+//            productsMap.add(list2);
+//        }
+        Cursor cursor = getActivity().getContentResolver().query(ProductsContentProvider.CONTENT_URI, null, null,
+                null, null);
+        while (cursor.moveToNext()) {
             Map<String, Object> list2 = new HashMap<String, Object>();
+            Product product = new Product();
+            product.setName(cursor.getString(cursor.getColumnIndex(ProductsContentProvider.Columns.NAME)));
+            product.setShoplistid(1);
             list2.put("content", product);
             productsMap.add(list2);
+
+//            String displayName = cursor.getString(cursor
+//                    .getColumnIndex(ContactsContract.Data.DISPLAY_NAME));
+//            contactView.append("Name: ");
+//            contactView.append(displayName);
+//            contactView.append("\n");
         }
+
         sAdapter = new ShopListAdapter(this.getActivity(), productsMap, R.layout.item_todo,
                 new String[]{"content"}, new int[]{android.R.id.content});
         sAdapter.setViewBinder(new CrossBinder());
@@ -229,21 +221,28 @@ public class ShopListFragment extends Fragment implements OnCrossListener{
     public void onCross(int position, boolean crossed) {
         Log.e(AppBase.TAG, "onCross");
         int viewIndex = position - list.getFirstVisiblePosition();
-        if (viewIndex < shopList.getProductList().size() && viewIndex >= 0) {
-            Product product = shopList.getProductList().get(viewIndex);
+        if (viewIndex < productsMap.size() && viewIndex >= 0) {
+
+            Product product = (Product) productsMap.get(viewIndex).get("content");
+            product.setCrossed(crossed);
+
+            ProductLocal productLocal = new ProductLocal(product);
+            productLocal.save();
+
 
             if (product.getCrossed().booleanValue() != crossed) {
-                AppBase.clientRest.crossProduct(1, product);
-
+//
+//                //AppBase.clientRest.crossProduct(1, product);
+//
                 if (product.getCrossed()) {
                     MediaPlayer mPlayer = MediaPlayer.create(this.getActivity(), R.raw.cross);
                     mPlayer.setLooping(false);
                     mPlayer.start();
                 }
-
-                //  list.refreshDrawableState();
-                list.refreshDrawableState();
-                sAdapter.notifyDataSetChanged();
+//
+//                //  list.refreshDrawableState();
+//                list.refreshDrawableState();
+//                sAdapter.notifyDataSetChanged();
             }
         }
     }
@@ -260,33 +259,33 @@ public class ShopListFragment extends Fragment implements OnCrossListener{
     }
 
 
-//
-//    @Override
-//    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-//        // We only have one loader, so we can ignore the value of i.
-//        // (It'll be '0', as set in onCreate().)
-//
-//        Log.e(AppBase.TAG, "onCreateLoader");
-//
-//
-//        return new CursorLoader(getActivity(),  // Context
-//                ProductsContentProvider.CONTENT_URI, // URI
-//                null,                // Projection
-//                null,                           // Selection
-//                null,                           // Selection args
-//                null); // Sort
-//
-//    }
-//
-//    @Override
-//    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-//        mAdapter.changeCursor(cursor);
-//    }
-//
-//    @Override
-//    public void onLoaderReset(Loader<Cursor> loader) {
-//        mAdapter.changeCursor(null);
-//    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        // We only have one loader, so we can ignore the value of i.
+        // (It'll be '0', as set in onCreate().)
+
+        Log.e(AppBase.TAG, "onCreateLoader");
+
+
+        return new CursorLoader(getActivity(),  // Context
+                ProductsContentProvider.CONTENT_URI, // URI
+                null,                // Projection
+                null,                           // Selection
+                null,                           // Selection args
+                null); // Sort
+
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        mAdapter.changeCursor(cursor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mAdapter.changeCursor(null);
+    }
 
 
 }

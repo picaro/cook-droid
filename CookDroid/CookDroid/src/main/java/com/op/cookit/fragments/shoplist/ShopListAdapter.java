@@ -2,6 +2,7 @@ package com.op.cookit.fragments.shoplist;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,12 @@ import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 
 import com.op.cookit.AppBase;
+import com.op.cookit.MainActivity;
 import com.op.cookit.R;
 import com.op.cookit.model.Product;
+import com.op.cookit.syncadapter.ProductsContentProvider;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +26,8 @@ import java.util.Map;
  */
 public class ShopListAdapter extends SimpleAdapter {
 
-    private  List<? extends Map<String, ?>> data;
-
+    private List<? extends Map<String, ?>> data;
+    private Context context;
     /**
      * Constructor
      *
@@ -40,6 +44,7 @@ public class ShopListAdapter extends SimpleAdapter {
      */
     public ShopListAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
         super(context, data, resource, from, to);
+        this.context = context;
         this.data = data;
     }
 
@@ -49,12 +54,14 @@ public class ShopListAdapter extends SimpleAdapter {
 
         View view = super.getView(position, convertView, parent);
         ImageView delicon = (ImageView) view.findViewById(R.id.imgdel);
-        final Product product = (Product)((HashMap) getItem(position)).get("content");
+        final Product product = (Product) ((HashMap) getItem(position)).get("content");
         delicon.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Log.e("", "delview:" + position);
-                AppBase.clientRest.deleteProduct(1, product.getId());
+                //AppBase.clientRest.deleteProduct(1, product.getId());
                 data.remove(getItem(position));
+                Integer deleted =  ((MainActivity)context).getContentResolver().delete( ProductsContentProvider.CONTENT_URI, "id = ?",new String[]{"" + product.getId()});
+
                 notifyDataSetChanged();
             }
         });
@@ -66,9 +73,9 @@ public class ShopListAdapter extends SimpleAdapter {
                 AppBase.clientRest.crossProduct(1, product);
                 //data.remove(getItem(position));
                 if (product.getCrossed()) {
-                 MediaPlayer mPlayer = MediaPlayer.create(view.getContext(), R.raw.cross);
-                 mPlayer.setLooping(false);
-                 mPlayer.start();
+                    MediaPlayer mPlayer = MediaPlayer.create(view.getContext(), R.raw.cross);
+                    mPlayer.setLooping(false);
+                    mPlayer.start();
                 }
                 notifyDataSetChanged();
             }

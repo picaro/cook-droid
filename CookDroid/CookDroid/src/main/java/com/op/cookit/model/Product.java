@@ -1,5 +1,7 @@
 package com.op.cookit.model;
 
+import com.op.cookit.model.inner.ProductLocal;
+
 import java.io.Serializable;
 
 /**
@@ -16,6 +18,16 @@ public class Product implements Serializable {
     private Integer shoplistid;
 
     private Boolean crossed = false;
+
+    public Product(){
+    }
+
+    public Product(ProductLocal productLocal) {
+        id = productLocal.getOutid();
+        name = productLocal.getName();
+        shoplistid = productLocal.getShoplistid();
+        note = productLocal.getNote();
+    }
 
     public String getName() {
         return name;
