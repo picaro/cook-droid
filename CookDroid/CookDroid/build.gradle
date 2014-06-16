@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.6.+'
+        classpath 'com.android.tools.build:gradle:0.11.+'
 
     }
 }
@@ -15,19 +15,35 @@ repositories {
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '19.0.0'
+    buildToolsVersion '19.1.0'
     defaultConfig {
         minSdkVersion 13
         targetSdkVersion 19
     }
     buildTypes {}
+    productFlavors {
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:18.0.0'
+    compile 'com.android.support:support-v4:19.0.0'
     compile 'com.google.zxing:core:2.0'
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE@jar'
     compile 'org.springframework.android:spring-android-core:1.0.1.RELEASE@jar'
     compile files('libs/gson-2.2.4.jar')
     compile files('libs/zxingjar-1.1.jar')
+    compile files('libs/activeandroid.jar')
 }

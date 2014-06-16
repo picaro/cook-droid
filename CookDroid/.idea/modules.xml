@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CookDroid/CookDroid.iml" filepath="$PROJECT_DIR$/CookDroid/CookDroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CookDroid.iml" filepath="$PROJECT_DIR$/CookDroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CookDroid/CookDroid-CookDroid.iml" filepath="$PROJECT_DIR$/CookDroid/CookDroid-CookDroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/CookDroidProject.iml" filepath="$PROJECT_DIR$/CookDroidProject.iml" />
     </modules>
   </component>
